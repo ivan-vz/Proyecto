@@ -1,0 +1,74 @@
+  .galeria { /* Fila de foto chiquitas */
+    width: 100%;
+    list-style: none;
+    box-sizing: border-box; /* Propiedad que nos permite incluir el padding y margen en el width y heigth total ==> al agregar padding, por ejemplo, este no modifica el espacio que ocupa el objeto*/ 
+  
+    display: flex;
+    flex-wrap: nowrap; /* Nos permite contorlar la ubicacion de los elementos y sus descendencia, wrap nos los ubica en varias lineas mientras que nowrap los obligara a estar en una (se sale de la pantalla)*/
+    justify-content: space-around; /* Propiedad para darle alineacion a elementos flex, space-around les da espaco antes, entre ellos y despues*/
+  }
+  
+  /* Fila de fotos chicas */
+  .galeria img {
+    width: 80%;
+    height: 80%;
+  }
+  
+  /* Estilo del Modal */
+  .modal {
+    display: none;
+  }
+  
+  .modal:target { /*Esto esta mas centrado al fondo que a la foto en si, :target sirve para darle una "accion" a un elemento cuando su id este al final del url */
+    display: block;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8); /* Las tres prieras ranuras son el color (#000 es el codigo del negro), mientras que la ultima es la opacidad del color */
+    top: 0; /* Marcan la distancia que tiene el elemento fix o absolute con su left, top, bottom, right*/
+    left: 0;
+    width: 100%; /*Cuando se hace "zoom" a la imagen, el efecto ocupa toda la pantalla*/
+    height: 100%;
+  }
+  
+  .imagen {
+    margin: auto;
+    margin-top: 10em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center; /*Centra todo*/
+    align-items: center; /* Alinea todos los elementos en base a su mitad*/
+  }
+  
+  /* Esta corresponde a las flechas < > */
+  .imagen a {
+    color: white;
+    font-size: 2em;
+    text-decoration: none;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+  
+  /* Foto con "zoom" */
+  .imagen img {
+    width: 18em;
+    border: 7px solid white;
+    box-sizing: border-box;
+  }
+  
+  /* Boton con la X */
+  .cerrar {
+    display: block;
+    background-color: white;
+    width: 2em;
+    height: 2em;
+    margin: auto ;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    border-radius: 50%;
+    line-height: 2em;
+  }
+
+  /* Estrellas de los comentarios */
+  .checked {
+    color: orange;
+  }

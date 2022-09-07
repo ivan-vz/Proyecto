@@ -10,6 +10,8 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/galeria-products.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -39,11 +41,42 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <p id="volverProducts" class="float-end">
+        <a href="products.html">Volver</a>
+      </p>
+      <div id="informacion" class="row">
       </div>
+      <div id="galeria" class="row">
+      </div>
+      <h3>Comentarios</h3>
+      <div class="border rounded-3 cont">
+        <ul class="list-group" id="Comentarios">
+        </ul>
+      </div>
+
+    
+          <h1 class="my-3">Comentar</h1>
+          <hr class="my-4">
+          <div class="row mt-4 g-3">
+            <div class="col-sm-4">
+              <label for="tuOpinion" class="form-label">Tu opinion:</label>
+              <textarea type="text" class="form-control" id="tuOpinion"></textarea>
+              <label for="tuPuntuacion" class="form-label">Tu puntuacion:</label>
+              <select class="form-select" aria-label="Default select example" id="tuPuntuacion">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <div class="d-grid">
+                <button type="button" class="btn btn-primary my-3" id="enviar">Enviar</button>
+              </div>
+          </div>
+
     </div>
   </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">

@@ -1,20 +1,26 @@
-let codigo = localStorage.getItem("catID"); //Guardamos el identificador de la categoria (subidoal LS en categories.js) en una variable
+let codigo = localStorage.getItem("catID"); //Guardamos el identificador de la categoria (subido al LS en categories.js) en una variable
 const url = "https://japceibal.github.io/emercado-api/cats_products/" + codigo + ".json"; //Fucionamos la variable anterior con el URL para poder generar un enlace valido para pedir la informacion de cada categoria
 let mercancia = [];
 let newList = [];
 let minCount;
 let maxCount;
 
+//Funcion para conseguir los datos
+document.addEventListener("DOMContentLoaded",async function(e){
+    mercancia =  await getJSONData(url);
+    //localStorage.setItem("id", mercancia.data.products.id)
+    showProductsList(mercancia.data.products);
+    document.getElementById("tituloSecundario").innerHTML = `Verás aquí todos los productos de la categoría  ${mercancia.data.catName}`;
+});
+
 //función que recibe un array con los datos, y los muestra en pantalla a través el uso del DOM
 function showProductsList(array){
     let htmlContentToAppend = "";
-    let articulos = "";
 
     for(let i = 0; i < array.length; i++){ 
      let product = array[i];
-     articulos += `<li class="articulo" style="display: none;"> ${product.name} </li>`
      htmlContentToAppend += `
-     <div id="${product.name}" class="mostrar">
+     <div id="${product.name}" onclick="setProductID(${product.id})" class="list-group-item list-group-item-action cursor-active">
          <div class="row"> 
              <div class="col-3">
                  <img src="${product.image}" alt="product image" class="img-thumbnail"> 
@@ -37,25 +43,13 @@ function showProductsList(array){
       document.getElementById("Lista_De_Productos").innerHTML = htmlContentToAppend; 
 }
 
-//Funcion para conseguir los datos
-document.addEventListener("DOMContentLoaded",async function(e){
-    mercancia =  await getJSONData(url);
-    //console.log(mercancia.data.products);
-    showProductsList(mercancia.data.products);
-});
+// Funcion para guardar en el local storage la id de un producto especifico
+function setProductID(id) {
+    localStorage.setItem("PID", id);
+    window.location = "product-info.html"
+}
 
 //Filtro
-
-function entreMaxMin(prod){
-    //Filtramos en los casos en que uno de los dos no tiene valor y cuando ambos tienen
-    if(minCount == undefined){
-        return (prod.cost <= maxCount);
-    } else if (maxCount == undefined){
-        return (prod.cost >= minCount);
-    } else {
-        return (prod.cost >= minCount) && (prod.cost <= maxCount);
-    }
-};
 
 // Obtengo el boton de Filtrar por id y le agrego una accion al hacerle click
 document.getElementById("rangeFilterCount").addEventListener("click", function(){
@@ -85,6 +79,17 @@ document.getElementById("rangeFilterCount").addEventListener("click", function()
         showProductsList(newList);
     }
 });
+
+function entreMaxMin(prod){
+    //Filtramos en los casos en que uno de los dos no tiene valor y cuando ambos tienen
+    if(minCount == undefined){
+        return (prod.cost <= maxCount);
+    } else if (maxCount == undefined){
+        return (prod.cost >= minCount);
+    } else {
+        return (prod.cost >= minCount) && (prod.cost <= maxCount);
+    }
+};
 
 // Obtengo el boton de Limpiar por id y le agrego un accion al hacer click
 document.getElementById("clearRangeFilter").addEventListener("click", function(){
