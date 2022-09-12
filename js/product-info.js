@@ -3,8 +3,6 @@ const urlProductsInfo = "https://japceibal.github.io/emercado-api/products/"+ pr
 const opiniones = "https://japceibal.github.io/emercado-api/products_comments/"+ productId + ".json";
 let producto = [];
 let comment = [];
-let i = 0;
-let j = 0;
 
 //Funcion para conseguir los datos de un producto
 document.addEventListener("DOMContentLoaded",async function(e){
@@ -20,6 +18,7 @@ document.addEventListener("DOMContentLoaded",async function(e){
     }
 });
 
+//Funcion para mandar los comentarios fijos y nuevos al html
 function showComments(){
     document.getElementById("Comentarios").innerHTML = ""; 
     let comments = JSON.parse(localStorage.getItem("ListaComentarios"+productId));
@@ -82,76 +81,40 @@ function showComments(){
     });
 }
 
+
+//Funcion para mandar toda la informacion del producto al html
 function showProductInfo(product){
     let datos = "";
     let imagenes = ""
     datos = `
-        <div class="col-12 align-self-center">
-            <div>
+        <li class="list-group-item">
                 <div>
-                    <h2>${product.name}</h2><br>
-                <hr><br>
-                    <h4>Precio</h4><br>
-                    <p>${product.currency} ${product.cost}</p><br>
-                    <h4>Descripción</h4><br>
-                    <p> ${product.description}</p><br>
-                    <h4>Categoría</h4><br>
-                    <p> ${product.category}</p><br>
-                    <h4>Cantidad de vendidos</h4><br>
-                    <p> ${product.soldCount}</p><br>
-                    <h4>Imagenes Ilustrativas</h4><br>
+                    <h2 class="titulo">${product.name}</h2>
+                    <hr>
+                    <h5 class="titulo">Precio</h5>
+                    <p class="textos">${product.currency} ${product.cost}</p>
+                    <h5 class="titulo">Descripción</h5>
+                    <p class="textos"> ${product.description}</p>
+                    <h5 class="titulo">Categoría</h5>
+                    <p class="textos"> ${product.category}</p>
+                    <h5 class="titulo">Cantidad de vendidos</h5>
+                    <p class="textos"> ${product.soldCount}</p>
                 </div>
-            </div>
-        </div>
+        </li>
      `
 
-        imagenes +=  `       
-            <a class="col-3" href="#foto1"><img src="${product.images[0]}" alt="product image" class="img-thumbnail"></a>
-            <a class="col-3" href="#foto2"><img src="${product.images[1]}" alt="product image" class="img-thumbnail"></a>
-            <a class="col-3" href="#foto3"><img src="${product.images[2]}" alt="product image" class="img-thumbnail"></a>
-            <a class="col-3" href="#foto4"><img src="${product.images[3]}" alt="product image" class="img-thumbnail"></a>
-
-
-            <div id="foto1" class="modal">
-                <div class="imagen">
-                    <a href="#foto4">&#60;</a>
-                    <a href="#foto2"><img src="${product.images[0]}" alt="img 1"></a>
-                    <a href="#foto2">></a>
+    for(imag of product.images){
+            imagenes +=  `       
+                <div class="col galCol">
+                    <img src="${imag}" class="img-thumbnail" onclick="expand(this);">
                 </div>
-                <a class="cerrar" href="#catalogo">X</a>
-                <!-- como el href de "cerrar" esta vacio nos devuelve a la misma ruta sacandole el final lo que genera un efecto de boton -->
-            </div>
+        `;
 
-            <div id="foto2" class="modal">
-                <div class="imagen">
-                    <a href="#foto1">&#60;</a>
-                    <a href="#foto3"><img src="${product.images[1]}" alt="img 2"></a>
-                    <a href="#foto3">></a>
-                </div>
-                <a class="cerrar" href="#catalogo">X</a>
-            </div>
+        document.getElementById("fotoExt").innerHTML = `<img id="expandedImg" src="${product.images[0]}"  class="img-thumbnail" style="width:100%">`;
+        document.getElementById("galeria").innerHTML = imagenes; 
+    }
 
-            <div id="foto3" class="modal">
-                <div class="imagen">
-                    <a href="#foto2">&#60;</a>
-                    <a href="#foto4"><img src="${product.images[2]}" alt="img 3"></a>
-                    <a href="#foto4">></a>
-                </div>
-                <a class="cerrar" href="#catalogo">X</a>
-            </div>
-
-            <div id="foto4" class="modal">
-                <div class="imagen">
-                    <a href="#foto3">&#60;</a>
-                    <a href="#foto1"><img src="${product.images[3]}" alt="img 4"></a>
-                    <a href="#foto1">></a>
-                </div>
-                <a class="cerrar" href="#catalogo">X</a>
-            </div>
-     `;
-
-      document.getElementById("informacion").innerHTML = datos; 
-      document.getElementById("galeria").innerHTML = imagenes; 
+    document.getElementById("informacion").innerHTML = datos; 
 
 }
 
@@ -168,8 +131,20 @@ comentar.addEventListener("click",() => {
         "user": "Usuario",
         "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
     }
-    j++;
     comment.data.unshift(nuevoCom);
     localStorage.setItem("ListaComentarios"+productId, JSON.stringify(comment.data));
     showComments();
 })
+
+//Funcion al hacer click en una de las foto miniatura
+function expand(imgs) {
+    // Consigo el <img> de la foto extendida
+    let expandImg = document.getElementById("expandedImg");
+    // Sobrecargo el src de la imagen extendida por el de la imagen clickeada
+    expandImg.src = imgs.src;
+  }
+
+//Botones para volver a productos  arriba
+document.getElementById("volverProducts").addEventListener("click", () => {
+    window.location = "products.html";
+});

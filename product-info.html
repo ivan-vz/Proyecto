@@ -39,49 +39,91 @@
       </div>
     </div>
   </nav>
-  <main>
-    <div class="container">
-      <p id="volverProducts" class="float-end">
-        <a href="products.html">Volver</a>
-      </p>
-      <div id="informacion" class="row">
-      </div>
-      <div id="galeria" class="row">
-      </div>
-      <h3>Comentarios</h3>
-      <div class="border rounded-3 cont">
-        <ul class="list-group" id="Comentarios">
-        </ul>
-      </div>
 
-    
-          <h1 class="my-3">Comentar</h1>
-          <hr class="my-4">
-          <div class="row mt-4 g-3">
-            <div class="col-sm-4">
-              <label for="tuOpinion" class="form-label">Tu opinion:</label>
-              <textarea type="text" class="form-control" id="tuOpinion"></textarea>
-              <label for="tuPuntuacion" class="form-label">Tu puntuacion:</label>
-              <select class="form-select" aria-label="Default select example" id="tuPuntuacion">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-              <div class="d-grid">
-                <button type="button" class="btn btn-primary my-3" id="enviar">Enviar</button>
+  <main>
+    <div class="container mt-3">
+
+      <button id="volverProducts" type="button" class="btn btn-primary float-end">Volver</button>
+      
+      <!-- Fila Superior -->
+      <div  class="row mt-3">
+        
+        <!-- Columna de Informacion -->
+        <div class="col">
+            <div id="informacion" class="border rounded-3 cont">
+              <ul class="list-group" >
+              </ul>
+            </div>
+        </div>
+
+        <!-- Columna de Fotos -->
+        <div class="col">
+          <div class="row">
+
+            <div class="col">
+              <div id="galeria" class="row">
+
               </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <!-- The expanding image container -->
+              <div id="fotoExt" class="galContainer">
+              </div>
+            </div>
           </div>
 
-    </div>
+          </div>
+        </div>
+
+      <div>
+
+      <!-- Segunda Fila Comentarios -->
+      <div class="row-col mt-5">
+            <h3>Comentarios</h3>
+            <hr>
+            <div class="border rounded-3 cont">
+              <ul class="list-group" id="Comentarios">
+              </ul>
+            </div>
+      </div>
+
+      <!-- Tercera Fila comentar -->
+      <div class="row mt-5">
+        <h3>Comentar</h3>
+        <hr>
+
+         <div class="row">
+            <div class="col-sm-4">
+
+                <label for="tuOpinion" class="form-label">Tu opinion:</label>
+                <textarea type="text" class="form-control" id="tuOpinion"></textarea>
+
+                <label for="tuPuntuacion" class="form-label">Tu puntuacion:</label>
+                <select class="form-select" aria-label="Default select example" id="tuPuntuacion">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+
+                <div class="d-grid">
+                  <button type="button" class="btn btn-primary my-3" id="enviar">Enviar</button>
+                </div>
+
+            </div>
+          </div>
+      </div>
+    </div> <!-- Div final container -->
   </main>
 
   <footer class="text-muted">
     <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
+      <button id="volverArriba" type="button" class="btn btn-primary float-end">Volver arriba</button>
+      
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
         2022</p>
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
