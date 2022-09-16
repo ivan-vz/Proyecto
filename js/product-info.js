@@ -1,16 +1,19 @@
-let productId = localStorage.getItem("PID"); // ID del producto al que entrmos
+let productId = localStorage.getItem("PID"); // ID del producto al que entramos
 const urlProductsInfo = "https://japceibal.github.io/emercado-api/products/"+ productId + ".json" // Link para poder entrar al product-info del producto especifico
-const opiniones = "https://japceibal.github.io/emercado-api/products_comments/"+ productId + ".json";
+const opiniones = "https://japceibal.github.io/emercado-api/products_comments/"+ productId + ".json"; // Link para obtener los comentarios
+let lista = document.getElementById("contenedor");
+let comentar = document.getElementById("enviar");
 let producto = [];
 let comment = [];
 let estrellas;
 
 //Funcion para conseguir los datos de un producto
 document.addEventListener("DOMContentLoaded",async function(e){
-    producto =  await getJSONData(urlProductsInfo);
+    producto =  await getJSONData(urlProductsInfo); //Pedimos la informacion del producto
     showProductInfo(producto.data);
-    comment =  await getJSONData(opiniones);
+    comment =  await getJSONData(opiniones); //Pedimos los comentarios del producto
 
+    //Guardamos en el localStorage los comentarios para poder mostrarlos
     if(JSON.parse(localStorage.getItem("ListaComentarios"+productId)) == null){
         localStorage.setItem("ListaComentarios"+productId, JSON.stringify(comment.data));
         showComments();
@@ -18,6 +21,21 @@ document.addEventListener("DOMContentLoaded",async function(e){
         showComments();
     }
 });
+
+// Comentar
+comentar.addEventListener("click",() => {
+    let date = new Date();
+    let nuevoCom = {
+        "product": productId,
+        "score": parseInt(document.getElementById("tuPuntuacion").value),
+        "description": document.getElementById("tuOpinion").value,
+        "user": infoUsuario.usuario, //variable creada en info.js
+        "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
+    }
+    comment.data.unshift(nuevoCom);
+    localStorage.setItem("ListaComentarios"+productId, JSON.stringify(comment.data));
+    showComments();
+})
 
 //Funcion para mandar los comentarios fijos y nuevos al html
 function showComments(){
@@ -69,31 +87,13 @@ function showProductInfo(product){
                 </div>
         `;
 
-        document.getElementById("fotoExt").innerHTML = `<img id="expandedImg" src="${product.images[0]}"  class="img-thumbnail" style="width:100%">`;
         document.getElementById("galeria").innerHTML = imagenes; 
+        document.getElementById("fotoExt").innerHTML = `<img id="expandedImg" src="${product.images[0]}"  class="img-thumbnail" style="width:100%">`;
     }
 
     document.getElementById("informacion").innerHTML = datos; 
 
 }
-
-// Comentar
-let lista = document.getElementById("contenedor");
-let comentar = document.getElementById("enviar");
-
-comentar.addEventListener("click",() => {
-    let date = new Date();
-    let nuevoCom = {
-        "product": productId,
-        "score": parseInt(document.getElementById("tuPuntuacion").value),
-        "description": document.getElementById("tuOpinion").value,
-        "user": infoUsuario.usuario, //variable creada en info.js
-        "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
-    }
-    comment.data.unshift(nuevoCom);
-    localStorage.setItem("ListaComentarios"+productId, JSON.stringify(comment.data));
-    showComments();
-})
 
 //Funcion al hacer click en una de las foto miniatura
 function expand(imgs) {
