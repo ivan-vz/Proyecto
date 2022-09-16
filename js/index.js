@@ -31,7 +31,7 @@ document.getElementById("regBtn").addEventListener("click", (e) => {
     localStorage.setItem("datosUser", JSON.stringify(datosUsuario));
 
     
-    if (((datosUsuario.email != "" || datosUsuario.password != "")) && (datosUsuario.email.includes("@"))){
+    if (((datosUsuario.email != "" && datosUsuario.password != "")) && (datosUsuario.email.includes("@"))){
         document.getElementById("email").value = "";
         document.getElementById("password").value = "";
         window.location.href = "inicio.html";
