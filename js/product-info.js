@@ -3,6 +3,7 @@ const urlProductsInfo = "https://japceibal.github.io/emercado-api/products/"+ pr
 const opiniones = "https://japceibal.github.io/emercado-api/products_comments/"+ productId + ".json";
 let producto = [];
 let comment = [];
+let estrellas;
 
 //Funcion para conseguir los datos de un producto
 document.addEventListener("DOMContentLoaded",async function(e){
@@ -22,61 +23,19 @@ document.addEventListener("DOMContentLoaded",async function(e){
 function showComments(){
     document.getElementById("Comentarios").innerHTML = ""; 
     let comments = JSON.parse(localStorage.getItem("ListaComentarios"+productId));
-    let estrellas;
-    comments.forEach(element => {
-        let Us_Da = `<li class="list-group-item"><strong>${element.user}</strong> - ${element.dateTime} `;
-        switch (element.score){
-            case 1: estrellas = `
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-
-            `
-            break;
-
-            case 2: estrellas = `
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-
-            `
-            break;
-
-            case 3: estrellas = `
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-
-            `
-            break;
-
-            case 4: estrellas = `
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-
-            `
-            break;
-
-            case 5: estrellas = `
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-
-            `
-            break;
+    comments.forEach(msj => {
+        let k = 1;
+        estrellas = "";
+        let Us_Da = `<li class="list-group-item"><strong>${msj.user}</strong> - ${msj.dateTime} `;
+        while (k < 6) {
+            if(k <= parseInt(msj.score)){
+                estrellas += `<span class="fa fa-star checked"></span>`;
+            } else {
+                estrellas += `<span class="fa fa-star"></span>`;
+            }
+            k++;
         }
-        let Des = `<br>${element.description}</li>`;
+        let Des = `<br>${msj.description}</li>`;
         document.getElementById("Comentarios").innerHTML += Us_Da + estrellas + Des; 
     });
 }
@@ -128,7 +87,7 @@ comentar.addEventListener("click",() => {
         "product": productId,
         "score": parseInt(document.getElementById("tuPuntuacion").value),
         "description": document.getElementById("tuOpinion").value,
-        "user": "Usuario",
+        "user": infoUsuario.usuario, //variable creada en info.js
         "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
     }
     comment.data.unshift(nuevoCom);

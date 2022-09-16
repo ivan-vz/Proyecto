@@ -1,3 +1,5 @@
+let datosUsuario;
+
 //Alertas
 function showAlertError1() {
     document.getElementById("alert-null").classList.add("show");
@@ -6,45 +8,35 @@ function showAlertError2() {
     document.getElementById("alert-email").classList.add("show");
 }
 
-//Condiciones
-function noVacios(dato0, dato1){
-
-    if ((dato0 === "") || (dato1 === "")){
-        return false;
-    } else {
-        return true;
-    }
-}
-function emailCorrecto(correo){
-    if (correo.includes("@")) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 //¿Ya ingresado?
-let log = localStorage.getItem("email");
+let log = localStorage.getItem("datosUser");
 if (log != null){
     window.location.href = "inicio.html";
 } else {
-
+//Funcion que genera un objeto con la informacion de un usuario
+function arrayToObject(array){
+    let newUser = {
+        email: array[0].value,
+        password: array[1].value,
+        usuario: array[0].value.substring(0,array[0].value.indexOf("@")), //substring devuelve el string desde a hasta el caracter b de otro string, mientras que indexOf devuelve el indice del caracter buscado
+    }
+    return newUser;
+}
 //funcion que al clickear en login analiza los requisitos y las alarmas
 document.getElementById("regBtn").addEventListener("click", (e) => {
 
-    let datos = document.querySelectorAll('input');
+    datosUsuario = arrayToObject(Array.from(document.querySelectorAll('input')));
 
     //localStorage
-    localStorage.setItem("email", datos[0].value);
+    localStorage.setItem("datosUser", JSON.stringify(datosUsuario));
+
     
-    if ((noVacios(datos[0].value, datos[1].value)) && (emailCorrecto(datos[0].value))){
-        for(let dato of datos){
-            dato.value = "";
-            dato.checked = false;
-        }
+    if (((datosUsuario.email != "" || datosUsuario.password != "")) && (datosUsuario.email.includes("@"))){
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
         window.location.href = "inicio.html";
     } else {
-        if (!(noVacios(datos[0].value, datos[1].value))){
+        if (datosUsuario.email == "" || datosUsuario.password == ""){
             showAlertError1();
             setTimeout(function() {
                 document.getElementById("alert-null").classList.remove("show");
