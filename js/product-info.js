@@ -63,6 +63,7 @@ function showComments(){
 function showProductInfo(product){
     let datos = "";
     let imagenes = ""
+    let objR = "";
     datos = `
         <li class="list-group-item">
                 <div>
@@ -91,6 +92,17 @@ function showProductInfo(product){
         document.getElementById("fotoExt").innerHTML = `<img id="expandedImg" src="${product.images[0]}"  class="img-thumbnail" style="width:100%">`;
     }
 
+    for(prod of product.relatedProducts){
+        objR += 
+        `
+        <div class="col text-center">
+            <img class="img-thumbnail" src="${prod.image}" onclick="setProductID(${prod.id})" style="width: 50%; cursor: pointer">
+            <h6><small class="text-muted">${prod.name}</small></h6>
+        </div>
+        `
+    }
+
+    document.getElementById("ORelacionados").innerHTML = objR;
     document.getElementById("informacion").innerHTML = datos; 
 
 }

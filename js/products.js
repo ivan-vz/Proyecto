@@ -43,12 +43,6 @@ function showProductsList(array){
       document.getElementById("Lista_De_Productos").innerHTML = htmlContentToAppend; 
 }
 
-// Funcion para guardar en el local storage la id de un producto especifico
-function setProductID(id) {
-    localStorage.setItem("PID", id);
-    window.location = "product-info.html"
-}
-
 //Filtro
 
 // Obtengo el boton de Filtrar por id y le agrego una accion al hacerle click

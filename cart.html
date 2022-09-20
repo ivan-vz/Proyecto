@@ -29,8 +29,13 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
-            <a id="emailLogin" class="nav-link"></a>
+          <li class="nav-item dropdown">
+            <a id="emailLogin" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"></a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Mi carrito</a></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li><a class="dropdown-item" href="index.html" onclick="cerrarS()">Cerrar sesión</a></li>
+            </ul>
           </li>
         </ul>
       </div>
