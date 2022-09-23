@@ -62,8 +62,10 @@ function showComments(){
 //Funcion para mandar toda la informacion del producto al html
 function showProductInfo(product){
     let datos = "";
-    let imagenes = ""
+    let imagenes = "";
     let objR = "";
+    let pos = 0;
+
     datos = `
         <li class="list-group-item">
                 <div>
@@ -81,15 +83,25 @@ function showProductInfo(product){
         </li>
      `
 
-    for(imag of product.images){
-            imagenes +=  `       
-                <div class="col galCol">
-                    <img src="${imag}" class="img-thumbnail" onclick="expand(this);">
-                </div>
+     for(imag of product.images){
+        if(pos == 0){
+            imagenes +=  
+        `       
+            <div class="carousel-item active">
+                <img src="${imag}" class="d-block w-100 img-thumbnail">
+            </div>
         `;
+        } else {
+            imagenes +=  
+            `       
+                <div class="carousel-item">
+                    <img src="${imag}" class="d-block w-100 img-thumbnail">
+                </div>
+            `;
+        }
+        pos++;
 
-        document.getElementById("galeria").innerHTML = imagenes; 
-        document.getElementById("fotoExt").innerHTML = `<img id="expandedImg" src="${product.images[0]}"  class="img-thumbnail" style="width:100%">`;
+        document.getElementById("galeriaCarousel").innerHTML = imagenes; 
     }
 
     for(prod of product.relatedProducts){
