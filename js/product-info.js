@@ -107,7 +107,7 @@ function showProductInfo(product){
     for(prod of product.relatedProducts){
         objR += 
         `
-        <div class="col text-center">
+        <div class="text-center">
             <img class="img-thumbnail" src="${prod.image}" onclick="setProductID(${prod.id})" style="width: 50%; cursor: pointer">
             <h6><small class="text-muted">${prod.name}</small></h6>
         </div>
@@ -118,14 +118,6 @@ function showProductInfo(product){
     document.getElementById("informacion").innerHTML = datos; 
 
 }
-
-//Funcion al hacer click en una de las foto miniatura
-function expand(imgs) {
-    // Consigo el <img> de la foto extendida
-    let expandImg = document.getElementById("expandedImg");
-    // Sobrecargo el src de la imagen extendida por el de la imagen clickeada
-    expandImg.src = imgs.src;
-  }
 
 //Botones para volver a productos  arriba
 document.getElementById("volverProducts").addEventListener("click", () => {
