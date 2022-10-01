@@ -115,8 +115,26 @@ function showProductInfo(product){
     }
 
     document.getElementById("ORelacionados").innerHTML = objR;
-    document.getElementById("informacion").innerHTML = datos; 
+    document.getElementById("informacion").innerHTML = datos;
+    document.getElementById("botonComprar").innerHTML = `<button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto(); unirSubir()">Comprar</button>`
+}
 
+
+function crearNuevoProducto(){
+    prod = producto.data;
+    let pedidos = document.getElementById("cantComprar").value;
+    console.log(pedidos);
+    if (pedidos != "" && pedidos > 0){
+        let registro = {
+            id: prod.id,
+            name: prod.name,
+            count: pedidos,
+            currency: prod.currency,
+            image: prod.images[0],
+            unitCost: prod.cost
+        }
+        localStorage.setItem("nuevoProducto", JSON.stringify(registro));
+    }
 }
 
 //Botones para volver a productos  arriba

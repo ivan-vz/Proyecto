@@ -43,11 +43,76 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <h2 class="row justify-content-md-center my-3">Carrito de Compras</h2>
+
+      <h4>Articulos a comprar</h4>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Costo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="carritoProd">
+
+        </tbody>
+      </table>
+
+      <hr>
+
+      <!-- Form -->
+      <div>
+            <div class="row justify-content-around">
+              <div class="col-3">
+                <h4>Tipo de envío</h4>
+                <div class="form-check">
+                  <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="premium" value="premium">
+                  <label class="form-check-label" for="premium">Premium 2 a 5 días (15%)</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="express" value="express">
+                  <label class="form-check-label" for="express">Express 5 a 8 días (7%)</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="standard" value="standard">
+                  <label class="form-check-label" for="standard">Standard 12 a 15 días (5%)</label>
+                </div>
+              </div>
+              
+              <div class="col-3">
+              <h4>Dirección de envío</h4>
+                <div class="row">
+                  <div class="col-8">
+                    <label for="calle" class="form-label ">Calle</label>
+                    <input type="text" class="form-control border border-dark update" id="cale">
+                  </div>
+                  
+                  <div class="col-4">
+                    <label for="numero" class="form-label">Número</label>
+                    <input type="number" class="form-control border border-dark update" id="numero">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <label for="esquina" class="form-label">Esquina</label>
+                    <input type="text" class="form-control border border-dark update" id="esquina">
+                  </div>
+                </div>
+              </div>
+            </div>
+
       </div>
+
     </div>
   </main>
+
+
+
+
   <footer class="text-muted">
     <div class="container">
       <button id="volverArriba" type="button" class="btn btn-primary float-end">Volver arriba</button>

@@ -63,17 +63,28 @@
 
         <!-- Columna de Fotos -->
         <div class="col">
-          <div id="galeria" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <div id="galeriaCarousel" class="carousel-inner">
+          <div class="row">
+            <div id="galeria" class="carousel carousel-dark slide" data-bs-ride="carousel">
+              <div id="galeriaCarousel" class="carousel-inner">
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#galeria" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#galeria" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#galeria" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#galeria" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+          </div>
+
+          <div class="row mt-4 mx-0">
+            <div class="col">
+              <input type="number" class="form-control border border-dark update" min="1" id="cantComprar" placeholder="Cantidad a Comprar">
+            </div>
+            <div id="botonComprar" class="col">
+
+            </div>
           </div>
         </div>
       <div>
@@ -148,7 +159,6 @@
   <script src="js/init.js"></script>
   <script src="js/product-info.js"></script>
   <script src="js/info.js"></script>
-
 </body>
 
 </html>

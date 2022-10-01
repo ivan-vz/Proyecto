@@ -13,3 +13,14 @@ function setProductID(id) {
 document.getElementById("volverArriba").addEventListener("click", () => {
     window.location = "#";
 });
+
+//Funciones para mostrar y modificar la tabla del carrito (paso de productinfo a cart)
+function unirSubir(){
+    let nuevoproducto = JSON.parse(localStorage.getItem("nuevoProducto"));
+    carrito = JSON.parse(localStorage.getItem("carroCompras"));
+    if(!(carrito.find(({id}) => id === nuevoproducto.id))){
+        carrito.push(nuevoproducto);
+        localStorage.setItem("carroCompras", JSON.stringify(carrito));
+        //mostrarCarrito();
+    }
+}
