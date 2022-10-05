@@ -1,17 +1,21 @@
 const urlCarrito = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
-let carrito = [];
 let productoBase;
 
 //Funcion para conseguir los datos de un producto
 document.addEventListener("DOMContentLoaded",async function(e){
     productoBase =  await getJSONData(urlCarrito);
-    if(localStorage.getItem("carroCompras") === null){
+    let carrito = JSON.parse(localStorage.getItem("carroCompras"));
+
+    if(!carrito){
         carrito = productoBase.data.articles;
         localStorage.setItem("carroCompras", JSON.stringify(carrito));
-        mostrarCarrito();
-    } else {
-        mostrarCarrito();
+        
+    } else if(!(carrito.find(({id}) => id === productoBase.data.articles[0].id))){
+        carrito.unshift(productoBase.data.articles[0]);
+        localStorage.setItem("carroCompras", JSON.stringify(carrito));
     }
+
+    mostrarCarrito();
 });
 
 
@@ -25,7 +29,7 @@ function mostrarCarrito(){
             <th scope="row"><img src="${compra.image}" style="width: 5em" img-thumbnail></th>
             <td>${compra.name}</td>
             <td>${compra.currency}${compra.unitCost}</td>
-            <td><input type="number" class="form-control border border-dark" style="width: 4em;" id="subtotal${compra.id}" min="1" placeholder="${compra.count}" onclick="modificarCarrito(${compra.id})" onkeyup="modificarCarrito(${compra.id})"></td>
+            <td><input type="number" class="form-control border border-dark" style="width: 4em;" id="subtotal${compra.id}" min="1" placeholder="${compra.count}" oninput="modificarCarrito(${compra.id})"></td>
             <td id="subtotalRelativo${compra.id}">${compra.currency}${subtotal}</td>
         </tr>
         `;

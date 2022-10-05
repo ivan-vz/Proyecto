@@ -55,9 +55,19 @@
         
         <!-- Columna de Informacion -->
         <div class="col">
-            <div id="informacion" class="border rounded-3 cont">
-              <ul class="list-group" >
-              </ul>
+            <div id="informacion" class=" card cont">
+                <div class="card-body">
+                  <h2 id="nameP" class="card-title"></h2>
+                  <hr>
+                    <h5 class="titulo">Precio</h5>
+                    <p id="costP" class="card-text textos"></p>
+                    <h5 class="titulo">Descripción</h5>
+                    <p id="descriptionP" class="card-text textos"></p>
+                    <h5 class="titulo">Categoría</h5>
+                    <p id="categoryP" class="card-text textos"></p>
+                    <h5 class="titulo">Cantidad de vendidos</h5>
+                    <p id="soldCountP" class="card-text textos"></p>
+                </div>
             </div>
         </div>
 
@@ -80,10 +90,10 @@
 
           <div class="row mt-4 mx-0">
             <div class="col">
-              <input type="number" class="form-control border border-dark update" min="1" id="cantComprar" placeholder="Cantidad a Comprar">
+              <input id="cantComprar" type="number" class="form-control border border-dark update" min="1" placeholder="Cantidad a Comprar" disabled>
             </div>
-            <div id="botonComprar" class="col">
-
+            <div class="col">
+              <button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto(); unirSubir()" disabled>Agregar al carrito</button>
             </div>
           </div>
         </div>
@@ -136,6 +146,12 @@
         </div>
       </div>
     </div> <!-- Div final container -->
+
+    <!-- Alerta al agregar al carrito -->
+    <div class="alert alert-success alert-dismissible fade" role="alert" id="alert-success">
+      <p>Producto agregado al carrito</p>
+    </div>
+
   </main>
 
   <footer class="text-muted">

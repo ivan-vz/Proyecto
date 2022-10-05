@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded",async function(e){
     mercancia =  await getJSONData(url);
     //localStorage.setItem("id", mercancia.data.products.id)
     showProductsList(mercancia.data.products);
+    console.log(mercancia.data.products);
     document.getElementById("tituloSecundario").innerHTML = `Verás aquí todos los productos de la categoría  ${mercancia.data.catName}`;
 });
 

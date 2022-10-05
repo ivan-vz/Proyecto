@@ -18,9 +18,23 @@ document.getElementById("volverArriba").addEventListener("click", () => {
 function unirSubir(){
     let nuevoproducto = JSON.parse(localStorage.getItem("nuevoProducto"));
     carrito = JSON.parse(localStorage.getItem("carroCompras"));
-    if(!(carrito.find(({id}) => id === nuevoproducto.id))){
+    if(!carrito){
+        carrito = [];
         carrito.push(nuevoproducto);
         localStorage.setItem("carroCompras", JSON.stringify(carrito));
-        //mostrarCarrito();
+        
+        document.getElementById("alert-success").classList.add("show");
+        setTimeout(function() {
+            document.getElementById("alert-success").classList.remove("show");
+        }, 3000);
+        
+    } else if(!(carrito.find(({id}) => id === nuevoproducto.id))){
+        carrito.push(nuevoproducto);
+        localStorage.setItem("carroCompras", JSON.stringify(carrito));
+        
+        document.getElementById("alert-success").classList.add("show");
+        setTimeout(function() {
+            document.getElementById("alert-success").classList.remove("show");
+        }, 3000);
     }
 }

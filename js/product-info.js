@@ -66,22 +66,16 @@ function showProductInfo(product){
     let objR = "";
     let pos = 0;
 
-    datos = `
-        <li class="list-group-item">
-                <div>
-                    <h2 class="titulo">${product.name}</h2>
-                    <hr>
-                    <h5 class="titulo">Precio</h5>
-                    <p class="textos">${product.currency} ${product.cost}</p>
-                    <h5 class="titulo">Descripción</h5>
-                    <p class="textos"> ${product.description}</p>
-                    <h5 class="titulo">Categoría</h5>
-                    <p class="textos"> ${product.category}</p>
-                    <h5 class="titulo">Cantidad de vendidos</h5>
-                    <p class="textos"> ${product.soldCount}</p>
-                </div>
-        </li>
-     `
+    if(!JSON.parse(localStorage.getItem("carroCompras")) || !(JSON.parse(localStorage.getItem("carroCompras")).find(({id}) => id === product.id))){
+        document.getElementById("comprarProducto").removeAttribute("disabled");
+        document.getElementById("cantComprar").removeAttribute("disabled");
+    }
+
+    document.getElementById("nameP").innerHTML = product.name;
+    document.getElementById("costP").innerHTML = product.currency + product.cost;
+    document.getElementById("descriptionP").innerHTML = product.description;
+    document.getElementById("categoryP").innerHTML = product.category;
+    document.getElementById("soldCountP").innerHTML = product.soldCount;
 
      for(imag of product.images){
         if(pos == 0){
@@ -115,15 +109,14 @@ function showProductInfo(product){
     }
 
     document.getElementById("ORelacionados").innerHTML = objR;
-    document.getElementById("informacion").innerHTML = datos;
-    document.getElementById("botonComprar").innerHTML = `<button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto(); unirSubir()">Comprar</button>`
 }
 
 
 function crearNuevoProducto(){
+
     prod = producto.data;
     let pedidos = document.getElementById("cantComprar").value;
-    console.log(pedidos);
+
     if (pedidos != "" && pedidos > 0){
         let registro = {
             id: prod.id,
@@ -134,6 +127,10 @@ function crearNuevoProducto(){
             unitCost: prod.cost
         }
         localStorage.setItem("nuevoProducto", JSON.stringify(registro));
+      
+        document.getElementById("comprarProducto").setAttribute("disabled", "");
+        document.getElementById("cantComprar").setAttribute("disabled", "");
+
     }
 }
 
