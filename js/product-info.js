@@ -116,6 +116,9 @@ function crearNuevoProducto(){
 
     prod = producto.data;
     let pedidos = document.getElementById("cantComprar").value;
+    if(!pedidos){
+        pedidos = 1;
+    }
 
     if (pedidos != "" && pedidos > 0){
         let registro = {
