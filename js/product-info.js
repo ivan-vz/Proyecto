@@ -61,12 +61,13 @@ function showComments(){
 
 //Funcion para mandar toda la informacion del producto al html
 function showProductInfo(product){
-    let datos = "";
     let imagenes = "";
     let objR = "";
     let pos = 0;
 
-    if(!JSON.parse(localStorage.getItem("carroCompras")) || !(JSON.parse(localStorage.getItem("carroCompras")).find(({id}) => id === product.id))){
+    let carritoActual = JSON.parse(localStorage.getItem("carroCompras"));
+
+    if((carritoActual === null) || (!(carritoActual.find(({id}) => id === product.id)))){
         document.getElementById("comprarProducto").removeAttribute("disabled");
         document.getElementById("cantComprar").removeAttribute("disabled");
     }
@@ -115,12 +116,9 @@ function showProductInfo(product){
 function crearNuevoProducto(){
 
     prod = producto.data;
-    let pedidos = document.getElementById("cantComprar").value;
-    if(!pedidos){
-        pedidos = 1;
-    }
+    let pedidos = document.getElementById("cantComprar").value; //Input del boton "agregar al carrito"
 
-    if (pedidos != "" && pedidos > 0){
+    if (pedidos != "" && pedidos > 0){ //Si el valor tiene sentido se crea un nuevo objeto con el formato del prefijado
         let registro = {
             id: prod.id,
             name: prod.name,
@@ -131,9 +129,15 @@ function crearNuevoProducto(){
         }
         localStorage.setItem("nuevoProducto", JSON.stringify(registro));
       
-        document.getElementById("comprarProducto").setAttribute("disabled", "");
+        document.getElementById("comprarProducto").setAttribute("disabled", ""); //Desactivamos el boton y el input
         document.getElementById("cantComprar").setAttribute("disabled", "");
 
+        unirSubir();
+    } else {
+        document.getElementById("alert-warning").classList.add("show");
+        setTimeout(function() {
+            document.getElementById("alert-warning").classList.remove("show");
+        }, 3000);
     }
 }
 

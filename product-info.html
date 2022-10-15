@@ -32,12 +32,20 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item dropdown">
-            <button id="emailLogin" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <li class="nav-item dropdown d-flex d-none d-lg-block">
+            <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
               <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
               <li><a class="dropdown-item" href="index.html" onclick="cerrarS()">Cerrar sesión</a></li>
+            </ul>          
+          </li>
+          <li class="nav-item dropdown d-flex d-block d-lg-none">
+            <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+            <ul class="dropdown-menu position-absolute w-100 mt-3 menuC">
+              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="my-profile.html">Mi perfil</a></li>
+              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="index.html" onclick="cerrarS()">Cerrar sesión</a></li>
             </ul>          
           </li>
         </ul>
@@ -93,7 +101,7 @@
               <input id="cantComprar" type="number" class="form-control border border-dark update" min="1" placeholder="Cantidad a Comprar" disabled>
             </div>
             <div class="col">
-              <button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto(); unirSubir()" disabled>Agregar al carrito</button>
+              <button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto()" disabled>Agregar al carrito</button>
             </div>
           </div>
         </div>
@@ -148,8 +156,13 @@
     </div> <!-- Div final container -->
 
     <!-- Alerta al agregar al carrito -->
-    <div class="alert alert-success alert-dismissible fade" role="alert" id="alert-success">
+    <div class="alert alert-success alert-dismissible fade text-center" role="alert" id="alert-success">
       <p>Producto agregado al carrito</p>
+    </div>
+
+    <!-- Alerta al querer comprar un valor imposible -->
+    <div class="alert alert-warning alert-dismissible fade text-center" role="alert" id="alert-warning">
+      <p>Ingrese un valor mayor o igual a 1</p>
     </div>
 
   </main>

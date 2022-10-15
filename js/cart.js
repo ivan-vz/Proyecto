@@ -6,13 +6,19 @@ document.addEventListener("DOMContentLoaded",async function(e){
     productoBase =  await getJSONData(urlCarrito);
     let carrito = JSON.parse(localStorage.getItem("carroCompras"));
 
+    // Si el carrito esta vacio lo declaramos como el array con el producto prefijado 
     if(!carrito){
         carrito = productoBase.data.articles;
         localStorage.setItem("carroCompras", JSON.stringify(carrito));
         
-    } else if(!(carrito.find(({id}) => id === productoBase.data.articles[0].id))){
-        carrito.unshift(productoBase.data.articles[0]);
-        localStorage.setItem("carroCompras", JSON.stringify(carrito));
+    // Si ya tiene productos, entonces le agregamos el prefijado al inicio del array
+    } else {
+        
+        let existe = carrito.find(({id}) => id === productoBase.data.articles[0].id);
+        if(!existe){
+            carrito.unshift(productoBase.data.articles[0]);
+            localStorage.setItem("carroCompras", JSON.stringify(carrito));
+        }
     }
 
     mostrarCarrito();
@@ -39,13 +45,15 @@ function mostrarCarrito(){
 
 
 function modificarCarrito(idmodificar){
-    let productoModificar = carrito.find(({id}) => id === idmodificar);
-    let cant = document.getElementById("subtotal" + idmodificar).value;
+    let productoModificar = carrito.find(({id}) => id === idmodificar); //Encontrams el producto en carrito
+    let cant = document.getElementById("subtotal" + idmodificar).value; //Conseguimos la nueva cantidad
+
+    //Si es un valor coherente 
     if (cant != "" && cant > 0){
-        document.getElementById("subtotal" + idmodificar).setAttribute("placeholder", cant);
-        productoModificar.count = cant;
+        document.getElementById("subtotal" + idmodificar).setAttribute("placeholder", cant); //Modificamos el placeholder con la nueva cantidad
+        productoModificar.count = cant; //Modificamos la cantidad en el objeto
         localStorage.setItem("carroCompras", JSON.stringify(carrito));
-        let subtotal = productoModificar.count * productoModificar.unitCost;
-        document.getElementById(`subtotalRelativo${productoModificar.id}`).innerHTML = `$${subtotal}`;
+        let subtotal = productoModificar.count * productoModificar.unitCost; //Calculamos el nuevo subtotal
+        document.getElementById(`subtotalRelativo${productoModificar.id}`).innerHTML = `$${subtotal}`; //Actualizamos la tabla con el nuevo subtotal
     }
 }

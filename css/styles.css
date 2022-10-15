@@ -200,3 +200,14 @@ a.custom-card:hover {
 .pb-5 h5{
   margin-bottom: 2em;
 }
+
+/* Boton de perfil */
+.menuC {
+  border: none;
+  background-color: transparent;
+}
+
+.aC {
+  padding: 0.8em;
+  background-color: white;
+}
