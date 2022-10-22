@@ -61,6 +61,7 @@ function showComments(){
 
 //Funcion para mandar toda la informacion del producto al html
 function showProductInfo(product){
+    
     let imagenes = "";
     let objR = "";
     let pos = 0;

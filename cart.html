@@ -49,77 +49,200 @@
       </div>
     </div>
   </nav>
+
   <main>
-    <div class="container">
-      <h2 class="row justify-content-md-center my-3">Carrito de Compras</h2>
+      <div class="container">
+        <h2 class="row justify-content-md-center my-3">Carrito de Compras</h2>
 
-      <h4>Articulos a comprar</h4>
-      <table class="table">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Costo</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Subtotal</th>
-          </tr>
-        </thead>
-        <tbody id="carritoProd">
+        <h4>Articulos a comprar</h4>
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Costo</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Subtotal</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="carritoProd">
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
 
-      <hr>
+        <hr>
 
-      <!-- Form -->
-      <div>
-            <div class="row justify-content-around">
-              <div class="col-3">
-                <h4>Tipo de envío</h4>
-                <div class="form-check">
-                  <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="premium" value="premium">
-                  <label class="form-check-label" for="premium">Premium 2 a 5 días (15%)</label>
+        <!-- Form -->
+        <form id="form1" class="needs-validation" novalidate>
+          <div class="row justify-content-around">
+                <div class="col-3">
+                  <h4>Tipo de envío</h4>
+                  <div>
+                      <div class="form-check">
+                        <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="premium" value="0.15" onclick="totales()" required>
+                        <label class="form-check-label" for="premium">Premium 2 a 5 días (15%)</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="express" value="0.07" onclick="totales()" required>
+                        <label class="form-check-label" for="express">Express 5 a 8 días (7%)</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="standard" value="0.05" onclick="totales()" required>
+                        <label class="form-check-label" for="standard">Standard 12 a 15 días (5%)</label>
+                        <div class="invalid-feedback">
+                          Seleccione un tipo de envío.
+                        </div>
+                      </div>
+                  </div>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="express" value="express">
-                  <label class="form-check-label" for="express">Express 5 a 8 días (7%)</label>
+                
+                <div class="col-3">
+                <h4>Dirección de envío</h4>
+                  <div class="row">
+                    <div class="col-8">
+                      <label for="calle" class="form-label ">Calle</label>
+                      <input type="text" class="form-control border border-dark update" id="calle" required oninput="esVacio()">
+                      <div class="invalid-feedback">
+                        Ingrese una calle.
+                      </div>
+                    </div>
+                    
+                    <div class="col-4">
+                      <label for="numeroP" class="form-label">Número</label>
+                      <input type="number" class="form-control border border-dark update" id="numeroP" required oninput="nCorrecto('numeroP',4,4)">
+                      <div class="invalid-feedback">
+                        Ingrese un número de puerta.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="esquina" class="form-label">Esquina</label>
+                      <input type="text" class="form-control border border-dark update" id="esquina" required oninput="esVacio()">
+                      <div class="invalid-feedback">
+                        Ingrese una esquina.
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="standard" value="standard">
-                  <label class="form-check-label" for="standard">Standard 12 a 15 días (5%)</label>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <h4>Costos</h4>
+            <div class="col">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="d-flex w-100 justify-content-between">
+                    <p class="mb-1">Subtotal</p>
+                    <small id="subTC" class="text-muted"></small>
+                  </div>
+                  <small class="text-muted">Costo unitario del producto por cantidad</small>
+                </li>
+                <li class="list-group-item">
+                  <div class="d-flex w-100 justify-content-between">
+                    <p class="mb-1">Costo del envío</p>
+                    <small id="ivaC" class="text-muted"></small>
+                  </div>
+                  <small class="text-muted">Según el tipo de envío</small>
+                </li>
+                <li class="list-group-item">
+                  <div class="d-flex w-100 justify-content-between">
+                    <p class="mb-1">Total ($)</p>
+                    <small id="totalC" class="text-muted"></small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <h4>Forma de pago</h4>
+            <div>
+              <small>
+                Transferencia bancaria
+                <a id="botonCondiciones" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" req>Selecionar</a>
+                
+                <div id="selectT" class="d-none">
+                  Seleccione una forma de pago.
                 </div>
+              </small>
+            </div>
+          </div>
+
+          <div class="row-cols">
+            <button class="btn btn-primary" type="submit">Finalizar compra</button>
+          </div>
+          
+        </form>
+
+      </div>
+  </main>
+
+  <!-- Modal con formulario de pago -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body container">
+          <form id="form2" class="needs-validation" novalidate>
+            <div class="row-cols form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="credito" value="credito" required onclick="Fpago(); seAcepto()">
+              <label class="form-check-label" for="credito">Tarjeta de credito</label>
+            </div>
+
+            <hr>
+
+            <div class="row">
+              <div class="col">
+                <label class="form-check-label" for="nTarjeta">Número de tarjeta</label>
+                <input id="nTarjeta" type="number" class="form-control" disabled required oninput="nCorrecto('nTarjeta',16, 16)">
               </div>
-              
-              <div class="col-3">
-              <h4>Dirección de envío</h4>
-                <div class="row">
-                  <div class="col-8">
-                    <label for="calle" class="form-label ">Calle</label>
-                    <input type="text" class="form-control border border-dark update" id="cale">
-                  </div>
-                  
-                  <div class="col-4">
-                    <label for="numero" class="form-label">Número</label>
-                    <input type="number" class="form-control border border-dark update" id="numero">
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12">
-                    <label for="esquina" class="form-label">Esquina</label>
-                    <input type="text" class="form-control border border-dark update" id="esquina">
-                  </div>
-                </div>
+              <div class="col">
+                <label class="form-check-label" for="cSeguridad">Código de seg.</label>
+                <input id="cSeguridad" type="number" class="form-control" disabled required oninput="nCorrecto('cSeguridad',3, 4)">
               </div>
             </div>
 
+            <div class="row-cols">
+              <label class="form-check-label" for="fecha">Vencimient0</label>
+              <input id="fecha" type="date" class="form-control" disabled required>
+            </div>
+
+            <div class="row-cols form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="bancaria" value="bancaria" required onclick="Fpago(); seAcepto()">
+              <label class="form-check-label" for="bancaria">Transferenca bancaria</label>
+            </div>
+
+            <hr>
+
+            <div class="row-cols">
+              <label class="form-check-label" for="nCuenta">Número de cuenta</label>
+              <input id="nCuenta" type="number" class="form-control" disabled required oninput="nCorrecto('nCuenta',10, 10)">
+            </div>
+          </form>
+        </div>
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
       </div>
-
     </div>
-  </main>
+  </div>
 
-
-
+  <!-- Alerta de compra exitosa -->
+  <div class="alert alert-success alert-dismissible fade text-center" role="alert" id="compraE">
+    <p>¡Has comprado con éxito!</p>
+  </div>
 
   <footer class="text-muted">
     <div class="container">
