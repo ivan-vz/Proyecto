@@ -97,10 +97,10 @@
                   </div>
                 </div>
                 
-                <div class="col-3">
-                <h4>Dirección de envío</h4>
+                <div class="col-4">
+                <h4 class="text-center">Dirección de envío</h4>
                   <div class="row">
-                    <div class="col-8">
+                    <div class="col-8 my-2">
                       <label for="calle" class="form-label">Calle</label>
                       <input type="text" class="form-control border border-dark update conEspacios" id="calle" required oninput="conEspacios()">
                       <div class="invalid-feedback">
@@ -108,7 +108,7 @@
                       </div>
                     </div>
                     
-                    <div class="col-4">
+                    <div class="col-4 my-2">
                       <label for="numeroP" class="form-label">Número</label>
                       <input type="number" class="form-control border border-dark update" id="numeroP" required oninput="nCorrecto('numeroP',4,4)">
                       <div class="invalid-feedback">
@@ -117,7 +117,7 @@
                     </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row my-2">
                     <div class="col-12">
                       <label for="esquina" class="form-label">Esquina</label>
                       <input type="text" class="form-control border border-dark update conEspacios" id="esquina" required oninput="conEspacios()">
@@ -165,8 +165,8 @@
             <h4>Forma de pago</h4>
             <div>
               <small>
-                Transferencia bancaria
-                <a id="botonCondiciones" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" req>Selecionar</a>
+                Transferencia bancaria:  
+                <a id="botonCondiciones" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" req>  Selecionar  </a>
                 
                  <!-- Modal con formulario de pago -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -221,15 +221,15 @@
                   </div>
                 </div>
 
-                <div id="selectT" class="d-none">
+                <small id="selectT" class="d-none" style="color: #dc3545;">
                   Seleccione una forma de pago.
-                </div>
+                </small>
               </small>
             </div>
           </div>
 
-          <div class="row-cols">
-            <button class="btn btn-primary" type="submit">Finalizar compra</button>
+          <div class="row-cols-12 my-2">
+            <button class="btn btn-primary w-100" type="submit">Finalizar compra</button>
           </div>
           
         </form>

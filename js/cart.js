@@ -196,60 +196,59 @@ const nCorrecto = (id, minL, maxL) => {
     }
 };
 
+//Funcion que controla el estado del formulario de pago
+let credito = document.getElementById("credito");
+let nTarjeta = document.getElementById("nTarjeta");
+let cSeguridad = document.getElementById("cSeguridad");
+let fecha = document.getElementById("fecha");
+
+let bancaria = document.getElementById("bancaria"); 
+let nCuenta = document.getElementById("nCuenta");
+
+let botonC = document.getElementById("botonCondiciones");
+
 const seAcepto = () => {
-    let credito = document.getElementById("credito");
-    let nTarjeta = document.getElementById("nTarjeta");
-    let cSeguridad = document.getElementById("cSeguridad");
-    let fecha = document.getElementById("fecha");
 
-    let bancaria = document.getElementById("bancaria"); 
-    let nCuenta = document.getElementById("nCuenta");
-
-
-    let botonC = document.getElementById("botonCondiciones");
-
-    console.log(nCuenta.checkValidity() , cSeguridad.checkValidity() , fecha.checkValidity() , nTarjeta.checkValidity());
     if(!credito.checked && !bancaria.checked || !(nCuenta.checkValidity() || (cSeguridad.checkValidity() && fecha.checkValidity() && nTarjeta.checkValidity()))){
-        botonC.style.color = '#dc3545';
-        credito.setCustomValidity("Complete el form de pago");
-        bancaria.setCustomValidity("Complete el form de pago");
-        
-        document.getElementById("selectT").classList.remove("d-none");
-        document.getElementById("selectT").classList.add("d-inline-block");
+        mostrar();
+
     } else {
         if(bancaria.checked){
             nTarjeta.value = " ",
             cSeguridad.value = " ";
             fecha.value = " ";
-            credito.setCustomValidity("Complete el form de pago");
-            bancaria.setCustomValidity("Complete el form de pago");
-            document.getElementById("selectT").classList.remove("d-none");
-            document.getElementById("selectT").classList.add("d-inline-block");
+            mostrar();
 
 
             if(nCuenta.checkValidity()){
-                botonC.style.color = '#0d6efd';
-                credito.setCustomValidity("");
-                bancaria.setCustomValidity("");
-                document.getElementById("selectT").classList.remove("d-inline-block");
-                document.getElementById("selectT").classList.add("d-none");
+                esconder();
             }
+
         } else if (credito.checked ){
             nCuenta.value = " ";
-            credito.setCustomValidity("Complete el form de pago");
-            bancaria.setCustomValidity("Complete el form de pago");
-            document.getElementById("selectT").classList.remove("d-none");
-            document.getElementById("selectT").classList.add("d-inline-block");
+            mostrar();
 
             if(cSeguridad.checkValidity() && fecha.checkValidity() && nTarjeta.checkValidity()){
-                botonC.style.color = '#0d6efd';
-                credito.setCustomValidity("");
-                bancaria.setCustomValidity("");
-                document.getElementById("selectT").classList.remove("d-inline-block");
-                document.getElementById("selectT").classList.add("d-none");
+                esconder();
             }
         }
     }
+};
+
+const esconder = () => {
+    botonC.style.color = '#0d6efd';
+    credito.setCustomValidity("");
+    bancaria.setCustomValidity("");
+    document.getElementById("selectT").classList.remove("d-block");
+    document.getElementById("selectT").classList.add("d-none");
+};
+
+const mostrar = () => {
+    botonC.style.color = '#dc3545';
+    credito.setCustomValidity("Complete el form de pago");
+    bancaria.setCustomValidity("Complete el form de pago");
+    document.getElementById("selectT").classList.remove("d-none");
+    document.getElementById("selectT").classList.add("d-block");
 };
 
   /* -------------------------------------------------------------------------------------------------------------------------------------------------- */
