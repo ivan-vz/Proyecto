@@ -101,8 +101,8 @@
                 <h4>Dirección de envío</h4>
                   <div class="row">
                     <div class="col-8">
-                      <label for="calle" class="form-label ">Calle</label>
-                      <input type="text" class="form-control border border-dark update" id="calle" required oninput="esVacio()">
+                      <label for="calle" class="form-label">Calle</label>
+                      <input type="text" class="form-control border border-dark update conEspacios" id="calle" required oninput="conEspacios()">
                       <div class="invalid-feedback">
                         Ingrese una calle.
                       </div>
@@ -120,7 +120,7 @@
                   <div class="row">
                     <div class="col-12">
                       <label for="esquina" class="form-label">Esquina</label>
-                      <input type="text" class="form-control border border-dark update" id="esquina" required oninput="esVacio()">
+                      <input type="text" class="form-control border border-dark update conEspacios" id="esquina" required oninput="conEspacios()">
                       <div class="invalid-feedback">
                         Ingrese una esquina.
                       </div>
@@ -168,6 +168,59 @@
                 Transferencia bancaria
                 <a id="botonCondiciones" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" req>Selecionar</a>
                 
+                 <!-- Modal con formulario de pago -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body container">
+                          <div class="row-cols form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="credito" value="credito" required onclick="Fpago(); seAcepto()">
+                            <label class="form-check-label" for="credito">Tarjeta de credito</label>
+                          </div>
+
+                          <hr>
+
+                          <div class="row">
+                            <div class="col">
+                              <label class="form-check-label" for="nTarjeta">Número de tarjeta</label>
+                              <input id="nTarjeta" type="number" class="form-control conEspacios" disabled required oninput="nCorrecto('nTarjeta',16, 16); seAcepto()">
+                            </div>
+                            <div class="col">
+                              <label class="form-check-label" for="cSeguridad">Código de seg.</label>
+                              <input id="cSeguridad" type="number" class="form-control" disabled required oninput="nCorrecto('cSeguridad',3, 4); seAcepto()">
+                            </div>
+                          </div>
+
+                          <div class="row-cols">
+                            <label class="form-check-label" for="fecha">Vencimient0</label>
+                            <input id="fecha" type="date" class="form-control" disabled required oninput="seAcepto()">
+                          </div>
+
+                          <div class="row-cols form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="bancaria" value="bancaria" required onclick="Fpago(); seAcepto()">
+                            <label class="form-check-label" for="bancaria">Transferenca bancaria</label>
+                          </div>
+
+                          <hr>
+
+                          <div class="row-cols">
+                            <label class="form-check-label" for="nCuenta">Número de cuenta</label>
+                            <input id="nCuenta" type="number" class="form-control" disabled required oninput="nCorrecto('nCuenta',10, 10); seAcepto()">
+                          </div>
+                      </div>
+
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div id="selectT" class="d-none">
                   Seleccione una forma de pago.
                 </div>
@@ -183,61 +236,6 @@
 
       </div>
   </main>
-
-  <!-- Modal con formulario de pago -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container">
-          <form id="form2" class="needs-validation" novalidate>
-            <div class="row-cols form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="credito" value="credito" required onclick="Fpago(); seAcepto()">
-              <label class="form-check-label" for="credito">Tarjeta de credito</label>
-            </div>
-
-            <hr>
-
-            <div class="row">
-              <div class="col">
-                <label class="form-check-label" for="nTarjeta">Número de tarjeta</label>
-                <input id="nTarjeta" type="number" class="form-control" disabled required oninput="nCorrecto('nTarjeta',16, 16)">
-              </div>
-              <div class="col">
-                <label class="form-check-label" for="cSeguridad">Código de seg.</label>
-                <input id="cSeguridad" type="number" class="form-control" disabled required oninput="nCorrecto('cSeguridad',3, 4)">
-              </div>
-            </div>
-
-            <div class="row-cols">
-              <label class="form-check-label" for="fecha">Vencimient0</label>
-              <input id="fecha" type="date" class="form-control" disabled required>
-            </div>
-
-            <div class="row-cols form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="bancaria" value="bancaria" required onclick="Fpago(); seAcepto()">
-              <label class="form-check-label" for="bancaria">Transferenca bancaria</label>
-            </div>
-
-            <hr>
-
-            <div class="row-cols">
-              <label class="form-check-label" for="nCuenta">Número de cuenta</label>
-              <input id="nCuenta" type="number" class="form-control" disabled required oninput="nCorrecto('nCuenta',10, 10)">
-            </div>
-          </form>
-        </div>
-
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Alerta de compra exitosa -->
   <div class="alert alert-success alert-dismissible fade text-center" role="alert" id="compraE">

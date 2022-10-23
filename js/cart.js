@@ -119,9 +119,7 @@ const Fpago = () => {
 };
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-let inputs = Array.from(document.querySelectorAll('.form-control'));
-
+/*
 (() => {
   
     const form1 = document.getElementById("form1");
@@ -140,17 +138,55 @@ let inputs = Array.from(document.querySelectorAll('.form-control'));
         seAcepto();
       }, false)
   })()
+  */
 
+  (() => {
+    
+    const forms = document.querySelectorAll('.needs-validation')
+  
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+            localStorage.setItem("compraE", 'true');
+        }
+  
+        form.classList.add('was-validated');
+        seAcepto();
+
+      }, false)
+    })
+  })()
+
+
+let inputsSinEspacios = Array.from(document.querySelectorAll('.form-control'));
+let inputsConEspacios = Array.from(document.querySelectorAll('.conEspacios'));
+
+// Funcion que controla que calle y esquina no sean vacias, pero tambien permite espacios ==> "   " esta mal pero "  pedro  pedro" esta bien
+const conEspacios = () => {
+    inputsConEspacios.forEach((input) => {
+        if(Array.from(input.value).some((caracter) => caracter != " ")){
+            input.setCustomValidity("");
+        } else {
+            input.setCustomValidity("Caracteres invalidos");
+        }
+    });
+}
+
+//Funcion que controla que los input numericos no sean vacios
 const esVacio = () => {
-    inputs.forEach((input) => {
+    inputsSinEspacios.forEach((input) => {
         if(input.value.includes(" ")){
             input.setCustomValidity("Caracteres invalidos");
         } else {
             input.setCustomValidity("");
         }
-    })
+    });
 };
 
+//Funcion que controla que cada input numerico tenga su largo correcto ==> que no se ingresen numerso de mas o de menos
 const nCorrecto = (id, minL, maxL) => {
     let num = document.getElementById(id);
     if(num.value.length === minL || num.value.length === maxL){
@@ -162,23 +198,57 @@ const nCorrecto = (id, minL, maxL) => {
 
 const seAcepto = () => {
     let credito = document.getElementById("credito");
+    let nTarjeta = document.getElementById("nTarjeta");
+    let cSeguridad = document.getElementById("cSeguridad");
+    let fecha = document.getElementById("fecha");
+
     let bancaria = document.getElementById("bancaria"); 
+    let nCuenta = document.getElementById("nCuenta");
+
 
     let botonC = document.getElementById("botonCondiciones");
 
-    console.log(credito, bancaria, botonC);
-    if(credito.checked || bancaria.checked){
-        botonC.style.color = '#0d6efd';
-        credito.setCustomValidity("");
-        bancaria.setCustomValidity("");
-        document.getElementById("selectT").classList.remove("d-inline-block");
-        document.getElementById("selectT").classList.add("d-none");
-    } else {
+    console.log(nCuenta.checkValidity() , cSeguridad.checkValidity() , fecha.checkValidity() , nTarjeta.checkValidity());
+    if(!credito.checked && !bancaria.checked || !(nCuenta.checkValidity() || (cSeguridad.checkValidity() && fecha.checkValidity() && nTarjeta.checkValidity()))){
         botonC.style.color = '#dc3545';
-        credito.setCustomValidity("Seleccione una trasferencia");
-        credito.setCustomValidity("Seleccione una trasferencia");
+        credito.setCustomValidity("Complete el form de pago");
+        bancaria.setCustomValidity("Complete el form de pago");
+        
         document.getElementById("selectT").classList.remove("d-none");
         document.getElementById("selectT").classList.add("d-inline-block");
+    } else {
+        if(bancaria.checked){
+            nTarjeta.value = " ",
+            cSeguridad.value = " ";
+            fecha.value = " ";
+            credito.setCustomValidity("Complete el form de pago");
+            bancaria.setCustomValidity("Complete el form de pago");
+            document.getElementById("selectT").classList.remove("d-none");
+            document.getElementById("selectT").classList.add("d-inline-block");
+
+
+            if(nCuenta.checkValidity()){
+                botonC.style.color = '#0d6efd';
+                credito.setCustomValidity("");
+                bancaria.setCustomValidity("");
+                document.getElementById("selectT").classList.remove("d-inline-block");
+                document.getElementById("selectT").classList.add("d-none");
+            }
+        } else if (credito.checked ){
+            nCuenta.value = " ";
+            credito.setCustomValidity("Complete el form de pago");
+            bancaria.setCustomValidity("Complete el form de pago");
+            document.getElementById("selectT").classList.remove("d-none");
+            document.getElementById("selectT").classList.add("d-inline-block");
+
+            if(cSeguridad.checkValidity() && fecha.checkValidity() && nTarjeta.checkValidity()){
+                botonC.style.color = '#0d6efd';
+                credito.setCustomValidity("");
+                bancaria.setCustomValidity("");
+                document.getElementById("selectT").classList.remove("d-inline-block");
+                document.getElementById("selectT").classList.add("d-none");
+            }
+        }
     }
 };
 
