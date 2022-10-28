@@ -1,6 +1,6 @@
 let productId = localStorage.getItem("PID"); // ID del producto al que entramos
-const urlProductsInfo = "https://japceibal.github.io/emercado-api/products/"+ productId + ".json" // Link para poder entrar al product-info del producto especifico
-const opiniones = "https://japceibal.github.io/emercado-api/products_comments/"+ productId + ".json"; // Link para obtener los comentarios
+const urlProductsInfo = PRODUCT_INFO_URL + productId + EXT_TYPE; // Link para poder entrar al product-info del producto especifico
+const opiniones = PRODUCT_INFO_COMMENTS_URL + productId + EXT_TYPE; // Link para obtener los comentarios
 let lista = document.getElementById("contenedor");
 let comentar = document.getElementById("enviar");
 let producto = [];

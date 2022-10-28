@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
           <li class="nav-item">
-            <a class="nav-link" href="inicio.html">Inicio</a>
+            <a class="nav-link" href="lobby.html">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="categories.html">Categorías</a>
@@ -55,6 +55,13 @@
         <h2 class="row justify-content-md-center my-3">Carrito de Compras</h2>
 
         <h4>Articulos a comprar</h4>
+        <small>
+          <div class="form-check form-switch">
+            <input id="cambiarM" class="form-check-input" type="checkbox" role="switch" onclick="cambiarMoneda()">
+            <label class="cambiarM" for="flexSwitchCheckChecked">Pesos - Dolares</label>
+          </div>
+        </small>
+        
         <table class="table">
           <thead class="table-dark">
             <tr>
@@ -178,7 +185,7 @@
                       </div>
                       <div class="modal-body container">
                           <div class="row-cols form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="credito" value="credito" required onclick="Fpago(); seAcepto()">
+                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="credito" value="credito" required onclick="Fpago()">
                             <label class="form-check-label" for="credito">Tarjeta de credito</label>
                           </div>
 
@@ -187,21 +194,21 @@
                           <div class="row">
                             <div class="col">
                               <label class="form-check-label" for="nTarjeta">Número de tarjeta</label>
-                              <input id="nTarjeta" type="number" class="form-control conEspacios" disabled required oninput="nCorrecto('nTarjeta',16, 16); seAcepto()">
+                              <input id="nTarjeta" type="number" class="form-control conEspacios" disabled required>
                             </div>
                             <div class="col">
                               <label class="form-check-label" for="cSeguridad">Código de seg.</label>
-                              <input id="cSeguridad" type="number" class="form-control" disabled required oninput="nCorrecto('cSeguridad',3, 4); seAcepto()">
+                              <input id="cSeguridad" type="number" class="form-control" disabled required>
                             </div>
                           </div>
 
                           <div class="row-cols">
                             <label class="form-check-label" for="fecha">Vencimient0</label>
-                            <input id="fecha" type="date" class="form-control" disabled required oninput="seAcepto()">
+                            <input id="fecha" type="month" class="form-control" disabled required >
                           </div>
 
                           <div class="row-cols form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="bancaria" value="bancaria" required onclick="Fpago(); seAcepto()">
+                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="bancaria" value="bancaria" required onclick="Fpago()">
                             <label class="form-check-label" for="bancaria">Transferenca bancaria</label>
                           </div>
 
@@ -209,7 +216,7 @@
 
                           <div class="row-cols">
                             <label class="form-check-label" for="nCuenta">Número de cuenta</label>
-                            <input id="nCuenta" type="number" class="form-control" disabled required oninput="nCorrecto('nCuenta',10, 10); seAcepto()">
+                            <input id="nCuenta" type="number" class="form-control" disabled required>
                           </div>
                       </div>
 

@@ -1,5 +1,5 @@
 let codigo = localStorage.getItem("catID"); //Guardamos el identificador de la categoria (subido al LS en categories.js) en una variable
-const url = "https://japceibal.github.io/emercado-api/cats_products/" + codigo + ".json"; //Fucionamos la variable anterior con el URL para poder generar un enlace valido para pedir la informacion de cada categoria
+const url = PRODUCTS_URL + codigo + EXT_TYPE; //Fucionamos la variable anterior con el URL para poder generar un enlace valido para pedir la informacion de cada categoria
 let mercancia = [];
 let newList = [];
 let minCount;

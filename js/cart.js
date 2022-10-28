@@ -1,7 +1,6 @@
-const urlCarrito = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
+const urlCarrito = CART_INFO_URL + "25801" + EXT_TYPE;
 let productoBase;
 let carrito;
-
 
 //Funcion para conseguir los datos de un producto
 document.addEventListener("DOMContentLoaded",async function(e){
@@ -23,6 +22,11 @@ document.addEventListener("DOMContentLoaded",async function(e){
         }
     }
 
+    let monedaActual = localStorage.getItem("moeda");
+    if(!monedaActual){
+        localStorage.setItem("moneda", "UYU");
+    }
+
     mostrarCarrito();
     totales();
 
@@ -34,40 +38,66 @@ document.addEventListener("DOMContentLoaded",async function(e){
         }, 3000);
         localStorage.setItem("compraE", 'false');
     }
+
 });
 
 
 function mostrarCarrito(){
+    let moneda = localStorage.getItem("moneda");
     carrito = JSON.parse(localStorage.getItem("carroCompras"));
     let listaComprar = "";
     carrito.forEach(compra => {
-        let subtotal = compra.count * compra.unitCost;
+        let conversionCompra = {
+            count: compra.count,
+            currency: moneda === "USD"
+                    ? "USD"
+                    : "UYU",
+            id: compra.id,
+            image: compra.image,
+            name: compra.name,
+            unitCost: ((moneda === "USD" && compra.currency === "UYU")
+                    ? compra.unitCost /= 40
+                    : (moneda === "UYU" && compra.currency === "USD")
+                    ? compra.unitCost * 40
+                    : compra.unitCost)
+        };
+
+        let  subtotal = conversionCompra.count * (conversionCompra.unitCost).toFixed(2);
         listaComprar += `
         <tr>
-            <th scope="row"><img src="${compra.image}" style="width: 5em" img-thumbnail></th>
-            <td>${compra.name}</td>
-            <td>${compra.currency}${compra.unitCost}</td>
-            <td><input type="number" class="form-control border border-dark" style="width: 4em;" id="subtotal${compra.id}" min="1" placeholder="${compra.count}" oninput="modificarCarrito(${compra.id})"></td>
-            <td id="subtotalRelativo${compra.id}">${compra.currency}${subtotal}</td>
-            <td><img src="img/x-octagon.svg" style="width: 50%; cursor: pointer;" onclick="borrar(${compra.id})"></td>
+            <th scope="row"><img src="${conversionCompra.image}" style="width: 5em" img-thumbnail></th>
+            <td>${conversionCompra.name}</td>
+            <td>${conversionCompra.currency}${conversionCompra.unitCost.toLocaleString()}</td>
+            <td><input type="number" class="form-control border border-dark" style="width: 4em;" id="subtotal${conversionCompra.id}" min="1" placeholder="${conversionCompra.count}" oninput="modificarCarrito(${compra.id})"></td>
+            <td id="subtotalRelativo${conversionCompra.id}">${conversionCompra.currency}${subtotal.toLocaleString()}</td>
+            <td><img src="img/x-octagon.svg" style="width: 50%; cursor: pointer;" onclick="borrar(${conversionCompra.id})"></td>
         </tr>
         `;
     });
     document.getElementById("carritoProd").innerHTML = listaComprar;
+
+    totales();
 }
 
 
 function modificarCarrito(idmodificar){
     let productoModificar = carrito.find(({id}) => id === idmodificar); //Encontrams el producto en carrito
     let cant = document.getElementById("subtotal" + idmodificar).value; //Conseguimos la nueva cantidad
+    let moneda = localStorage.getItem("moneda");
+
+    let nuevoValor = ((moneda === "USD" && productoModificar.currency === "UYU")
+                    ? productoModificar.unitCost /= 40
+                    : (moneda === "UYU" && productoModificar.currency === "USD")
+                    ? productoModificar.unitCost * 40
+                    : productoModificar.unitCost).toFixed(2);
 
     //Si es un valor coherente 
     if (cant != "" && cant > 0){
         document.getElementById("subtotal" + idmodificar).setAttribute("placeholder", cant); //Modificamos el placeholder con la nueva cantidad
         productoModificar.count = cant; //Modificamos la cantidad en el objeto
         localStorage.setItem("carroCompras", JSON.stringify(carrito));
-        let subtotal = productoModificar.count * productoModificar.unitCost; //Calculamos el nuevo subtotal
-        document.getElementById(`subtotalRelativo${productoModificar.id}`).innerHTML = `$${subtotal}`; //Actualizamos la tabla con el nuevo subtotal
+        let subtotal = productoModificar.count * nuevoValor; //Calculamos el nuevo subtotal
+        document.getElementById(`subtotalRelativo${productoModificar.id}`).innerHTML = moneda + subtotal; //Actualizamos la tabla con el nuevo subtotal
         totales();
     }
 }
@@ -85,70 +115,73 @@ const totales = () => {
     let subC = 0;
     let ivaC = 0;
 
-    if(carrito) {
-        carrito.forEach(compra => {
-            let dolares = compra.unitCost;
-            if(compra.currency === "UYU"){
-                dolares = pesosADolares(compra.unitCost);
-            }
-            subC += dolares * compra.count;
-            ivaC += ivaElegido * (dolares * compra.count);
-        }); 
-    }
-    document.getElementById("subTC").innerHTML = "USD " + subC.toFixed(2);
-    document.getElementById("ivaC").innerHTML = "USD " + ivaC.toFixed(2);
-    document.getElementById("totalC").innerHTML = "USD " + (subC + ivaC).toFixed(2);
-};
+    let moneda = localStorage.getItem("moneda");
 
-const pesosADolares = (monto) => {
-    return (monto / 41,22).toFixed(2); //Dolar el 18/10/22
+    if(carrito) {
+        carrito.forEach(compra => {        
+            let conversionCompra = {
+                count: compra.count,
+                currency: moneda === "USD"
+                        ? "USD"
+                        : "UYU",
+                unitCost: (moneda === "USD" && compra.currency === "UYU")
+                        ? compra.unitCost /= 40
+                        : (moneda === "UYU" && compra.currency === "USD")
+                        ? compra.unitCost * 40
+                        : compra.unitCost
+            };
+
+            subC += conversionCompra.count * conversionCompra.unitCost
+            }); 
+    }
+
+    ivaC = ivaElegido * subC;
+    
+    document.getElementById("subTC").innerHTML = moneda + subC.toLocaleString();
+    document.getElementById("ivaC").innerHTML = moneda + ivaC.toLocaleString();
+    document.getElementById("totalC").innerHTML = moneda + (subC + ivaC).toLocaleString();
 };
 
 const Fpago = () => {
-   let tCredito = document.getElementById("credito");
+    let credito = document.getElementById("credito");
+    let nTarjeta = document.getElementById("nTarjeta");
+    let cSeguridad = document.getElementById("cSeguridad");
+    let fecha = document.getElementById("fecha");
 
-   tCredito.checked
-   ? (document.getElementById("nTarjeta").removeAttribute("disabled"),
-     document.getElementById("cSeguridad").removeAttribute("disabled"),
-     document.getElementById("fecha").removeAttribute("disabled"),
-     document.getElementById("nCuenta").setAttribute("disabled", true))
-   : (document.getElementById("nCuenta").removeAttribute("disabled"),
-     document.getElementById("nTarjeta").setAttribute("disabled", true),
-     document.getElementById("cSeguridad").setAttribute("disabled", true),
-     document.getElementById("fecha").setAttribute("disabled", true));
+    let nCuenta = document.getElementById("nCuenta");
+
+   credito.checked
+   ? ( nCuenta.value = " ",
+     mostrar(),
+     nTarjeta.removeAttribute("disabled"),
+     cSeguridad.removeAttribute("disabled"),
+     fecha.removeAttribute("disabled"),
+     nCuenta.setAttribute("disabled", true))
+   : (nTarjeta.value = " ",
+     cSeguridad.value = " ",
+     fecha.value = " ",
+     mostrar(),
+     nCuenta.removeAttribute("disabled"),
+     nTarjeta.setAttribute("disabled", true),
+     cSeguridad.setAttribute("disabled", true),
+     fecha.setAttribute("disabled", true));
 };
-
-/* -------------------------------------------------------------------------------------------------------------------------------------------------- */
-/*
-(() => {
-  
-    const form1 = document.getElementById("form1");
-    const form2 = document.getElementById("form2");
-
-    form1.addEventListener('submit', event => {
-        if (!form1.checkValidity() && !form2.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        } else {
-            localStorage.setItem("compraE", 'true');
-        }
-
-        form1.classList.add('was-validated');
-        form2.classList.add('was-validated');
-        seAcepto();
-      }, false)
-  })()
-  */
 
   (() => {
     
     const forms = document.querySelectorAll('.needs-validation')
-  
+
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', event => {
         if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
+
+            document.getElementById("nTarjeta").setAttribute("oninput", "seAcepto()");
+            document.getElementById("cSeguridad").setAttribute("oninput", "seAcepto()");
+            document.getElementById("fecha").setAttribute("oninput", "seAcepto()");
+            document.getElementById("nCuenta").setAttribute("oninput", "seAcepto()");
+            seAcepto();
         } else {
             localStorage.setItem("compraE", 'true');
         }
@@ -214,19 +247,17 @@ const seAcepto = () => {
 
     } else {
         if(bancaria.checked){
-            nTarjeta.value = " ",
-            cSeguridad.value = " ";
-            fecha.value = " ";
             mostrar();
-
+            nCorrecto('nCuenta',10, 10);
 
             if(nCuenta.checkValidity()){
                 esconder();
             }
 
         } else if (credito.checked ){
-            nCuenta.value = " ";
             mostrar();
+            nCorrecto('cSeguridad',3, 4);
+            nCorrecto('nTarjeta',16, 16);
 
             if(cSeguridad.checkValidity() && fecha.checkValidity() && nTarjeta.checkValidity()){
                 esconder();
@@ -254,6 +285,7 @@ const mostrar = () => {
   /* -------------------------------------------------------------------------------------------------------------------------------------------------- */
   
   const borrar = (idEliminar) => {
+
     let borrado = localStorage.getItem("borrado");
     if(idEliminar === 50924 && !borrado){
         localStorage.setItem('borrado', 'true');
@@ -265,4 +297,15 @@ const mostrar = () => {
     localStorage.setItem("carroCompras", JSON.stringify(carrito));
     mostrarCarrito();
     totales();
+  };
+
+  function cambiarMoneda() {
+    let switchMoneda = document.getElementById("cambiarM");
+    monedaNueva = switchMoneda.checked
+                ? "USD"
+                : "UYU";
+
+    localStorage.setItem("moneda", monedaNueva);
+
+    mostrarCarrito();
   };

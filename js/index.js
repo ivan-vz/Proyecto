@@ -11,7 +11,7 @@ function showAlertError2() {
 //¿Ya ingresado?
 let log = localStorage.getItem("datosUser");
 if (log != null){
-    window.location.href = "inicio.html";
+    window.location.href = "lobby.html";
 } else {
 //Funcion que genera un objeto con la informacion de un usuario
 function arrayToObject(array){
@@ -34,7 +34,7 @@ document.getElementById("regBtn").addEventListener("click", (e) => {
     if (((datosUsuario.email != "" && datosUsuario.password != "")) && (datosUsuario.email.includes("@"))){
         document.getElementById("email").value = "";
         document.getElementById("password").value = "";
-        window.location.href = "inicio.html";
+        window.location.href = "lobby.html";
     } else {
         if (datosUsuario.email == "" || datosUsuario.password == ""){
             showAlertError1();
