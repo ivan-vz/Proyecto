@@ -53,14 +53,19 @@
   <main>
       <div class="container">
         <h2 class="row justify-content-md-center my-3">Carrito de Compras</h2>
-
-        <h4>Articulos a comprar</h4>
-        <small>
-          <div class="form-check form-switch">
-            <input id="cambiarM" class="form-check-input" type="checkbox" role="switch" onclick="cambiarMoneda()">
-            <label class="cambiarM" for="flexSwitchCheckChecked">Pesos - Dolares</label>
+        <div class="row">
+          <div class="col">
+            <h4>Articulos a comprar</h4>
           </div>
-        </small>
+          <div class="col">
+            <small>
+              <div class="form-check form-switch float-end">
+                <input id="cambiarM" class="form-check-input" type="checkbox" role="switch" onclick="cambiarMoneda()">
+                <label class="cambiarM" for="flexSwitchCheckChecked">Pesos - Dolares</label>
+              </div>
+            </small>
+          </div>
+        </div>
         
         <table class="table">
           <thead class="table-dark">

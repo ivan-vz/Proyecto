@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded",async function(e){
     }
 
     //Creacion inicial de "moneda"
-    let monedaActual = localStorage.getItem("moeda");
+    let monedaActual = localStorage.getItem("moneda");
     if(!monedaActual){
         localStorage.setItem("moneda", "UYU");
     }
@@ -102,7 +102,7 @@ function modificarCarrito(idmodificar){
     let moneda = localStorage.getItem("moneda");
 
     let nuevoValor = (moneda === "USD" && productoModificar.currency === "UYU")
-                    ? productoModificar.unitCost /= 40
+                    ? productoModificar.unitCost / 40
                     : (moneda === "UYU" && productoModificar.currency === "USD")
                     ? productoModificar.unitCost * 40
                     : productoModificar.unitCost;
@@ -119,7 +119,7 @@ function modificarCarrito(idmodificar){
 
 //Funcion que calcula y muestra tanto el subtotal de toda la compra como su iva
 const totales = () => {
-    carrito = carrito = JSON.parse(localStorage.getItem("carroCompras"));
+    carrito = JSON.parse(localStorage.getItem("carroCompras"));
     let premium = document.getElementById("premium");
     let express = document.getElementById("express");
     let standard = document.getElementById("standard");  
@@ -141,7 +141,7 @@ const totales = () => {
                         ? "USD"
                         : "UYU",
                 unitCost: ((moneda === "USD" && compra.currency === "UYU")
-                        ? compra.unitCost /= 40
+                        ? compra.unitCost / 40
                         : (moneda === "UYU" && compra.currency === "USD")
                         ? compra.unitCost * 40
                         : compra.unitCost)
@@ -162,7 +162,6 @@ const totales = () => {
 const Fpago = () => {
    credito.checked
    ? ( nCuenta.value = " ",
-     mostrar(),
      nTarjeta.removeAttribute("disabled"),
      cSeguridad.removeAttribute("disabled"),
      fecha.removeAttribute("disabled"),
@@ -170,7 +169,6 @@ const Fpago = () => {
    : (nTarjeta.value = " ",
      cSeguridad.value = " ",
      fecha.value = " ",
-     mostrar(),
      nCuenta.removeAttribute("disabled"),
      nTarjeta.setAttribute("disabled", true),
      cSeguridad.setAttribute("disabled", true),
@@ -192,13 +190,14 @@ const Fpago = () => {
             cSeguridad.setAttribute("oninput", "seAcepto()");
             fecha.setAttribute("oninput", "seAcepto()");
             nCuenta.setAttribute("oninput", "seAcepto()");
+            bancaria.setAttribute("onclick", "Fpago(); mostrar();");
+            credito.setAttribute("onclick", "Fpago(); mostrar();");
             seAcepto();
         } else {
             localStorage.setItem("compraE", 'true');
         }
   
         form.classList.add('was-validated');
-        seAcepto();
 
       }, false)
     })
@@ -290,9 +289,9 @@ const mostrar = () => {
     if(idEliminar === 50924 && !borrado){
         localStorage.setItem('borrado', 'true');
     }
-    carrito = carrito = JSON.parse(localStorage.getItem("carroCompras"));
-    let obEiminar = carrito.find(({id}) => id === idEliminar);
-    let indx = carrito.indexOf(obEiminar);
+    carrito = JSON.parse(localStorage.getItem("carroCompras"));
+    let obEliminar = carrito.find(({id}) => id === idEliminar);
+    let indx = carrito.indexOf(obEliminar);
     carrito.splice(indx, 1);
     localStorage.setItem("carroCompras", JSON.stringify(carrito));
     mostrarCarrito();
