@@ -36,7 +36,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
           <li class="nav-item">
-            <a class="nav-link" href="lobby.html">Inicio</a>
+            <a class="nav-link" href="index.html">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="categories.html">Categorías</a>
@@ -44,33 +44,171 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item dropdown d-flex d-none d-lg-block">
-            <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-              <li><a class="dropdown-item" href="index.html" onclick="cerrarS()">Cerrar sesión</a></li>
-            </ul>          
-          </li>
-          <li class="nav-item dropdown d-flex d-block d-lg-none">
-            <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu position-absolute w-100 mt-3 menuC">
-              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
-              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="my-profile.html">Mi perfil</a></li>
-              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="index.html" onclick="cerrarS()">Cerrar sesión</a></li>
-            </ul>          
+          <li class="nav-item">
+            <div class="dropdown d-flex d-none d-lg-block">
+              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <ul class="dropdown-menu position-absolute w-100 menuC">
+                <li class="botonPerfil"></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li class="botonCerrar"></li>
+              </ul>
+            </div>
+            <div class="d-flex d-block d-lg-none">
+              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <ul class="dropdown-menu position-absolute w-100 menuC">
+                <li class="botonPerfil"></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li class="botonCerrar"></li>
+              </ul>
+            </div>
+            <!-- Modal Para iniciar sesión -->
+            <form action="" class="needs-validation validacionLogin" novalidate>
+              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
+                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group my-4">
+                          <span class="input-group-text">@</span>
+                          <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" oninput="sinEspacios()" required>
+                          <div class="invalid-feedback">
+                            Debe ingresar un email.
+                          </div>
+                        </div>
+                  
+                        <div class="input-group my-4">
+                          <span class="input-group-text">&</span>
+                          <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" oninput="sinEspacios()" required>
+                          <div class="invalid-feedback">
+                            Debe ingresar una contraseña con al menos 6 caracteres.
+                          </div>
+                        </div>
+                  
+                        <div class="input-group my-4">
+                            <div class="input-group-text">
+                              <input type="checkbox" id="recordarme">
+                            </div>
+                            <span class="input-group-text">Recordarme</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Iniciar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>          
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container w-50">
+      <div class="row row-cols-2 my-3">
+
+        <div class="col align-self-center">
+          <h1>Perfil</h1>
+        </div>
+
+        <div id="fotoPerfil" class="col">
+        </div>
+      </div>
+      
+      <hr>
+      <div class="row-cols">
+        <form action="" class="needs-validation validacionPerfil" novalidate>
+          <div class="row row-cols-2">
+            <div class="col my-2">
+              <label for="pName" class="form-label">Primer Nombre</label>
+              <input type="text" class="form-control border border-dark conEspacios" id="pName" required oninput="conEspacios()">
+              <div class="invalid-feedback">
+                Ingrese su primer nombre.
+              </div>
+            </div>
+
+            <div class="col my-2">
+              <label for="sName" class="form-label">Segundo Nombre</label>
+              <input type="text" class="form-control border border-dark" id="sName">
+              <div class="invalid-feedback">
+                Ingrese su segundo nombre.
+              </div>
+            </div>
+
+            <div class="col my-2">
+              <label for="pSurname" class="form-label">Primer Apellido</label>
+              <input type="text" class="form-control border border-dark conEspacios" id="pSurname" required oninput="conEspacios()">
+              <div class="invalid-feedback">
+                Ingrese su primer apellido
+              </div>
+            </div>
+
+            <div class="col my-2">
+              <label for="sSurname" class="form-label">Segundo Apellido</label>
+              <input type="text" class="form-control border border-dark" id="sSurname">
+              <div class="invalid-feedback">
+                Ingrese su segundo apellido.
+              </div>
+            </div>
+
+            <div class="col my-2">
+              <label for="telefono" class="form-label">Teléfono de Contacto</label>
+              <input type="number" class="form-control border border-dark" id="telefono">
+              <div class="invalid-feedback">
+                Ingrese su número de telefono.
+              </div>
+            </div>
+
+            <div class="col my-2">
+              <label for="emailPerfil" class="form-label">E-mail</label>
+              <input type="email" class="form-control border border-dark sinEspacios" id="emailPerfil" required oninput="sinEspacios()">
+              <div class="invalid-feedback">
+                Ingrese su email.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row-cols my-2">
+            <div class="mb-3">
+              <label for="inputFoto" class="form-label">Imagen de perfil</label>
+              <input type="file"
+              id="inputFoto"
+              name="image_uploads"
+              accept=".jpg, .jpeg, .png" class="form-control" aria-label="file example">
+              <div class="invalid-feedback">Example invalid form file feedback</div>
+            </div>  
+            <div class="invalid-feedback">
+              <p>No files currently selected for upload</p>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row-cols-12 my-2">
+            <button id="guardarB" class="btn btn-primary" type="submit">Guardar Cambios</button>
+          </div>
+        </form>
+
+         <div class="toast-container position-fixed top-0 end-0 p-3">
+          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header" style="background-color: lightgreen; color: black;">
+              <strong>¡Hey!</strong>
+            </div>
+            <div class="toast-body">
+              Cambios guardados exitosamente
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </main>
+
+
   <footer class="text-muted">
     <div class="container">
       <button id="volverArriba" type="button" class="btn btn-primary float-end">Volver arriba</button>
@@ -80,6 +218,7 @@
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/my-profile.js"></script>

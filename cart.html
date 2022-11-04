@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
           <li class="nav-item">
-            <a class="nav-link" href="lobby.html">Inicio</a>
+            <a class="nav-link" href="index.html">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="categories.html">Categorías</a>
@@ -29,21 +29,63 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item dropdown d-flex d-none d-lg-block">
-            <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-              <li><a class="dropdown-item" href="index.html" onclick="cerrarS()">Cerrar sesión</a></li>
-            </ul>          
-          </li>
-          <li class="nav-item dropdown d-flex d-block d-lg-none">
-            <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu position-absolute w-100 mt-3 menuC">
-              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
-              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="my-profile.html">Mi perfil</a></li>
-              <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="index.html" onclick="cerrarS()">Cerrar sesión</a></li>
-            </ul>          
+          <li class="nav-item">
+            <div class="dropdown d-flex d-none d-lg-block">
+              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <ul class="dropdown-menu position-absolute w-100 menuC">
+                <li class="botonPerfil"></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li class="botonCerrar"></li>
+              </ul>
+            </div>
+            <div class="d-flex d-block d-lg-none">
+              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <ul class="dropdown-menu position-absolute w-100 menuC">
+                <li class="botonPerfil"></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li class="botonCerrar"></li>
+              </ul>
+            </div>
+            <!-- Modal Para iniciar sesión -->
+            <form action="" class="needs-validation validacionLogin" novalidate>
+              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
+                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group my-4">
+                          <span class="input-group-text">@</span>
+                          <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" oninput="sinEspacios()" required>
+                          <div class="invalid-feedback">
+                            Debe ingresar un email.
+                          </div>
+                        </div>
+                  
+                        <div class="input-group my-4">
+                          <span class="input-group-text">&</span>
+                          <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" oninput="sinEspacios()" required>
+                          <div class="invalid-feedback">
+                            Debe ingresar una contraseña con al menos 6 caracteres.
+                          </div>
+                        </div>
+                  
+                        <div class="input-group my-4">
+                            <div class="input-group-text">
+                              <input type="checkbox" id="recordarme">
+                            </div>
+                            <span class="input-group-text">Recordarme</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Iniciar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>          
           </li>
         </ul>
       </div>
@@ -114,7 +156,7 @@
                   <div class="row">
                     <div class="col-8 my-2">
                       <label for="calle" class="form-label">Calle</label>
-                      <input type="text" class="form-control border border-dark update conEspacios" id="calle" required oninput="conEspacios()">
+                      <input type="text" class="form-control border border-dark conEspacios" id="calle" required oninput="conEspacios()">
                       <div class="invalid-feedback">
                         Ingrese una calle.
                       </div>
@@ -122,7 +164,7 @@
                     
                     <div class="col-4 my-2">
                       <label for="numeroP" class="form-label">Número</label>
-                      <input type="number" class="form-control border border-dark update" id="numeroP" required oninput="nCorrecto('numeroP',4,4)">
+                      <input type="number" class="form-control border border-dark" id="numeroP" required oninput="nCorrecto('numeroP',4,4)">
                       <div class="invalid-feedback">
                         Ingrese un número de puerta.
                       </div>
@@ -132,7 +174,7 @@
                   <div class="row my-2">
                     <div class="col-12">
                       <label for="esquina" class="form-label">Esquina</label>
-                      <input type="text" class="form-control border border-dark update conEspacios" id="esquina" required oninput="conEspacios()">
+                      <input type="text" class="form-control border border-dark conEspacios" id="esquina" required oninput="conEspacios()">
                       <div class="invalid-feedback">
                         Ingrese una esquina.
                       </div>
@@ -201,6 +243,7 @@
                               <label class="form-check-label" for="nTarjeta">Número de tarjeta</label>
                               <input id="nTarjeta" type="number" class="form-control conEspacios" disabled required>
                             </div>
+                            
                             <div class="col">
                               <label class="form-check-label" for="cSeguridad">Código de seg.</label>
                               <input id="cSeguridad" type="number" class="form-control" disabled required>
@@ -241,7 +284,7 @@
           </div>
 
           <div class="row-cols-12 my-2">
-            <button class="btn btn-primary w-100" type="submit">Finalizar compra</button>
+            <button id="botonFinalizarCompra" class="btn btn-primary w-100" type="submit">Finalizar compra</button>
           </div>
           
         </form>

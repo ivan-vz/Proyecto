@@ -7,6 +7,7 @@ let maxCount;
 
 //Funcion para conseguir los datos
 document.addEventListener("DOMContentLoaded",async function(e){
+    verificarInicioDeSesion();
     mercancia =  await getJSONData(url);
     //localStorage.setItem("id", mercancia.data.products.id)
     showProductsList(mercancia.data.products);

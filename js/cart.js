@@ -19,6 +19,12 @@ let botonC = document.getElementById("botonCondiciones");
 
 //Funcion para conseguir los datos de un producto
 document.addEventListener("DOMContentLoaded",async function(e){
+    verificarInicioDeSesion();
+    let Usuario = JSON.parse(localStorage.getItem("datosUser"));
+    if(Usuario == null){
+        document.getElementById("botonFinalizarCompra").setAttribute("disabled", true);
+    }
+
     productoBase =  await getJSONData(urlCarrito);
     carrito = JSON.parse(localStorage.getItem("carroCompras"));
     let borrado = localStorage.getItem("borrado");
@@ -47,7 +53,8 @@ document.addEventListener("DOMContentLoaded",async function(e){
 
     //Mensaje de compra exitosa
     let compraE = localStorage.getItem("compraE"); 
-    if(compraE && compraE != 'false'){
+    console.log(typeof compraE, compraE);
+    if(compraE != null && compraE !="false"){
         document.getElementById("compraE").classList.add("show");
         setTimeout(function() {
         document.getElementById("compraE").classList.remove("show");
@@ -161,14 +168,14 @@ const totales = () => {
 //Funcion que chequea Si fue seleccionada una forma de pago para habilitar sus opciones, bloquear las de la otra ademas de reiniciar sus valores
 const Fpago = () => {
    credito.checked
-   ? ( nCuenta.value = " ",
+   ? ( nCuenta.value = "",
      nTarjeta.removeAttribute("disabled"),
      cSeguridad.removeAttribute("disabled"),
      fecha.removeAttribute("disabled"),
      nCuenta.setAttribute("disabled", true))
-   : (nTarjeta.value = " ",
-     cSeguridad.value = " ",
-     fecha.value = " ",
+   : (nTarjeta.value = "",
+     cSeguridad.value = "",
+     fecha.value = "",
      nCuenta.removeAttribute("disabled"),
      nTarjeta.setAttribute("disabled", true),
      cSeguridad.setAttribute("disabled", true),
@@ -182,7 +189,7 @@ const Fpago = () => {
 
     Array.from(forms).forEach(form => {
       form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
+        if(!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
 
@@ -194,46 +201,14 @@ const Fpago = () => {
             credito.setAttribute("onclick", "Fpago(); mostrar();");
             seAcepto();
         } else {
-            localStorage.setItem("compraE", 'true');
+            localStorage.setItem("compraE", "true");
         }
   
         form.classList.add('was-validated');
 
       }, false)
     })
-  })()
-
-// Funcion que controla que calle y esquina no sean vacias, pero tambien permite espacios ==> "   " esta mal pero "  pedro  pedro" esta bien
-const conEspacios = () => {
-    inputsConEspacios.forEach((input) => {
-        if(Array.from(input.value).some((caracter) => caracter != " ")){
-            input.setCustomValidity("");
-        } else {
-            input.setCustomValidity("Caracteres invalidos");
-        }
-    });
-}
-
-//Funcion que controla que los input numericos no sean vacios
-const esVacio = () => {
-    inputsSinEspacios.forEach((input) => {
-        if(input.value.includes(" ")){
-            input.setCustomValidity("Caracteres invalidos");
-        } else {
-            input.setCustomValidity("");
-        }
-    });
-};
-
-//Funcion que controla que cada input numerico tenga su largo correcto ==> que no se ingresen numerso de mas o de menos
-const nCorrecto = (id, minL, maxL) => {
-    let num = document.getElementById(id);
-    if(num.value.length === minL || num.value.length === maxL){
-        num.setCustomValidity("");
-    } else {
-        num.setCustomValidity("Formato incorrecto");
-    }
-};
+})()
 
 //Funcion que controla el estado del apartado del tipo de pago
 const seAcepto = () => {

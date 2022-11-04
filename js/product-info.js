@@ -9,6 +9,7 @@ let estrellas;
 
 //Funcion para conseguir los datos de un producto
 document.addEventListener("DOMContentLoaded",async function(e){
+    verificarInicioDeSesion();
     producto =  await getJSONData(urlProductsInfo); //Pedimos la informacion del producto
     showProductInfo(producto.data);
     comment =  await getJSONData(opiniones); //Pedimos los comentarios del producto
