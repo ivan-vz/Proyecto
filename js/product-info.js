@@ -79,33 +79,39 @@ function showProductInfo(product){
     document.getElementById("descriptionP").innerHTML = product.description;
     document.getElementById("categoryP").innerHTML = product.category;
     document.getElementById("soldCountP").innerHTML = product.soldCount;
+    document.getElementById("namePChico").innerHTML = product.name;
+    document.getElementById("costPChico").innerHTML = product.currency + product.cost;
+    document.getElementById("descriptionPChico").innerHTML = product.description;
+    document.getElementById("categoryPChico").innerHTML = product.category;
+    document.getElementById("soldCountPChico").innerHTML = product.soldCount;
 
      for(imag of product.images){
         if(pos == 0){
             imagenes +=  
         `       
             <div class="carousel-item active">
-                <img src="${imag}" class="d-block w-100 img-thumbnail">
+                <img src="${imag}" alt="imgCarousel" class="d-block w-100 img-thumbnail">
             </div>
         `;
         } else {
             imagenes +=  
             `       
                 <div class="carousel-item">
-                    <img src="${imag}" class="d-block w-100 img-thumbnail">
+                    <img src="${imag}" alt="imgCarousel" class="d-block w-100 img-thumbnail">
                 </div>
             `;
         }
         pos++;
 
-        document.getElementById("galeriaCarousel").innerHTML = imagenes; 
+        document.getElementById("galeriaCarousel").innerHTML = imagenes;
+        document.getElementById("galeriaCarouselChica").innerHTML = imagenes;
     }
 
     for(prod of product.relatedProducts){
         objR += 
         `
         <div class="text-center">
-            <img class="img-thumbnail" src="${prod.image}" onclick="setProductID(${prod.id})" style="width: 50%; cursor: pointer">
+            <img class="img-thumbnail" src="${prod.image}" alt="imgProd" onclick="setProductID(${prod.id})" style="width: 50%; cursor: pointer">
             <h6><small class="text-muted">${prod.name}</small></h6>
         </div>
         `

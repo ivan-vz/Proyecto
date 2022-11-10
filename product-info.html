@@ -34,53 +34,61 @@
           </li>
           <li class="nav-item">
             <div class="dropdown d-flex d-none d-lg-block">
-              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <div class="d-flex d-block d-lg-none">
-              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <!-- Modal Para iniciar sesión -->
             <form action="" class="needs-validation validacionLogin" novalidate>
-              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
-                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="input-group my-4">
-                          <span class="input-group-text">@</span>
-                          <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar un email.
-                          </div>
+                      <div class="input-group my-4">
+                        <span class="input-group-text">@</span>
+                        <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email"
+                          oninput="sinEspacios()" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar un email.
                         </div>
-                  
-                        <div class="input-group my-4">
-                          <span class="input-group-text">&</span>
-                          <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar una contraseña con al menos 6 caracteres.
-                          </div>
+                      </div>
+
+                      <div class="input-group my-4">
+                        <span class="input-group-text">&</span>
+                        <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password"
+                          minlength="6" oninput="sinEspacios()" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar una contraseña con al menos 6 caracteres.
                         </div>
-                  
-                        <div class="input-group my-4">
-                            <div class="input-group-text">
-                              <input type="checkbox" id="recordarme">
-                            </div>
-                            <span class="input-group-text">Recordarme</span>
+                      </div>
+
+                      <div class="input-group my-4">
+                        <div class="input-group-text">
+                          <input type="checkbox" id="recordarme">
                         </div>
+                        <span class="input-group-text">Recordarme</span>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">Iniciar</button>
@@ -88,7 +96,7 @@
                   </div>
                 </div>
               </div>
-            </form>          
+            </form>
           </li>
         </ul>
       </div>
@@ -97,75 +105,119 @@
 
   <main>
     <div class="container mt-3">
+          <div class="row justify-content-end m-0 my-2">
+            <button id="volverProducts" type="button" class="btn btn-primary w-25">Volver</button>
+          </div>
 
-      <button id="volverProducts" type="button" class="btn btn-primary float-end">Volver</button>
-      
-      <!-- Fila Superior -->
-      <div  class="row mt-3">
-        
-        <!-- Columna de Informacion -->
-        <div class="col">
-            <div id="informacion" class=" card cont">
-                <div class="card-body">
-                  <h2 id="nameP" class="titulo"></h2>
-                  <hr>
-                    <h5 class="titulo">Precio</h5>
-                    <p id="costP" class="card-text textos"></p>
-                    <h5 class="titulo">Descripción</h5>
-                    <p id="descriptionP" class="card-text textos"></p>
-                    <h5 class="titulo">Categoría</h5>
-                    <p id="categoryP" class="card-text textos"></p>
-                    <h5 class="titulo">Cantidad de vendidos</h5>
-                    <p id="soldCountP" class="card-text textos"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Columna de Fotos -->
-        <div class="col">
           <div class="row">
-            <div id="galeria" class="carousel carousel-dark slide" data-bs-ride="carousel">
-              <div id="galeriaCarousel" class="carousel-inner">
+            <div class="container d-none d-lg-block d-md-block">
+              <div class="row mt-3">
+                <div class="col">
+                  <div id="informacion" class="card cont">
+                    <div class="card-body">
+                      <h2 id="nameP" class="titulo"></h2>
+                      <hr>
+                      <h5 class="titulo">Precio</h5>
+                      <p id="costP" class="card-text textos"></p>
+                      <h5 class="titulo">Descripción</h5>
+                      <p id="descriptionP" class="card-text textos"></p>
+                      <h5 class="titulo">Categoría</h5>
+                      <p id="categoryP" class="card-text textos"></p>
+                      <h5 class="titulo">Cantidad de vendidos</h5>
+                      <p id="soldCountP" class="card-text textos"></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="row">
+                    <div id="galeria" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                      <div id="galeriaCarousel" class="carousel-inner">
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#galeria" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#galeria" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row mt-4 mx-0">
+                    <div class="col">
+                      <input id="cantComprar" type="number" class="form-control border border-dark" min="1"
+                        placeholder="Cantidad a Comprar" disabled>
+                    </div>
+                    <div class="col">
+                      <button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto()"
+                        disabled>Agregar al carrito</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#galeria" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#galeria" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
+            </div>
+
+            <div class="container d-block d-lg-none d-md-none">
+              <div class="card mb-3">
+                <div class="container">
+                  <div class="row">
+                    <div id="galeriaChica" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                      <div id="galeriaCarouselChica" class="carousel-inner">
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#galeriaChica" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#galeriaChica" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h2 id="namePChico" class="titulo"></h2>
+                  <hr>
+                  <h5 class="titulo">Precio</h5>
+                  <p id="costPChico" class="card-text textos"></p>
+                  <h5 class="titulo">Descripción</h5>
+                  <p id="descriptionPChico" class="card-text textos"></p>
+                  <h5 class="titulo">Categoría</h5>
+                  <p id="categoryPChico" class="card-text textos"></p>
+                  <h5 class="titulo">Cantidad de vendidos</h5>
+                  <p id="soldCountPChico" class="card-text textos"></p>
+                </div>
+              </div>
+              <div class="row mt-4 mx-0">
+                <div class="col">
+                  <input id="cantComprar" type="number" class="form-control border border-dark" min="1" placeholder="Cantidad" disabled>
+                </div>
+                <div class="col">
+                  <button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto()" disabled>Agregar al carrito</button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="row mt-4 mx-0">
-            <div class="col">
-              <input id="cantComprar" type="number" class="form-control border border-dark" min="1" placeholder="Cantidad a Comprar" disabled>
-            </div>
-            <div class="col">
-              <button id="comprarProducto" type="button" class="btn btn-success" onclick="crearNuevoProducto()" disabled>Agregar al carrito</button>
-            </div>
-          </div>
-        </div>
-      <div>
-
-      <!-- Segunda Fila Comentarios -->
-      <div class="row-col mt-5">
+          <!-- Segunda Fila Comentarios -->
+          <div class="row-col mt-5">
             <h3>Comentarios</h3>
             <hr>
             <div class="border rounded-3 cont">
               <ul class="list-group" id="Comentarios">
               </ul>
             </div>
-      </div>
+          </div>
 
-      <!-- Tercera Fila comentar -->
-      <div class="row mt-5">
-        <h3>Comentar</h3>
-        <hr>
+          <!-- Tercera Fila comentar -->
+          <div class="row mt-5">
+            <h3>Comentar</h3>
+            <hr>
 
-         <div class="row">
-            <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-4">
 
                 <label for="tuOpinion" class="form-label">Tu opinión:</label>
                 <textarea type="text" class="form-control" id="tuOpinion"></textarea>
@@ -183,41 +235,44 @@
                   <button type="button" class="btn btn-primary my-3" id="enviar">Enviar</button>
                 </div>
 
+              </div>
             </div>
           </div>
-      </div>
 
-      <!-- Relacionados -->
-      <div class="row mt-5">
-        <h4>Objetos Relacionados:</h4>
-        <hr>
-        <div id="ORelacionados" class="d-flex justify-content-around">
+          <!-- Relacionados -->
+          <div class="row mt-5">
+            <h4>Objetos Relacionados:</h4>
+            <hr>
+            <div id="ORelacionados" class="d-flex justify-content-around">
 
+            </div>
+          </div>
+        </div> <!-- Div final container -->
+
+        <!-- Alerta al agregar al carrito -->
+        <div class="alert alert-success alert-dismissible fade text-center" role="alert" id="alert-success">
+          <p>Producto agregado al carrito</p>
         </div>
-      </div>
-    </div> <!-- Div final container -->
 
-    <!-- Alerta al agregar al carrito -->
-    <div class="alert alert-success alert-dismissible fade text-center" role="alert" id="alert-success">
-      <p>Producto agregado al carrito</p>
-    </div>
-
-    <!-- Alerta al querer comprar un valor imposible -->
-    <div class="alert alert-warning alert-dismissible fade text-center" role="alert" id="alert-warning">
-      <p>Ingrese un valor mayor o igual a 1</p>
-    </div>
+        <!-- Alerta al querer comprar un valor imposible -->
+        <div class="alert alert-warning alert-dismissible fade text-center" role="alert" id="alert-warning">
+          <p>Ingrese un valor mayor o igual a 1</p>
+        </div>
 
   </main>
 
   <footer class="text-muted">
     <div class="container">
-      <button id="volverArriba" type="button" class="btn btn-primary float-end">Volver arriba</button>
-      
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
-        2022</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button" class="btn btn-primary w-25">Volver arriba</button> </div>
+
+      <div class="row">
+        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
+          2022</p>
+        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      </div>
     </div>
   </footer>
+  
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

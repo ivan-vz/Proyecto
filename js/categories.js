@@ -6,6 +6,16 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
+document.addEventListener("DOMContentLoaded", function(e){
+    verificarInicioDeSesion();
+    getJSONData(CATEGORIES_URL).then(function(resultObj){
+        if (resultObj.status === "ok"){
+            currentCategoriesArray = resultObj.data
+            showCategoriesList()
+        }
+    });
+});
+
 function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)
@@ -50,17 +60,28 @@ function showCategoriesList(){
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
 
             htmlContentToAppend += `
-            <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${category.imgSrc}" alt="${category.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${category.name}</h4>
-                            <small class="text-muted">${category.productCount} artículos</small>
+            <div class="row row-cols justify-content-center" id="${category.id}">
+                <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active d-none d-lg-block d-md-block">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="${category.imgSrc}" alt="categoryPhoto" class="img-thumbnail">
                         </div>
-                        <p class="mb-1">${category.description}</p>
+                        <div class="col">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">${category.name}</h4>
+                                <small class="text-muted">${category.productCount} artículos</small>
+                            </div>
+                            <p class="mb-1">${category.description}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card cursor-active d-sm-block d-lg-none d-md-none my-2" style="width: 18rem;" onclick="setCatID(${category.id})">
+                    <img class="card-img-top" src="${category.imgSrc}" alt="product image">
+                    <div class="card-body">
+                        <h5 class="card-title">${category.name}</h5>
+                        <p class="card-text">${category.description}</p>
+                        <small class="text-muted">${category.productCount} vendidos</small>
                     </div>
                 </div>
             </div>
@@ -80,64 +101,64 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
 
     currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
 
-    //Muestro las categorías ordenadas
     showCategoriesList();
 }
 
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
-    verificarInicioDeSesion();
-    getJSONData(CATEGORIES_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            currentCategoriesArray = resultObj.data
-            showCategoriesList()
-        }
-    });
+document.getElementById("rangeFilterCategoriesGrande").addEventListener("click", () => {
+    minCount = document.getElementById("rangeMinCategoriesGrande").value;
+    maxCount = document.getElementById("rangeMaxCategoriesGrande").value;
+    rangeFilerCategories()
+});
 
-    document.getElementById("sortAsc").addEventListener("click", function(){
-        sortAndShowCategories(ORDER_ASC_BY_NAME);
-    });
+document.getElementById("rangeFilterCategoriesChico").addEventListener("click", () => {
+    minCount = document.getElementById("rangeMinCategoriesChico").value;
+    maxCount = document.getElementById("rangeMaxCategoriesChico").value;
+    rangeFilerCategories()
+});
 
-    document.getElementById("sortDesc").addEventListener("click", function(){
-        sortAndShowCategories(ORDER_DESC_BY_NAME);
-    });
+document.getElementById("clearRangeFilterCategoriesGrande").addEventListener("click", () => {limpiar()});
 
-    document.getElementById("sortByCount").addEventListener("click", function(){
-        sortAndShowCategories(ORDER_BY_PROD_COUNT);
-    });
+document.getElementById("clearRangeFilterCategoriesChico").addEventListener("click", () => {limpiar()});
 
-    document.getElementById("clearRangeFilter").addEventListener("click", function(){
-        document.getElementById("rangeFilterCountMin").value = "";
-        document.getElementById("rangeFilterCountMax").value = "";
+const rangeFilerCategories = () => {
 
+    if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
+        minCount = parseInt(minCount);
+    }
+    else{
         minCount = undefined;
+    }
+
+    if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0){
+        maxCount = parseInt(maxCount);
+    }
+    else{
         maxCount = undefined;
+    }
 
-        showCategoriesList();
-    });
+    showCategoriesList();
+};
 
-    document.getElementById("rangeFilterCount").addEventListener("click", function(){
-        //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-        //de productos por categoría.
-        minCount = document.getElementById("rangeFilterCountMin").value;
-        maxCount = document.getElementById("rangeFilterCountMax").value;
+const limpiar = () => {
+    document.getElementById("rangeMinCategoriesGrande").value = "";
+    document.getElementById("rangeMaxCategoriesGrande").value = "";
+    document.getElementById("rangeMinCategoriesChico").value = "";
+    document.getElementById("rangeMaxCategoriesChico").value = "";
 
-        if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
-            minCount = parseInt(minCount);
-        }
-        else{
-            minCount = undefined;
-        }
+    minCount = undefined;
+    maxCount = undefined;
 
-        if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0){
-            maxCount = parseInt(maxCount);
-        }
-        else{
-            maxCount = undefined;
-        }
+    showCategoriesList();
+};
 
-        showCategoriesList();
-    });
+document.getElementById("sortAsc").addEventListener("click", function(){
+    sortAndShowCategories(ORDER_ASC_BY_NAME);
+});
+
+document.getElementById("sortDesc").addEventListener("click", function(){
+    sortAndShowCategories(ORDER_DESC_BY_NAME);
+});
+
+document.getElementById("sortByCount").addEventListener("click", function(){
+    sortAndShowCategories(ORDER_BY_PROD_COUNT);
 });

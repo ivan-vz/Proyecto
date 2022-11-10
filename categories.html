@@ -92,14 +92,17 @@
       </div>
     </div>
   </nav>
+  
   <main class="pb-5">
     <div class="text-center p-4">
       <h2>Categorías</h2>
       <p class="lead">Verás aquí todas las categorías del sitio.</p>
     </div>
+
     <div class="container">
-      <div class="row">
-        <div class="col text-end">
+      <!-- Pantalla PC -->
+      <div class="container d-none d-lg-block">
+        <div class="row-cols text-end">
           <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
             <input type="radio" class="btn-check" name="options" id="sortAsc">
             <label class="btn btn-light" for="sortAsc">A-Z</label>
@@ -109,43 +112,81 @@
             <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1"></i></label>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
-          <div class="row container p-0 m-0">
-            <div class="col">
+        <div class="container row justify-content-end mb-1">
+            <div class="col-3">
               <p class="font-weight-normal text-end my-2">Cant.</p>
             </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
+            <div class="col-3">
+              <input class="form-control" type="number" placeholder="min." id="rangeMinCategoriesGrande">
             </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
+            <div class="col-3">
+              <input class="form-control" type="number" placeholder="máx." id="rangeMaxCategoriesGrande">
             </div>
-            <div class="col-3 p-0">
+            <div class="col-1 p-0">
               <div class="btn-group" role="group">
-                <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
+                <button class="btn btn-light btn-block" id="rangeFilterCategoriesGrande">Filtrar</button>
+                <button class="btn btn-link btn-sm" id="clearRangeFilterCategoriesGrande">Limpiar</button>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Pantalla tablet y celular -->
+      <div class="container d-md-block d-sm-block d-lg-none">
+        <nav class="navbar p-1">
+          <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filtros"
+              aria-controls="filtros" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #A9F296;">
+              <span>Filtros</span>
+            </button>
+            <div class="container collapse navbar-collapse my-2" id="filtros">
+              <div class="row-cols my-2">
+                <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
+                  <input type="radio" class="btn-check" name="options" id="sortAsc">
+                  <label class="btn btn-light" for="sortAsc">A-Z</label>
+                  <input type="radio" class="btn-check" name="options" id="sortDesc">
+                  <label class="btn btn-light" for="sortDesc">Z-A</label>
+                  <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
+                  <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1"></i></label>
+                </div>
+              </div>
+              <div class="row-cols my-2">
+                <div class="row m-0 mt-2">
+                  <input class="form-control w-50" type="number" placeholder="mín." min="1" id="rangeMinCategoriesChico">
+                </div>
+                <div class="row m-0 mt-2">
+                  <input class="form-control w-50" type="number" placeholder="máx." min="1" id="rangeMaxCategoriesChico">
+                </div>
+              </div>
+              <div class="row-cols my-2">
+                  <button class="btn btn-secondary" id="rangeFilterCategoriesChico">Filtrar</button>
+                  <button class="btn btn-secondary mx-2" id="clearRangeFilterCategoriesChico">Limpiar</button>
               </div>
             </div>
           </div>
-        </div>
+        </nav>
       </div>
+
       <div class="row">
         <div class="list-group" id="cat-list-container">
         </div>
       </div>
     </div>
-  </main>
-  <footer class="text-muted">
-    <div class="container">
-      <button id="volverArriba" type="button" class="btn btn-primary float-end">Volver arriba</button>
 
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
-        2022</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+  </main>
+
+   <footer class="text-muted">
+    <div class="container">
+      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button" class="btn btn-primary w-25">Volver arriba</button> </div>
+
+      <div class="row">
+        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
+          2022</p>
+        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      </div>
     </div>
   </footer>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

@@ -32,53 +32,61 @@
           </li>
           <li class="nav-item">
             <div class="dropdown d-flex d-none d-lg-block">
-              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <div class="d-flex d-block d-lg-none">
-              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <!-- Modal Para iniciar sesión -->
             <form action="" class="needs-validation validacionLogin" novalidate>
-              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
-                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="input-group my-4">
-                          <span class="input-group-text">@</span>
-                          <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar un email.
-                          </div>
+                      <div class="input-group my-4">
+                        <span class="input-group-text">@</span>
+                        <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email"
+                          oninput="sinEspacios()" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar un email.
                         </div>
-                  
-                        <div class="input-group my-4">
-                          <span class="input-group-text">&</span>
-                          <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar una contraseña con al menos 6 caracteres.
-                          </div>
+                      </div>
+
+                      <div class="input-group my-4">
+                        <span class="input-group-text">&</span>
+                        <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password"
+                          minlength="6" oninput="sinEspacios()" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar una contraseña con al menos 6 caracteres.
                         </div>
-                  
-                        <div class="input-group my-4">
-                            <div class="input-group-text">
-                              <input type="checkbox" id="recordarme">
-                            </div>
-                            <span class="input-group-text">Recordarme</span>
+                      </div>
+
+                      <div class="input-group my-4">
+                        <div class="input-group-text">
+                          <input type="checkbox" id="recordarme">
                         </div>
+                        <span class="input-group-text">Recordarme</span>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">Iniciar</button>
@@ -86,71 +94,113 @@
                   </div>
                 </div>
               </div>
-            </form>         
+            </form>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <main class="pb-5 container">
+
+  <main class="pb-5">
     <!-- Tirtular -->
-        <h2>Productos</h2>
-        <h5 id="tituloSecundario"></h5>
+    <div class="text-center p-4">
+      <h2>Productos</h2>
+      <h5 id="tituloSecundario"></h5>
+    </div>
 
-    <!-- Filtro -->
-        <div class="container">
-          <div class="row">
-            <div class="col text-end">
-              <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
-                <input type="radio" class="btn-check" name="options" id="sortAsc">
-                <label class="btn btn-light" for="sortAsc"><i class="fas fa-sort-amount-down mr-1"></i>$</label>
-                <input type="radio" class="btn-check" name="options" id="sortDesc">
-                <label class="btn btn-light" for="sortDesc"><i class="fas fa-sort-amount-up mr-1"></i>$</label>
-                <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-                <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1">Rel.</i></label>
-              </div>
-            </div>
+    <div class="container">
+      
+      <!-- Filtro -->
+    
+      <!-- Pantalla PC -->
+      <div class="container d-none d-lg-block">
+        <div class="row-cols text-end">
+          <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
+            <input type="radio" class="btn-check" name="options" id="sortAsc">
+            <label class="btn btn-light" for="sortAsc"><i class="fas fa-sort-amount-down mr-1"></i>$</label>
+            <input type="radio" class="btn-check" name="options" id="sortDesc">
+            <label class="btn btn-light" for="sortDesc"><i class="fas fa-sort-amount-up mr-1"></i>$</label>
+            <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
+            <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1">Rel.</i></label>
           </div>
-          <div class="row">
-            <div class="col-lg-10 offset-lg-4 col-md-6 mb-1 container">
-              <div class="row container p-0 m-0">
-                <div class="col-2">
-                  <!-- Se utiliza elonKeyup para generar un evento cada vez que se suelte una tecla -->
-                  <input type="search" id="buscador" placeholder="Buscador..." onkeyup="Fbuscador()">
-                </div>
-                <div class="col-2">
-                  <p class="font-weight-normal text-end my-2">Precio</p>
-                </div>
-                <div class="col-2">
-                  <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
-                </div>
-                <div class="col-2">
-                  <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
-                </div>
-                <div class="col-4 p-0">
-                  <div class="btn-group" role="group">
-                    <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                    <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
-                  </div>
-                </div>
-              </div>
+        </div>
+        <div class="container row justify-content-end mb-1">
+          <div class="col-3">
+            <input class="form-control" type="search" id="buscadorGrande" placeholder="Buscador..." onkeyup="fBGrande()">
+          </div>
+          <div class="col-3">
+            <input class="form-control" type="number" placeholder="Precio mínimo" min="1" id="rangeFilterCountMinGrande">
+          </div>
+          <div class="col-3">
+            <input class="form-control" type="number" placeholder="Precio máximo" min="1" id="rangeFilterCountMaxGrande">
+          </div>
+          <div class="col-1 p-0">
+            <div class="btn-group" role="group">
+              <button class="btn btn-light btn-block" id="rangeFilterCountGrande">Filtrar</button>
+              <button class="btn btn-link btn-sm" id="clearRangeFilterGrande">Limpiar</button>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Productos -->
-        <div id="Lista_De_Productos">
-        </div>
+      <!-- Pantalla tablet y celular -->
+      <div class="container d-md-block d-sm-block d-lg-none">
+        <nav class="navbar p-1">
+          <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filtros"
+              aria-controls="filtros" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #A9F296;">
+              <span>Filtros</span>
+            </button>
+            <div class="container collapse navbar-collapse my-2" id="filtros">
+              <div class="row-cols my-2">
+                <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+                  <input type="radio" class="btn-check" name="options" id="sortAsc">
+                  <label class="btn btn-light" for="sortAsc"><i class="fas fa-sort-amount-down mr-1"></i>$</label>
+                  <input type="radio" class="btn-check" name="options" id="sortDesc">
+                  <label class="btn btn-light" for="sortDesc"><i class="fas fa-sort-amount-up mr-1"></i>$</label>
+                  <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
+                  <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1">Rel.</i></label>
+                </div>
+              </div>
+              <div class="row-cols my-2">
+                <div class="row m-0 mt-2">
+                  <input class="form-control w-50" type="search" id="buscadorChico" placeholder="Buscador..." onkeyup="fBChico()">
+                </div>
+                <div class="row m-0 mt-2">
+                  <input class="form-control w-50" type="number" placeholder="Precio mínimo" min="1" id="rangeFilterCountMinChico">
+                </div>
+                <div class="row m-0 mt-2">
+                  <input class="form-control w-50" type="number" placeholder="Precio máximo" min="1" id="rangeFilterCountMaxChico">
+                </div>
+              </div>
+              <div class="row-cols my-2">
+                  <button class="btn btn-secondary" id="rangeFilterCountChico">Filtrar</button>
+                  <button class="btn btn-secondary mx-2" id="clearRangeFilterChico">Limpiar</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Productos -->
+      <div id="Lista_De_Productos">
+      </div>
+    </div>
+
   </main>
+
   <footer class="text-muted">
     <div class="container">
-      <button id="volverArriba" type="button" class="btn btn-primary float-end">Volver arriba</button>
+      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button" class="btn btn-primary w-25">Volver arriba</button> </div>
 
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
-        2022</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      <div class="row">
+        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
+          2022</p>
+        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      </div>
     </div>
   </footer>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
