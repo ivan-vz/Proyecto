@@ -31,53 +31,61 @@
           </li>
           <li class="nav-item">
             <div class="dropdown d-flex d-none d-lg-block">
-              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <div class="d-flex d-block d-lg-none">
-              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <!-- Modal Para iniciar sesión -->
             <form action="" class="needs-validation validacionLogin" novalidate>
-              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
-                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="input-group my-4">
-                          <span class="input-group-text">@</span>
-                          <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar un email.
-                          </div>
+                      <div class="input-group my-4">
+                        <span class="input-group-text">@</span>
+                        <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email"
+                          oninput="sinEspacios()" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar un email.
                         </div>
-                  
-                        <div class="input-group my-4">
-                          <span class="input-group-text">&</span>
-                          <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar una contraseña con al menos 6 caracteres.
-                          </div>
+                      </div>
+
+                      <div class="input-group my-4">
+                        <span class="input-group-text">&</span>
+                        <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password"
+                          minlength="6" oninput="sinEspacios()" required>
+                        <div class="invalid-feedback">
+                          Debe ingresar una contraseña con al menos 6 caracteres.
                         </div>
-                  
-                        <div class="input-group my-4">
-                            <div class="input-group-text">
-                              <input type="checkbox" id="recordarme">
-                            </div>
-                            <span class="input-group-text">Recordarme</span>
+                      </div>
+
+                      <div class="input-group my-4">
+                        <div class="input-group-text">
+                          <input type="checkbox" id="recordarme">
                         </div>
+                        <span class="input-group-text">Recordarme</span>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">Iniciar</button>
@@ -85,7 +93,7 @@
                   </div>
                 </div>
               </div>
-            </form>          
+            </form>
           </li>
         </ul>
       </div>
@@ -93,27 +101,34 @@
   </nav>
 
   <main>
-      <div class="container">
-        <h2 class="row justify-content-md-center my-3">Carrito de Compras</h2>
-        <div class="row">
-          <div class="col">
-            <h4>Articulos a comprar</h4>
-          </div>
-          <div class="col">
-            <small>
-              <div class="form-check form-switch float-end">
-                <input id="cambiarM" class="form-check-input" type="checkbox" role="switch" onclick="cambiarMoneda()">
-                <label class="cambiarM" for="flexSwitchCheckChecked">Pesos - Dolares</label>
-              </div>
-            </small>
-          </div>
+    <div class="container">
+      <div class="row-cols text-center my-3">
+        <h2>Carrito de Compras</h2>
+      </div>
+
+      <div class="row row-cols-2">
+        <div class="col">
+          <h4>Articulos a comprar</h4>
         </div>
-        
-        <table class="table">
+        <div class="col">
+          <small>
+            <div class="form-check form-switch float-end">
+              <input id="cambiarM" class="form-check-input" type="checkbox" role="switch" onclick="cambiarMoneda()">
+              <label class="cambiarM" for="flexSwitchCheckChecked">Pesos - Dolares</label>
+            </div>
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row" style="overflow-x:auto;">
+        <table class="table col">
           <thead class="table-dark">
             <tr>
               <th scope="col"></th>
               <th scope="col">Nombre</th>
+              <th scope="col">Moneda</th>
               <th scope="col">Costo</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Subtotal</th>
@@ -124,172 +139,185 @@
 
           </tbody>
         </table>
+      </div>
+
+      <hr>
+
+    </div>
+
+    <div class="container">
+      <!-- Form -->
+      <form id="form1" class="needs-validation" novalidate>
+        <div class="row row-cols-1 row-cols-lg-2 justify-content-around">
+          <div class="col">
+            <h4>Tipo de envío</h4>
+            <div>
+              <div class="form-check">
+                <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="premium"
+                  value="0.15" onclick="totales()" required>
+                <label class="form-check-label" for="premium">Premium 2 a 5 días (15%)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="express"
+                  value="0.07" onclick="totales()" required>
+                <label class="form-check-label" for="express">Express 5 a 8 días (7%)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="standard"
+                  value="0.05" onclick="totales()" required>
+                <label class="form-check-label" for="standard">Standard 12 a 15 días (5%)</label>
+                <div class="invalid-feedback">
+                  Seleccione un tipo de envío.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <h4 class="text-lg-center mt-2">Dirección de envío</h4>
+            <div class="row">
+              <div class="col-8 my-2">
+                <label for="calle" class="form-label">Calle</label>
+                <input type="text" class="form-control border border-dark conEspacios" id="calle" required
+                  oninput="conEspacios()">
+                <div class="invalid-feedback">
+                  Ingrese una calle.
+                </div>
+              </div>
+
+              <div class="col-4 my-2">
+                <label for="numeroP" class="form-label">Número</label>
+                <input type="number" class="form-control border border-dark" id="numeroP" required
+                  oninput="nCorrecto('numeroP',4,4)">
+                <div class="invalid-feedback">
+                  Ingrese un número de puerta.
+                </div>
+              </div>
+            </div>
+
+            <div class="row my-2">
+              <div class="col-12">
+                <label for="esquina" class="form-label">Esquina</label>
+                <input type="text" class="form-control border border-dark conEspacios" id="esquina" required
+                  oninput="conEspacios()">
+                <div class="invalid-feedback">
+                  Ingrese una esquina.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <hr>
 
-        <!-- Form -->
-        <form id="form1" class="needs-validation" novalidate>
-          <div class="row justify-content-around">
-                <div class="col-3">
-                  <h4>Tipo de envío</h4>
-                  <div>
-                      <div class="form-check">
-                        <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="premium" value="0.15" onclick="totales()" required>
-                        <label class="form-check-label" for="premium">Premium 2 a 5 días (15%)</label>
+        <div class="row">
+          <h4>Costos</h4>
+          <div class="col">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                  <p class="mb-1">Subtotal</p>
+                  <small id="subTC" class="text-muted"></small>
+                </div>
+                <small class="text-muted">Costo unitario del producto por cantidad</small>
+              </li>
+              <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                  <p class="mb-1">Costo del envío</p>
+                  <small id="ivaC" class="text-muted"></small>
+                </div>
+                <small class="text-muted">Según el tipo de envío</small>
+              </li>
+              <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                  <p class="mb-1">Total ($)</p>
+                  <small id="totalC" class="text-muted"></small>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <h4>Forma de pago</h4>
+          <div>
+            <small>
+              Transferencia bancaria:
+              <a id="botonCondiciones" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" req> Selecionar
+              </a>
+
+              <!-- Modal con formulario de pago -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body container">
+                      <div class="row-cols form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="credito"
+                          value="credito" required onclick="Fpago()">
+                        <label class="form-check-label" for="credito">Tarjeta de credito</label>
                       </div>
-                      <div class="form-check">
-                        <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="express" value="0.07" onclick="totales()" required>
-                        <label class="form-check-label" for="express">Express 5 a 8 días (7%)</label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input border border-dark tipo" type="radio" name="PES" id="standard" value="0.05" onclick="totales()" required>
-                        <label class="form-check-label" for="standard">Standard 12 a 15 días (5%)</label>
-                        <div class="invalid-feedback">
-                          Seleccione un tipo de envío.
+
+                      <hr>
+
+                      <div class="row">
+                        <div class="col">
+                          <label class="form-check-label" for="nTarjeta">Número de tarjeta</label>
+                          <input id="nTarjeta" type="number" class="form-control conEspacios" disabled required>
+                        </div>
+
+                        <div class="col">
+                          <label class="form-check-label" for="cSeguridad">Código de seg.</label>
+                          <input id="cSeguridad" type="number" class="form-control" disabled required>
                         </div>
                       </div>
-                  </div>
-                </div>
-                
-                <div class="col-4">
-                <h4 class="text-center">Dirección de envío</h4>
-                  <div class="row">
-                    <div class="col-8 my-2">
-                      <label for="calle" class="form-label">Calle</label>
-                      <input type="text" class="form-control border border-dark conEspacios" id="calle" required oninput="conEspacios()">
-                      <div class="invalid-feedback">
-                        Ingrese una calle.
-                      </div>
-                    </div>
-                    
-                    <div class="col-4 my-2">
-                      <label for="numeroP" class="form-label">Número</label>
-                      <input type="number" class="form-control border border-dark" id="numeroP" required oninput="nCorrecto('numeroP',4,4)">
-                      <div class="invalid-feedback">
-                        Ingrese un número de puerta.
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row my-2">
-                    <div class="col-12">
-                      <label for="esquina" class="form-label">Esquina</label>
-                      <input type="text" class="form-control border border-dark conEspacios" id="esquina" required oninput="conEspacios()">
-                      <div class="invalid-feedback">
-                        Ingrese una esquina.
+                      <div class="row-cols">
+                        <label class="form-check-label" for="fecha">Vencimient0</label>
+                        <input id="fecha" type="month" class="form-control" disabled required>
                       </div>
+
+                      <div class="row-cols form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="bancaria"
+                          value="bancaria" required onclick="Fpago()">
+                        <label class="form-check-label" for="bancaria">Transferenca bancaria</label>
+                      </div>
+
+                      <hr>
+
+                      <div class="row-cols">
+                        <label class="form-check-label" for="nCuenta">Número de cuenta</label>
+                        <input id="nCuenta" type="number" class="form-control" disabled required>
+                      </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                   </div>
                 </div>
-          </div>
+              </div>
 
-          <hr>
-
-          <div class="row">
-            <h4>Costos</h4>
-            <div class="col">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <div class="d-flex w-100 justify-content-between">
-                    <p class="mb-1">Subtotal</p>
-                    <small id="subTC" class="text-muted"></small>
-                  </div>
-                  <small class="text-muted">Costo unitario del producto por cantidad</small>
-                </li>
-                <li class="list-group-item">
-                  <div class="d-flex w-100 justify-content-between">
-                    <p class="mb-1">Costo del envío</p>
-                    <small id="ivaC" class="text-muted"></small>
-                  </div>
-                  <small class="text-muted">Según el tipo de envío</small>
-                </li>
-                <li class="list-group-item">
-                  <div class="d-flex w-100 justify-content-between">
-                    <p class="mb-1">Total ($)</p>
-                    <small id="totalC" class="text-muted"></small>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <hr>
-
-          <div class="row">
-            <h4>Forma de pago</h4>
-            <div>
-              <small>
-                Transferencia bancaria:  
-                <a id="botonCondiciones" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" req>  Selecionar  </a>
-                
-                 <!-- Modal con formulario de pago -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body container">
-                          <div class="row-cols form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="credito" value="credito" required onclick="Fpago()">
-                            <label class="form-check-label" for="credito">Tarjeta de credito</label>
-                          </div>
-
-                          <hr>
-
-                          <div class="row">
-                            <div class="col">
-                              <label class="form-check-label" for="nTarjeta">Número de tarjeta</label>
-                              <input id="nTarjeta" type="number" class="form-control conEspacios" disabled required>
-                            </div>
-                            
-                            <div class="col">
-                              <label class="form-check-label" for="cSeguridad">Código de seg.</label>
-                              <input id="cSeguridad" type="number" class="form-control" disabled required>
-                            </div>
-                          </div>
-
-                          <div class="row-cols">
-                            <label class="form-check-label" for="fecha">Vencimient0</label>
-                            <input id="fecha" type="month" class="form-control" disabled required >
-                          </div>
-
-                          <div class="row-cols form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="TcreditoTbancaria" id="bancaria" value="bancaria" required onclick="Fpago()">
-                            <label class="form-check-label" for="bancaria">Transferenca bancaria</label>
-                          </div>
-
-                          <hr>
-
-                          <div class="row-cols">
-                            <label class="form-check-label" for="nCuenta">Número de cuenta</label>
-                            <input id="nCuenta" type="number" class="form-control" disabled required>
-                          </div>
-                      </div>
-
-
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <small id="selectT" class="d-none" style="color: #dc3545;">
-                  Seleccione una forma de pago.
-                </small>
+              <small id="selectT" class="d-none" style="color: #dc3545;">
+                Seleccione una forma de pago.
               </small>
-            </div>
+            </small>
           </div>
+        </div>
 
-          <div class="row-cols-12 my-2">
-            <button id="botonFinalizarCompra" class="btn btn-primary w-100" type="submit">Finalizar compra</button>
-          </div>
-          
-        </form>
+        <div class="row-cols-12 my-2">
+          <button id="botonFinalizarCompra" class="btn btn-primary w-100" type="submit">Finalizar compra</button>
+        </div>
 
-      </div>
+      </form>
+    </div>
   </main>
 
   <!-- Alerta de compra exitosa -->
@@ -299,10 +327,12 @@
 
   <footer class="text-muted">
     <div class="container">
-      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button" class="btn btn-primary w-25">Volver arriba</button> </div>
+      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button"
+          class="btn btn-primary w-25">Volver arriba</button> </div>
 
       <div class="row">
-        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
+        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+          -
           2022</p>
         <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
       </div>

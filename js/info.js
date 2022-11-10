@@ -144,9 +144,11 @@ function setProductID(id) {
     window.location = "product-info.html"
 }
   
-document.getElementById("volverArriba").addEventListener("click", () => {
-    window.location = "#";
-});
+if(window.location.pathname != "/my-profile.html"){
+    document.getElementById("volverArriba").addEventListener("click", () => {
+        window.location = "#";
+    });
+}
 
 //Funciones para mostrar y modificar la tabla del carrito (paso de productinfo a cart)
 function unirSubir(){

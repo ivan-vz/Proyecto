@@ -90,10 +90,11 @@ function mostrarCarrito(){
         <tr>
             <th scope="row"><img src="${conversionCompra.image}" style="width: 5em" img-thumbnail></th>
             <td>${conversionCompra.name}</td>
-            <td>${conversionCompra.currency}${ajustarCifras(conversionCompra.unitCost.toLocaleString())}</td>
+            <td>${conversionCompra.currency}</td>
+            <td>${ajustarCifras(conversionCompra.unitCost.toLocaleString())}</td>
             <td><input type="number" class="form-control border border-dark" style="width: 4em;" id="subtotal${conversionCompra.id}" min="1" placeholder="${conversionCompra.count}" oninput="modificarCarrito(${compra.id})"></td>
-            <td id="subtotalRelativo${conversionCompra.id}">${conversionCompra.currency}${ajustarCifras(subtotal.toLocaleString())}</td>
-            <td><img src="img/x-octagon.svg" style="width: 50%; cursor: pointer;" onclick="borrar(${conversionCompra.id})"></td>
+            <td id="subtotalRelativo${conversionCompra.id}">${ajustarCifras(subtotal.toLocaleString())}</td>
+            <td><img src="img/x-octagon.svg" style="width: 2em; cursor: pointer;" onclick="borrar(${conversionCompra.id})"></td>
         </tr>
         `;
     });

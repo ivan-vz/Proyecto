@@ -189,18 +189,6 @@ a.custom-card:hover {
   color: orange;
 }
 
-/* Agregados mios */
-
-.pb-5 h2, .pb-5 h5 {
-  text-align: center;
-}
-.pb-5 h2{
-  margin-top: 1em;
-}
-.pb-5 h5{
-  margin-bottom: 2em;
-}
-
 /* Boton de perfil */
 .menuC {
   border: none;

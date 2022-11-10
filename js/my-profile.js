@@ -101,11 +101,11 @@ const placeHolderAndPhoto = () => {
     document.getElementById("telefono").setAttribute('placeholder', Usuario.phone);
     if(Usuario.img){
       document.getElementById("fotoPerfil").innerHTML = `
-      <img src="${Usuario.img}" class="border border-primary border-5 float-end" style="border-radius: 1em; width: 10em; height: 10em;" alt="fotoPerfil">
+      <img src="${Usuario.img}" class="border border-primary border-5 float-lg-end"  style="border-radius: 1em; width: 10em; height: 10em;" alt="fotoPerfil">
     `
     } else {
       document.getElementById("fotoPerfil").innerHTML = `
-      <img src="img/img_perfil.png" class="border border-primary border-5 float-end" style="border-radius: 1em; width: 10em; height: 10em;" alt="fotoPerfil">
+      <img src="img/img_perfil.png" class="border border-primary border-5 float-lg-end"  style="border-radius: 1em; width: 10em; height: 10em;" alt="fotoPerfil">
     `
     }
   }
