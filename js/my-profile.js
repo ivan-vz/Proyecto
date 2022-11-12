@@ -1,107 +1,113 @@
-document.addEventListener("DOMContentLoaded",async function(e){
-  
-    verificarInicioDeSesion();
-    placeHolderAndPhoto();
+document.addEventListener("DOMContentLoaded", async function (e) {
+  verificarInicioDeSesion();
+  placeHolderAndPhoto();
 });
 
 //Funcion Bootstrap que cancela el subit en caso de no cumplir las condiciones
 (() => {
-    
-    const forms = document.querySelectorAll('.validacionPerfil')
 
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-          event.preventDefault();
-          event.stopPropagation();
-          form.classList.add('was-validated');
-          if(form.checkValidity()){
-            modificarDatosDeUsuario();
-            form.classList.remove('was-validated');
-            //Funcion para el msj de guardado exitoso
-            const toastTrigger = document.getElementById('guardarB');
-            const toastLiveExample = document.getElementById('liveToast');
-            const toast = new bootstrap.Toast(toastLiveExample)
+  const forms = document.querySelectorAll('.validacionPerfil')
 
-            toast.show()
-            setTimeout(function() {
-              toast.hide();
-            }, 3000);
-          }
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      form.classList.add('was-validated');
+      if (form.checkValidity()) {
+        modificarDatosDeUsuario();
+        form.classList.remove('was-validated');
+        //Funcion para el msj de guardado exitoso
+        const btntoast = document.getElementById('guardarB');
+        const toastGuardarP = document.getElementById('toastGurdar');
+        const toast = new bootstrap.Toast(toastGuardarP)
 
-      }, false)
-    })
+        toast.show()
+        setTimeout(function () {
+          toast.hide();
+        }, 3000);
+      }
+
+    }, false)
+  })
 })()
 
-document.getElementById("inputFoto").onchange = function(){//Input tipo file
+//Funcion para cambiar la foto
+document.getElementById("inputFoto").onchange = function () {
 
-  const read = new FileReader(); //Objeto que le permite a la web leer archivos locales
-  const file = this.files; //Hace referencia a la foto seleccionada
-  
-  read.onload = function(){ //onload se ejecuta cuando el elemento read es leido con readAsDataURL ==> es como una funcion async
+  const read = new FileReader(); 
+  const file = this.files; 
+
+  read.onload = function () {
     const result = read.result;
     const url = result;
-    let Usuario = JSON.parse(localStorage.getItem("datosUser")); 
-    Usuario.img = url;
-    localStorage.setItem("datosUser", JSON.stringify(Usuario));
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    perfilIniciado.img = url;
+    localStorage.setItem("perfilIniciado", JSON.stringify(perfilIniciado));
+    actualizarRegistroPerfiles();
     placeHolderAndPhoto();
 
   }
-  
-  read.readAsDataURL(file[0]); //Funcion que codifica la image y la manda como resultado de una promesa 
+
+  read.readAsDataURL(file[0]);
 }
 
+//Funcion para actualizar los datos del perfil
 const modificarDatosDeUsuario = () => {
-  let pNombre = document.getElementById("pName").value;
-  let sNombre = document.getElementById("sName").value;
-  let pApellido = document.getElementById("pSurname").value;
-  let sApellido = document.getElementById("sSurname").value;
-  let telefono = document.getElementById("telefono").value;
-  let email = document.getElementById("emailPerfil").value;
+  let pNombre = document.getElementById("pName");
+  let sNombre = document.getElementById("sName");
+  let pApellido = document.getElementById("pSurname");
+  let sApellido = document.getElementById("sSurname");
+  let telefono = document.getElementById("telefono");
+  let email = document.getElementById("emailPerfil");
 
-  let Usuario = JSON.parse(localStorage.getItem("datosUser"));
-  if(Usuario != null){
-      Usuario.name = pNombre;
-      Usuario.secondName = sNombre;
-      Usuario.surname = pApellido;
-      Usuario.secondSurname = sApellido;
-      Usuario.email = email;
-      Usuario.phone = telefono;
+  let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+  if (perfilIniciado) {
+    modificarDatosComentarios(perfilIniciado.name, pNombre.value);
+    
+    perfilIniciado.name = pNombre.value;
+    perfilIniciado.secondName = sNombre.value;
+    perfilIniciado.surname = pApellido.value;
+    perfilIniciado.secondSurname = sApellido.value;
+    perfilIniciado.email = email.value;
+    perfilIniciado.phone = telefono.value;
+    
+    localStorage.setItem("perfilIniciado", JSON.stringify(perfilIniciado));
+    actualizarRegistroPerfiles();
+  } 
 
-      localStorage.setItem("datosUser", JSON.stringify(Usuario));
-      document.getElementById("emailPerfil").setAttribute('placeholder', email);
-  }
+  pNombre.value = "";
+  sNombre.value = "";
+  pApellido.value = "";
+  sApellido.value = "";
+  telefono.value = "";
+  email.value = "";
 
-  document.getElementById("pName").value = "";
-  document.getElementById("sName").value = "";
-  document.getElementById("pSurname").value = "";
-  document.getElementById("sSurname").value = "";
-  document.getElementById("telefono").value = "";
-  document.getElementById("emailPerfil").value = "";
-  
   verificarInicioDeSesion();
   placeHolderAndPhoto();
 };
 
+//Funcion para actualizar los datos de los input en pantalla
 const placeHolderAndPhoto = () => {
-  let Usuario = JSON.parse(localStorage.getItem("datosUser"));
-  if(!Usuario){
-    document.getElementById("emailPerfil").removeAttribute('placeholder');
-    document.getElementById("pName").removeAttribute('placeholder');
-    document.getElementById("sName").removeAttribute('placeholder');
-    document.getElementById("pSurname").removeAttribute('placeholder');
-    document.getElementById("sSurname").removeAttribute('placeholder');
-    document.getElementById("telefono").removeAttribute('placeholder');
-    document.getElementById("fotoPerfil").innerHTML = " ";
+  let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+
+  if (!perfilIniciado) {
+    document.getElementById("emailPerfil").value = "";
+    document.getElementById("pName").value = "";
+    document.getElementById("sName").value = "";
+    document.getElementById("pSurname").value = "";
+    document.getElementById("sSurname").value = "";
+    document.getElementById("telefono").value = "";
+    document.getElementById("fotoPerfil").innerHTML = "";
   } else {
-    document.getElementById("emailPerfil").setAttribute('placeholder', Usuario.email);
-    document.getElementById("pName").setAttribute('placeholder', Usuario.name);
-    document.getElementById("sName").setAttribute('placeholder', Usuario.secondName);
-    document.getElementById("pSurname").setAttribute('placeholder', Usuario.surname);
-    document.getElementById("sSurname").setAttribute('placeholder', Usuario.secondSurname);
-    document.getElementById("telefono").setAttribute('placeholder', Usuario.phone);
-    if(Usuario.img){
+    document.getElementById("emailPerfil").value = perfilIniciado.email;
+    document.getElementById("pName").value = perfilIniciado.name;
+    document.getElementById("sName").value = perfilIniciado.secondName;
+    document.getElementById("pSurname").value = perfilIniciado.surname;
+    document.getElementById("sSurname").value = perfilIniciado.secondSurname;
+    document.getElementById("telefono").value = perfilIniciado.phone;
+    if (perfilIniciado.img) {
       document.getElementById("fotoPerfil").innerHTML = `
-      <img src="${Usuario.img}" class="border border-primary border-5 float-lg-end"  style="border-radius: 1em; width: 10em; height: 10em;" alt="fotoPerfil">
+      <img src="${perfilIniciado.img}" class="border border-primary border-5 float-lg-end"  style="border-radius: 1em; width: 10em; height: 10em;" alt="fotoPerfil">
     `
     } else {
       document.getElementById("fotoPerfil").innerHTML = `

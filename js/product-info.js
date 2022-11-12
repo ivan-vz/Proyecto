@@ -1,48 +1,78 @@
-let productId = localStorage.getItem("PID"); // ID del producto al que entramos
-const urlProductsInfo = PRODUCT_INFO_URL + productId + EXT_TYPE; // Link para poder entrar al product-info del producto especifico
-const opiniones = PRODUCT_INFO_COMMENTS_URL + productId + EXT_TYPE; // Link para obtener los comentarios
+let productId = localStorage.getItem("PID");
+const urlProductsInfo = PRODUCT_INFO_URL + productId + EXT_TYPE;
+const opiniones = PRODUCT_INFO_COMMENTS_URL + productId + EXT_TYPE;
 let lista = document.getElementById("contenedor");
-let comentar = document.getElementById("enviar");
 let producto = [];
 let comment = [];
 let estrellas;
 
-//Funcion para conseguir los datos de un producto
+//Funcion para conseguir los datos de un producto, inicializar y/o mostrar los comentarios, anular o no un boton
 document.addEventListener("DOMContentLoaded",async function(e){
     verificarInicioDeSesion();
-    producto =  await getJSONData(urlProductsInfo); //Pedimos la informacion del producto
-    showProductInfo(producto.data);
-    comment =  await getJSONData(opiniones); //Pedimos los comentarios del producto
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
 
-    //Guardamos en el localStorage los comentarios para poder mostrarlos
-    if(JSON.parse(localStorage.getItem("ListaComentarios"+productId)) == null){
-        localStorage.setItem("ListaComentarios"+productId, JSON.stringify(comment.data));
-        showComments();
-    } else {
-        showComments();
+    producto =  await getJSONData(urlProductsInfo);
+    showProductInfo(producto.data);
+    comment =  await getJSONData(opiniones);
+
+    if(perfilIniciado) {
+
+        let registroComentarios = {
+            id: productId,
+            comentarios: comment.data
+        }
+
+        if(comentariosPuestos){
+            let existenComentarios = comentariosPuestos.find((producto) => {
+                return (producto.id === productId);
+            });
+            
+            if(!existenComentarios){
+                comentariosPuestos.push(registroComentarios);
+                localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
+            }
+        } else {
+            comentariosPuestos = [];
+            comentariosPuestos.push(registroComentarios);
+            localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
+        }
     }
+
+    showComments();
 });
 
-// Comentar
+//Funcion para subir un comentario
 comentar.addEventListener("click",() => {
     let date = new Date();
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
     let nuevoCom = {
         "product": productId,
         "score": parseInt(document.getElementById("tuPuntuacion").value),
         "description": document.getElementById("tuOpinion").value,
-        "user": infoUsuario.usuario, //variable creada en info.js
+        "user": perfilIniciado.name,
         "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
     }
-    comment.data.unshift(nuevoCom);
-    localStorage.setItem("ListaComentarios"+productId, JSON.stringify(comment.data));
+
+    let indexAComentar = comentariosPuestos.map(object => object.id).indexOf(productId);
+    comentariosPuestos[indexAComentar].comentarios.unshift(nuevoCom);
+    localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
     showComments();
 })
 
-//Funcion para mandar los comentarios fijos y nuevos al html
+//Funcion para mostrar los comentarios
 function showComments(){
+    let comentariosAMostrar = [];
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
+
+    let indexAComentar = comentariosPuestos.map(object => object.id).indexOf(productId);
+    comentariosAMostrar = comentariosPuestos[indexAComentar].comentarios;
+    
     document.getElementById("Comentarios").innerHTML = ""; 
-    let comments = JSON.parse(localStorage.getItem("ListaComentarios"+productId));
-    comments.forEach(msj => {
+    
+    comentariosAMostrar.forEach(msj => {
         let k = 1;
         estrellas = "";
         let Us_Da = `<li class="list-group-item"><strong>${msj.user}</strong> - ${msj.dateTime} `;
@@ -60,19 +90,12 @@ function showComments(){
 }
 
 
-//Funcion para mandar toda la informacion del producto al html
+//Funcion para mostrar la informacion del producto
 function showProductInfo(product){
     
     let imagenes = "";
     let objR = "";
     let pos = 0;
-
-    let carritoActual = JSON.parse(localStorage.getItem("carroCompras"));
-
-    if((carritoActual === null) || (!(carritoActual.find(({id}) => id === product.id)))){
-        document.getElementById("comprarProducto").removeAttribute("disabled");
-        document.getElementById("cantComprar").removeAttribute("disabled");
-    }
 
     document.getElementById("nameP").innerHTML = product.name;
     document.getElementById("costP").innerHTML = product.currency + product.cost;
@@ -120,13 +143,14 @@ function showProductInfo(product){
     document.getElementById("ORelacionados").innerHTML = objR;
 }
 
-
+//Funcion para agregar al carrito
 function crearNuevoProducto(){
 
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     prod = producto.data;
-    let pedidos = document.getElementById("cantComprar").value; //Input del boton "agregar al carrito"
+    let pedidos = document.getElementById("cantComprar").value;
 
-    if (pedidos != "" && pedidos > 0){ //Si el valor tiene sentido se crea un nuevo objeto con el formato del prefijado
+    if (pedidos != "" && pedidos > 0){
         let registro = {
             id: prod.id,
             name: prod.name,
@@ -135,12 +159,17 @@ function crearNuevoProducto(){
             image: prod.images[0],
             unitCost: prod.cost
         }
-        localStorage.setItem("nuevoProducto", JSON.stringify(registro));
+        perfilIniciado.shop.cart.push(registro);
+        localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
+        actualizarRegistroPerfiles();
       
-        document.getElementById("comprarProducto").setAttribute("disabled", ""); //Desactivamos el boton y el input
+        document.getElementById("comprarProducto").setAttribute("disabled", "");
         document.getElementById("cantComprar").setAttribute("disabled", "");
 
-        unirSubir();
+        document.getElementById("alert-success").classList.add("show");
+            setTimeout(function () {
+                document.getElementById("alert-success").classList.remove("show");
+            }, 3000);
     } else {
         document.getElementById("alert-warning").classList.add("show");
         setTimeout(function() {
@@ -149,7 +178,36 @@ function crearNuevoProducto(){
     }
 }
 
-//Botones para volver a productos  arriba
+//Funcion qe controla el estado del boton y el input para "agregar productos"
+let chequearCarro = () => {
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    if(perfilIniciado){
+        let indexAComprar = perfilIniciado.shop.cart.map(producto => producto.id).indexOf(parseInt(productId));
+        if(indexAComprar === -1){
+            document.getElementById("comprarProducto").removeAttribute("disabled");
+            document.getElementById("cantComprar").removeAttribute("disabled");
+        } else {
+            document.getElementById("comprarProducto").setAttribute("disabled", true);
+            document.getElementById("cantComprar").setAttribute("disabled", true);
+        }
+    } else {
+        document.getElementById("comprarProducto").setAttribute("disabled", true);
+        document.getElementById("cantComprar").setAttribute("disabled", true);
+    }
+};
+
+//Funcion que controla el boton de comentar segun el estado del usuario
+let chequearComentario = () => {
+    let comentar = document.getElementById("comentar");
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    if(!perfilIniciado){
+        comentar.setAttribute("disabled", true);
+    } else {
+        comentar.removeAttribute("disabled");
+    }
+};
+
+//Botones para volver a productos
 document.getElementById("volverProducts").addEventListener("click", () => {
     window.location = "products.html";
 });

@@ -31,61 +31,67 @@
           </li>
           <li class="nav-item">
             <div class="dropdown d-flex d-none d-lg-block">
-              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <div class="d-flex d-block d-lg-none">
-              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
+                </li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
             <!-- Modal Para iniciar sesión -->
             <form action="" class="needs-validation validacionLogin" novalidate>
-              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
-                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="input-group my-4">
-                          <span class="input-group-text">@</span>
-                          <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar un email.
+                      <div class="input-group my-4">
+                        <span class="input-group-text">@</span>
+                        <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" required>
+                        <div class="invalid-feedback">
+                          Posibles errores: Email equivocado o con formato erróneo.
+                        </div>
+                      </div>
+                
+                      <div class="input-group my-4">
+                        <span class="input-group-text">&</span>
+                        <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" required>
+                        <div class="invalid-feedback">
+                          Posibles errores: Contraseña equivocada o que no cumple con el largo de 6 caracteres.
+                        </div>
+                      </div>
+                
+                      <div class="input-group my-4">
+                          <div class="input-group-text">
+                            <input type="checkbox" id="recordarme">
                           </div>
-                        </div>
-                  
-                        <div class="input-group my-4">
-                          <span class="input-group-text">&</span>
-                          <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" oninput="sinEspacios()" required>
-                          <div class="invalid-feedback">
-                            Debe ingresar una contraseña con al menos 6 caracteres.
-                          </div>
-                        </div>
-                  
-                        <div class="input-group my-4">
-                            <div class="input-group-text">
-                              <input type="checkbox" id="recordarme">
-                            </div>
-                            <span class="input-group-text">Recordarme</span>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Iniciar</button>
-                    </div>
+                          <span class="input-group-text">Recordarme</span>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onclick="cuentaCorrectaOLibre()">Iniciar</button>
+                  </div>
                   </div>
                 </div>
               </div>
-            </form>          
+            </form>
           </li>
         </ul>
       </div>
@@ -128,15 +134,16 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="productCostInput">Costo</label>
-              <input type="number" name="productCostInput" class="form-control" id="productCostInput" placeholder="" required="" value="0"
-                min="0">
+              <input type="number" name="productCostInput" class="form-control" id="productCostInput" placeholder=""
+                required="" value="0" min="0">
               <div class="invalid-feedback">
                 El costo debe ser mayor que 0.
               </div>
             </div>
             <div class="col-md-4 mb-3">
               <label for="productCurrency">Moneda</label>
-              <select name="productCurrency" class="form-select custom-select d-block w-100" id="productCurrency" required>
+              <select name="productCurrency" class="form-select custom-select d-block w-100" id="productCurrency"
+                required>
                 <option value="" hidden selected>Seleccionar moneda</option>
                 <option>Pesos Uruguayos (UYU)</option>
                 <option>Dólares (USD)</option>
@@ -166,8 +173,8 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="productCountInput">Cantidad en stock</label>
-              <input type="number" name="productCountInput" class="form-control" id="productCountInput"  required value="1"
-                min="0">
+              <input type="number" name="productCountInput" class="form-control" id="productCountInput" required
+                value="1" min="0">
               <div class="invalid-feedback">
                 La cantidad es requerida.
               </div>
@@ -223,12 +230,33 @@
       </div>
     </div>
   </div>
+
+  <!-- Nueva Cuenta -->
+  <div class="toast-container position-fixed top-0 p-3">
+    <div id="nuevaCuentaCreada" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header" style="background-color: lightskyblue; color: black;">
+        <strong>Se a creado exitosamente una nueva cuenta</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inicio de sesion -->
+  <div class="toast-container position-fixed top-0 p-3">
+    <div id="inicioExitoso" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header" style="background-color: lightskyblue; color: black;">
+        <strong>¡Bienvenido a e-Commerce!</strong>
+      </div>
+    </div>
+  </div>
+
   <footer class="text-muted">
     <div class="container">
-      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button" class="btn btn-primary w-25">Volver arriba</button> </div>
+      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button"
+          class="btn btn-primary w-25">Volver arriba</button> </div>
 
       <div class="row">
-        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
+        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+          -
           2022</p>
         <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
       </div>
