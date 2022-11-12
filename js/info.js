@@ -13,11 +13,6 @@
                 document.getElementById("password").value = "";
                 form.classList.remove('was-validated');
                 document.getElementById("closeB").click();
-                if (window.location.pathname === "/cart.html") {
-                    document.getElementById("botonFinalizarCompra").removeAttribute("disabled");
-                    mostrarCarrito();
-                }
-
             }
 
         }, false)
@@ -213,41 +208,50 @@ const verificarInicioDeSesion = () => {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     let liPerfil = Array.from(document.getElementsByClassName("botonPerfil"));
     let liCerrar = Array.from(document.getElementsByClassName("botonCerrar"));
+    let liCarrito = Array.from(document.getElementsByClassName("botonCarrito"));
 
 
     if (!perfilIniciado) {
         document.getElementById("emailLoginG").innerHTML = "Invitado";
         document.getElementById("emailLoginC").innerHTML = "Invitado";
 
-        liPerfil.forEach(((liP) => {
+        liPerfil.forEach((liP) => {
             liP.innerHTML = `
                 <button type="button" class="dropdown-item border aC" style="border-radius: 0.4em;" data-bs-toggle="modal" data-bs-target="#modalLogin">
                     Iniciar Sesión
                 </button>
 
             `
-        }))
+        })
 
-        liCerrar.forEach(((liC) => {
+        liCerrar.forEach((liC) => {
             liC.innerHTML = "";
-        }));
+        });
+
+        liCarrito.forEach((liCA) => {
+            liCA.innerHTML = "";
+        });
 
     } else {
 
         document.getElementById("emailLoginG").innerHTML = perfilIniciado.name;
         document.getElementById("emailLoginC").innerHTML = perfilIniciado.name;
 
-        liPerfil.forEach(((liP) => {
+        liPerfil.forEach((liP) => {
             liP.innerHTML = `
                 <a class="dropdown-item border aC" style="border-radius: 0.4em;" href="my-profile.html">Mi perfil</a>
             `
-        }));
+        });
 
-        liCerrar.forEach(((liC) => {
+        liCerrar.forEach((liC) => {
             liC.innerHTML = `
                 <a id="btnCerrar" class="dropdown-item border aC" style="border-radius: 0.4em;" href="#" onclick="cerrarS()">Cerrar sesión</a>
             `
-        }));
+        });
+
+        liCarrito.forEach((liCA) => {
+            liCA.innerHTML = `<a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>`;
+        });
     }
 
     if (window.location.pathname === "/product-info.html") {
@@ -259,12 +263,8 @@ const verificarInicioDeSesion = () => {
 //Funcion para cerrar sesion
 function cerrarS() {
     localStorage.removeItem("perfilIniciado");
-    if (window.location.pathname === "/my-profile.html") {
+    if (window.location.pathname === "/my-profile.html" || window.location.pathname === "/cart.html") {
         window.location = "index.html";
-    }
-    if (window.location.pathname === "/cart.html") {
-        document.getElementById("botonFinalizarCompra").setAttribute("disabled", true);
-        mostrarCarrito();
     }
     verificarInicioDeSesion();
 }

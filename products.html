@@ -36,8 +36,7 @@
                 data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
-                </li>
+                <li class="botonCarrito"></li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
@@ -46,8 +45,7 @@
                 data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
-                <li><a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>
-                </li>
+                <li class="botonCarrito"></li>
                 <li class="botonCerrar"></li>
               </ul>
             </div>
@@ -125,7 +123,7 @@
         <div class="container row justify-content-end mb-1">
           <div class="col-3">
             <input class="form-control" type="search" id="buscadorGrande" placeholder="Buscador..."
-              onkeyup="fBGrande()">
+              oninput="fBGrande()">
           </div>
           <div class="col-3">
             <input class="form-control" type="number" placeholder="Precio mínimo" min="1"
@@ -197,7 +195,7 @@
 
 
   <!-- Nueva Cuenta -->
-  <div class="toast-container position-fixed top-0 p-3">
+  <div class="toast-container position-fixed bottom-0 p-3">
     <div id="nuevaCuentaCreada" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header" style="background-color: lightskyblue; color: black;">
         <strong>Se a creado exitosamente una nueva cuenta</strong>
@@ -206,7 +204,7 @@
   </div>
 
   <!-- Inicio de sesion -->
-  <div class="toast-container position-fixed top-0 p-3">
+  <div class="toast-container position-fixed bottom-0 p-3">
     <div id="inicioExitoso" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header" style="background-color: lightskyblue; color: black;">
         <strong>¡Bienvenido a e-Commerce!</strong>

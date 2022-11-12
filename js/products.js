@@ -8,9 +8,9 @@ let maxCount;
 //Funcion para conseguir los datos
 document.addEventListener("DOMContentLoaded", async function (e) {
     verificarInicioDeSesion();
-    mercancia = await getJSONData(url);
-    showProductsList(mercancia.data.products);
-    document.getElementById("tituloSecundario").innerHTML = `Verás aquí todos los productos de la categoría  ${mercancia.data.catName}`;
+    mercancia = (await getJSONData(url)).data;
+    showProductsList(mercancia.products);
+    document.getElementById("tituloSecundario").innerHTML = `Verás aquí todos los productos de la categoría  ${mercancia.catName}`;
 });
 
 //Función que recibe un array con los datos de los productos y los muestra en pantalla
@@ -81,9 +81,9 @@ const rangoPrecio = () => {
     }
 
     if ((minCount == undefined) && (maxCount == undefined)) {
-        showProductsList(mercancia.data.products);
+        showProductsList(mercancia.products);
     } else {
-        newList = mercancia.data.products.filter(entreMaxMin);
+        newList = mercancia.products.filter(entreMaxMin);
         showProductsList(newList);
     }
 };
@@ -113,12 +113,13 @@ const limpiar = () => {
     document.getElementById("rangeFilterCountMaxChico").value = "";
     document.getElementById("rangeFilterCountMinGrande").value = "";
     document.getElementById("rangeFilterCountMaxGrande").value = "";
+    document.getElementById("buscadorGrande").value = "";
 
     minCount = undefined;
     maxCount = undefined;
     newList = [];
 
-    showProductsList(mercancia.data.products);
+    showProductsList(mercancia.products);
 };
 
 //Funciones para ordenar segun lo seleccionado 
@@ -137,7 +138,7 @@ document.getElementById("sortByCount").addEventListener("click", function () {
 //Funcion que controla si se puso algun filtro o no
 function sortAndShowProducts(codEsp, arrayActual) {
     if (arrayActual.length == 0) {
-        newList = sortProducts(codEsp, mercancia.data.products);
+        newList = sortProducts(codEsp, mercancia.products);
     } else {
         newList = sortProducts(codEsp, arrayActual);
     }
@@ -180,14 +181,14 @@ function Fbuscador(palabraEscrita) {
     ListaBusc = [];
 
     if (newList.length == 0) {
-        mercancia.data.products.forEach((merc) => {
+        mercancia.products.forEach((merc) => {
             if (merc.name.toLowerCase().includes(palabraEscrita) || merc.description.toLowerCase().includes(palabraEscrita)) {
                 ListaBusc.push(merc);
             }
         });
 
         if (ListaBusc.length == 0) {
-            showProductsList(mercancia.data.products);
+            showProductsList(mercancia.products);
         } else {
             showProductsList(ListaBusc);
         }

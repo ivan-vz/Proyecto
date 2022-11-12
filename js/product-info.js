@@ -59,6 +59,8 @@ comentar.addEventListener("click",() => {
     comentariosPuestos[indexAComentar].comentarios.unshift(nuevoCom);
     localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
     showComments();
+    document.getElementById("tuPuntuacion").value = 1;
+    document.getElementById("tuOpinion").value = "";
 })
 
 //Funcion para mostrar los comentarios
@@ -148,13 +150,13 @@ function crearNuevoProducto(){
 
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     prod = producto.data;
-    let pedidos = document.getElementById("cantComprar").value;
+    let pedidos = document.getElementById("cantComprar");
 
-    if (pedidos != "" && pedidos > 0){
+    if (pedidos.value != "" && pedidos.value > 0){
         let registro = {
             id: prod.id,
             name: prod.name,
-            count: pedidos,
+            count: pedidos.value,
             currency: prod.currency,
             image: prod.images[0],
             unitCost: prod.cost
@@ -163,6 +165,7 @@ function crearNuevoProducto(){
         localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
         actualizarRegistroPerfiles();
       
+        pedidos.value = "";
         document.getElementById("comprarProducto").setAttribute("disabled", "");
         document.getElementById("cantComprar").setAttribute("disabled", "");
 
