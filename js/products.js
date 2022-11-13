@@ -1,9 +1,30 @@
+//Variables
+
+//Datos y url
 let codigo = localStorage.getItem("catID");
 const url = PRODUCTS_URL + codigo + EXT_TYPE;
+
+//Array de para los filtrados
 let mercancia = [];
 let newList = [];
+
+//Filtros de valor
 let minCount;
 let maxCount;
+
+//Filtros segun Pantalla
+let minChico = document.getElementById("rangeFilterCountMinChico");
+let maxChico = document.getElementById("rangeFilterCountMaxChico");
+let minGrande = document.getElementById("rangeFilterCountMinGrande");
+let maxGrande = document.getElementById("rangeFilterCountMaxGrande");
+let buscChico = document.getElementById("buscadorChico");
+let buscGrande = document.getElementById("buscadorGrande");
+
+//Botones
+let btnFiltroC = document.getElementById("rangeFilterCountChico");
+let btnFiltroG = document.getElementById("rangeFilterCountGrande");
+let btnLimpiarC = document.getElementById("clearRangeFilterChico");
+let btnLimpiarG = document.getElementById("clearRangeFilterGrande");
 
 //Funcion para conseguir los datos
 document.addEventListener("DOMContentLoaded", async function (e) {
@@ -53,15 +74,15 @@ function showProductsList(array) {
 }
 
 //Filtros
-document.getElementById("rangeFilterCountChico").addEventListener("click", () => {
-    minCount = document.getElementById("rangeFilterCountMinChico").value;
-    maxCount = document.getElementById("rangeFilterCountMaxChico").value;
+btnFiltroC.addEventListener("click", () => {
+    minCount = minChico.value;
+    maxCount = maxChico.value;
     rangoPrecio();
 });
 
-document.getElementById("rangeFilterCountGrande").addEventListener("click", () => {
-    minCount = document.getElementById("rangeFilterCountMinGrande").value;
-    maxCount = document.getElementById("rangeFilterCountMaxGrande").value;
+btnFiltroG.addEventListener("click", () => {
+    minCount = minGrande.value;
+    maxCount = maxGrande.value;
     rangoPrecio();
 });
 
@@ -100,20 +121,21 @@ function entreMaxMin(prod) {
 };
 
 //Funcion que al clickear "Limpiar" reinicia todos los elementos en pantalla
-document.getElementById("clearRangeFilterChico").addEventListener("click", () => {
+btnLimpiarC.addEventListener("click", () => {
     limpiar();
 });
 
-document.getElementById("clearRangeFilterGrande").addEventListener("click", () => {
+btnLimpiarG.addEventListener("click", () => {
     limpiar();
 });
 
 const limpiar = () => {
-    document.getElementById("rangeFilterCountMinChico").value = "";
-    document.getElementById("rangeFilterCountMaxChico").value = "";
-    document.getElementById("rangeFilterCountMinGrande").value = "";
-    document.getElementById("rangeFilterCountMaxGrande").value = "";
-    document.getElementById("buscadorGrande").value = "";
+    minChico.value = "";
+    maxChico.value = "";
+    minGrande.value = "";
+    maxGrande.value = "";
+    buscChico.value = "";
+    buscGrande.value = "";
 
     minCount = undefined;
     maxCount = undefined;
@@ -167,12 +189,12 @@ function sortProducts(codEsp, arrayActual) {
 //Buscador
 //Funcion que filtra los objetos a tiempo real con el input de "buscar..."
 const fBChico = () => {
-    let palabraEscrita = document.getElementById("buscadorChico").value.toLowerCase();
+    let palabraEscrita = buscChico.value.toLowerCase();
     Fbuscador(palabraEscrita);
 };
 
 const fBGrande = () => {
-    let palabraEscrita = document.getElementById("buscadorGrande").value.toLowerCase();
+    let palabraEscrita = buscGrande.value.toLowerCase();
     Fbuscador(palabraEscrita);
 };
 

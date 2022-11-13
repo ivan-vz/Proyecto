@@ -1,4 +1,107 @@
-//Fncion que controla el modal del inicio de sesion
+//Variables
+
+//Local storage
+let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
+let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
+
+//Iniciar Sesion
+let emailIngresado = document.getElementById("email");
+let passwordIngresada = document.getElementById("password");
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+//Funcion que controla si el usuario esta o no ingresado para mostrar los elementos indicados
+const verificarInicioDeSesion = () => {
+    let liPerfil = Array.from(document.getElementsByClassName("botonPerfil"));
+    let liCerrar = Array.from(document.getElementsByClassName("botonCerrar"));
+    let liCarrito = Array.from(document.getElementsByClassName("botonCarrito"));
+
+    if (!perfilIniciado) {
+        console.log("Entre a iniciado");
+        document.getElementById("emailLoginG").innerHTML = "Invitado";
+        document.getElementById("emailLoginC").innerHTML = "Invitado";
+        
+        console.log(document.getElementById("emailLoginG"));
+        console.log(document.getElementById("emailLoginC"));
+
+        liPerfil.forEach((liP) => {
+            console.log(liP);
+            liP.innerHTML = `
+                <button type="button" class="dropdown-item border aC" style="border-radius: 0.4em;" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                    Iniciar Sesión
+                </button>
+
+            `
+        })
+
+        liCerrar.forEach((liC) => {
+            console.log(liC);
+            liC.innerHTML = "";
+        });
+
+        liCarrito.forEach((liCA) => {
+            console.log(liCA);
+            liCA.innerHTML = "";
+        });
+
+    } else {
+
+        console.log("Entre a cerrado");
+        document.getElementById("emailLoginG").innerHTML = perfilIniciado.name;
+        document.getElementById("emailLoginC").innerHTML = perfilIniciado.name;
+
+        console.log(document.getElementById("emailLoginG"));
+        console.log(document.getElementById("emailLoginC"));
+
+        liPerfil.forEach((liP) => {
+            console.log(liP);
+            liP.innerHTML = `
+                <a class="dropdown-item border aC" style="border-radius: 0.4em;" href="my-profile.html">Mi perfil</a>
+            `
+        });
+
+        liCerrar.forEach((liC) => {
+            console.log(liC);
+            liC.innerHTML = `
+                <a id="btnCerrar" class="dropdown-item border aC" style="border-radius: 0.4em;" href="#" onclick="cerrarS()">Cerrar sesión</a>
+            `
+        });
+
+        liCarrito.forEach((liCA) => {
+            console.log(liCA);
+            liCA.innerHTML = `<a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>`;
+        });
+    }
+
+    if (window.location.pathname === "/product-info.html") {
+        chequearCarro();
+        chequearComentario();
+    }
+};
+
+//Funcion para actualizar la informacion de un comentario al editar el perfil
+const modificarDatosComentarios = (usuarioActual, nuevoUsuario) => {
+    comentariosPuestos.forEach((producto) => {
+        let listaComentarios = producto.comentarios.map(comentario => comentario.user);
+        let listaComentariosFiltrados = listaComentarios.filter((usuario) => usuario === usuarioActual);
+        listaComentariosFiltrados.forEach((comment) => {
+            let indexComentarioAModificar = producto.comentarios.map(comm => comm.user).indexOf(comment);
+            producto.comentarios[indexComentarioAModificar].user = nuevoUsuario;
+            localStorage.setItem("comentariosPuestos", JSON.stringify(comentariosPuestos));
+        });
+    });
+};
+
+//Funcion lara actualizar el registro de perfiles
+const actualizarRegistroPerfiles = () => {
+
+    if (registroUsuarios) {
+        let indexPerfilModificar = registroUsuarios.map(perfil => perfil.id).indexOf(perfilIniciado.id);
+        registroUsuarios[indexPerfilModificar] = perfilIniciado;
+        localStorage.setItem("registroUsuarios", JSON.stringify(registroUsuarios));
+    }
+};
+//Funcion que controla el modal del inicio de sesion
 (() => {
     const forms = Array.from(document.querySelectorAll('.validacionLogin'));
 
@@ -9,8 +112,10 @@
             form.classList.add('was-validated');
 
             if (form.checkValidity()) {
-                document.getElementById("email").value = "";
-                document.getElementById("password").value = "";
+                crearUsuario();
+                verificarInicioDeSesion();
+                emailIngresado.value = "";
+                passwordIngresada.value = "";
                 form.classList.remove('was-validated');
                 document.getElementById("closeB").click();
             }
@@ -19,14 +124,8 @@
     })
 })()
 
-let inputNoVacio = Array.from(document.querySelectorAll('.sinEspacios'));
-
 //Funciones de condicion para el modal de Inicio
 let cuentaCorrectaOLibre = () => {
-    let emailIngresado = document.getElementById("email");
-    let passwordIngresada = document.getElementById("password");
-
-    let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
 
     if (registroUsuarios) {
         let existeEmail = registroUsuarios.find((usuario) => {
@@ -38,74 +137,82 @@ let cuentaCorrectaOLibre = () => {
         });
 
         if (existeEmail != undefined && existePassW != undefined) {
-            if (EPVacios(existeEmail.email) && EPVacios(existePassW.email)) {
-                if (existeEmail.password === existePassW.password && existeEmail.email === existePassW.email) {
-                    emailIngresado.setCustomValidity("");
-                    passwordIngresada.setCustomValidity("");
-                    let perfilIniciado = existeEmail;
-                    localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
-                    verificarInicioDeSesion();
-                    const toastInicioExitoso = document.getElementById('inicioExitoso');
-                    const toastIE = new bootstrap.Toast(toastInicioExitoso)
+            if (existeEmail.password === existePassW.password && existeEmail.email === existePassW.email) {
+                emailIngresado.setCustomValidity("");
+                passwordIngresada.setCustomValidity("");
+                localStorage.setItem('perfilIniciado', JSON.stringify(existeEmail));
+                verificarInicioDeSesion();
+                const toastInicioExitoso = document.getElementById('inicioExitoso');
+                const toastIE = new bootstrap.Toast(toastInicioExitoso)
 
-                    toastIE.show()
-                    setTimeout(function () {
-                        toastIE.hide();
-                    }, 3000);
-                } else {
-                    if (existeEmail.password === existePassW.password) {
-                        emailIngresado.setCustomValidity("Incorrecto");
-                        passwordIngresada.setCustomValidity("");
-                    } else if (existeEmail.email === existePassW.email) {
-                        emailIngresado.setCustomValidity("Incorrecto");
-                        passwordIngresada.setCustomValidity("");
-                    } else {
-                        emailIngresado.setCustomValidity("Incorrecto");
-                        passwordIngresada.setCustomValidity("Incorrecto");
-                    }
-                }
-
-
+                toastIE.show()
+                setTimeout(function () {
+                    toastIE.hide();
+                }, 3000);
             } else {
-                emailIngresado.setCustomValidity("Incorrecto");
-                passwordIngresada.setCustomValidity("Incorrecto");
+                if (existeEmail.password === existePassW.password) {
+                    emailIngresado.setCustomValidity("Incorrecto");
+                    passwordIngresada.setCustomValidity("");
+                } else if (existeEmail.email === existePassW.email) {
+                    emailIngresado.setCustomValidity("Incorrecto");
+                    passwordIngresada.setCustomValidity("");
+                } else {
+                    emailIngresado.setCustomValidity("Incorrecto");
+                    passwordIngresada.setCustomValidity("Incorrecto");
+                }
             }
 
 
         } else {
-            if (existeEmail != undefined) {
-                if(emailCorrecto(emailIngresado)){
+            if (existeEmail != undefined && existePassW === undefined) {
                     emailIngresado.setCustomValidity("");
                     passwordIngresada.setCustomValidity("Incorrecto");
-                } else {
-                    emailIngresado.setCustomValidity("Incorrecto");
-                    passwordIngresada.setCustomValidity("Incorrecto");
-                }
-            } else if (existePassW != undefined) {
+            } else if (existeEmail === undefined && existePassW != undefined) {
                 emailIngresado.setCustomValidity("Incorrecto");
                 passwordIngresada.setCustomValidity("");
             } else {
                 if (EPVacios(emailIngresado.value) && EPVacios(passwordIngresada.value)) {
-                    if(emailCorrecto(emailIngresado.value)){
+                    if (emailCorrecto(emailIngresado.value)) {
                         emailIngresado.setCustomValidity("");
                         passwordIngresada.setCustomValidity("");
-                        crearUsuario();
                     } else {
-                        emailIngresado.setCustomValidity("");
-                        passwordIngresada.setCustomValidity("Incorrecto");
+                        emailIngresado.setCustomValidity("Incorrectp");
+                        passwordIngresada.setCustomValidity("");
                     }
                 } else {
-                    emailIngresado.setCustomValidity("Incorrecto");
-                    passwordIngresada.setCustomValidity("Incorrecto");
+                    if(EPVacios(emailIngresado.value)){
+                        emailIngresado.setCustomValidity("");
+                        passwordIngresada.setCustomValidity("Incorrecto");
+                    } else if(EPVacios(passwordIngresada.value)) {
+                        emailIngresado.setCustomValidity("Incorrecto");
+                        passwordIngresada.setCustomValidity("");
+                    } else {
+                        emailIngresado.setCustomValidity("Incorrecto");
+                        passwordIngresada.setCustomValidity("Incorrecto");
+                    }
                 }
             }
         }
 
     } else {
         if (EPVacios(emailIngresado.value) && EPVacios(passwordIngresada.value)) {
-            emailIngresado.setCustomValidity("");
+            if (emailCorrecto(emailIngresado.value)) {
+                emailIngresado.setCustomValidity("");
+                passwordIngresada.setCustomValidity("");
+            } else {
+                emailIngresado.setCustomValidity("Incorrecto");
+                passwordIngresada.setCustomValidity("");
+            }
+        } else if (EPVacios(passwordIngresada.value)) {
+            emailIngresado.setCustomValidity("Incorrecto");
             passwordIngresada.setCustomValidity("");
-            crearUsuario();
+        } else if (EPVacios(emailIngresado.value)) {
+            if (emailCorrecto(emailIngresado.value)) {
+                emailIngresado.setCustomValidity("");
+            } else {
+                emailIngresado.setCustomValidity("Incorrecto");
+            }
+            passwordIngresada.setCustomValidity("Incorrecto");
         } else {
             emailIngresado.setCustomValidity("Incorrecto");
             passwordIngresada.setCustomValidity("Incorrecto");
@@ -131,9 +238,9 @@ const sinEspacios = () => {
     });
 };
 
-let noVaciosConEspacios = Array.from(document.querySelectorAll('.conEspacios'));
 // Funcion que controla que calle y esquina no sean vacias, pero tambien permite espacios ==> "   " esta mal pero "  pedro  pedro" esta bien
 const conEspacios = () => {
+    let noVaciosConEspacios = Array.from(document.querySelectorAll('.conEspacios'));
     noVaciosConEspacios.forEach((input) => {
         if (Array.from(input.value).some((caracter) => caracter != " ")) {
             input.setCustomValidity("");
@@ -158,17 +265,14 @@ function getRandomInt(max) {
 }
 
 function crearUsuario() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
     let datosUsuario = {
         id: Math.random(),
         name: 'User' + getRandomInt(1000000000),
         secondName: '',
         surname: '',
         secondSurname: '',
-        email: email,
-        password: password,
+        email: emailIngresado.value,
+        password: passwordIngresada.value,
         phone: '',
         img: '',
         prefijadoBorrado: false,
@@ -178,8 +282,6 @@ function crearUsuario() {
             moneda: 'UYU'
         }
     }
-
-    let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
     if (registroUsuarios) {
         registroUsuarios.push(datosUsuario);
     } else {
@@ -187,9 +289,8 @@ function crearUsuario() {
         registroUsuarios.push(datosUsuario);
     }
 
-    let perfilIniciado = datosUsuario;
     localStorage.setItem("registroUsuarios", JSON.stringify(registroUsuarios));
-    localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
+    localStorage.setItem('perfilIniciado', JSON.stringify(datosUsuario));
 
     const toastCreacionCuenta = document.getElementById('nuevaCuentaCreada');
     const toastCC = new bootstrap.Toast(toastCreacionCuenta)
@@ -202,63 +303,6 @@ function crearUsuario() {
     verificarInicioDeSesion();
 
 }
-
-//Funcion que controla si el usuario esta o no ingresado para mostrar los elementos indicados
-const verificarInicioDeSesion = () => {
-    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
-    let liPerfil = Array.from(document.getElementsByClassName("botonPerfil"));
-    let liCerrar = Array.from(document.getElementsByClassName("botonCerrar"));
-    let liCarrito = Array.from(document.getElementsByClassName("botonCarrito"));
-
-
-    if (!perfilIniciado) {
-        document.getElementById("emailLoginG").innerHTML = "Invitado";
-        document.getElementById("emailLoginC").innerHTML = "Invitado";
-
-        liPerfil.forEach((liP) => {
-            liP.innerHTML = `
-                <button type="button" class="dropdown-item border aC" style="border-radius: 0.4em;" data-bs-toggle="modal" data-bs-target="#modalLogin">
-                    Iniciar Sesión
-                </button>
-
-            `
-        })
-
-        liCerrar.forEach((liC) => {
-            liC.innerHTML = "";
-        });
-
-        liCarrito.forEach((liCA) => {
-            liCA.innerHTML = "";
-        });
-
-    } else {
-
-        document.getElementById("emailLoginG").innerHTML = perfilIniciado.name;
-        document.getElementById("emailLoginC").innerHTML = perfilIniciado.name;
-
-        liPerfil.forEach((liP) => {
-            liP.innerHTML = `
-                <a class="dropdown-item border aC" style="border-radius: 0.4em;" href="my-profile.html">Mi perfil</a>
-            `
-        });
-
-        liCerrar.forEach((liC) => {
-            liC.innerHTML = `
-                <a id="btnCerrar" class="dropdown-item border aC" style="border-radius: 0.4em;" href="#" onclick="cerrarS()">Cerrar sesión</a>
-            `
-        });
-
-        liCarrito.forEach((liCA) => {
-            liCA.innerHTML = `<a class="dropdown-item border aC" style="border-radius: 0.4em;" href="cart.html">Mi carrito</a>`;
-        });
-    }
-
-    if (window.location.pathname === "/product-info.html") {
-        chequearCarro();
-        chequearComentario();
-    }
-};
 
 //Funcion para cerrar sesion
 function cerrarS() {
@@ -279,29 +323,3 @@ if (window.location.pathname != "/my-profile.html") {
         window.location = "#";
     });
 }
-
-//Funcion lara actualizar el registro de perfiles
-const actualizarRegistroPerfiles = () => {
-    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
-    let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
-
-    if (registroUsuarios) {
-        let indexPerfilModificar = registroUsuarios.map(perfil => perfil.id).indexOf(perfilIniciado.id);
-        registroUsuarios[indexPerfilModificar] = perfilIniciado;
-        localStorage.setItem("registroUsuarios", JSON.stringify(registroUsuarios));
-    }
-};
-
-//Funcion para actualizar la informacion de un comentario al editar el perfil
-const modificarDatosComentarios = (usuarioActual, nuevoUsuario) => {
-    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
-    comentariosPuestos.forEach((producto) => {
-        let listaComentarios = producto.comentarios.map(comentario => comentario.user);
-        let listaComentariosFiltrados = listaComentarios.filter((usuario) => usuario === usuarioActual);
-        listaComentariosFiltrados.forEach((comment) => {
-            let indexComentarioAModificar = producto.comentarios.map(comm => comm.user).indexOf(comment);
-            producto.comentarios[indexComentarioAModificar].user = nuevoUsuario;
-            localStorage.setItem("comentariosPuestos", JSON.stringify(comentariosPuestos));
-        });
-    });
-};
