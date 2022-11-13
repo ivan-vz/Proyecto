@@ -1,27 +1,10 @@
-//Variables
-
-//Ordenes
 const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
 const ORDER_BY_PROD_COUNT = "Cant.";
-
-//Arrays y valores
 let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
-
-//Filtros
-let filtroCGrande = document.getElementById("rangeFilterCategoriesGrande");
-let filtroCChico = document.getElementById("rangeFilterCategoriesChico");
-let limpiarCGrande = document.getElementById("clearRangeFilterCategoriesGrande");
-let limpiarCChico = document.getElementById("clearRangeFilterCategoriesChico");
-
-//Input Filtros
-let cantMinGrande = document.getElementById("rangeMinCategoriesGrande");
-let cantMaxGrande = document.getElementById("rangeMaxCategoriesGrande");
-let cantMinChica = document.getElementById("rangeMinCategoriesChico");
-let cantMaxChica = document.getElementById("rangeMaxCategoriesChico");
 
 document.addEventListener("DOMContentLoaded", function(e){
     verificarInicioDeSesion();
@@ -121,21 +104,21 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     showCategoriesList();
 }
 
-filtroCGrande.addEventListener("click", () => {
-    minCount = cantMinGrande.value;
-    maxCount = cantMaxGrande.value;
+document.getElementById("rangeFilterCategoriesGrande").addEventListener("click", () => {
+    minCount = document.getElementById("rangeMinCategoriesGrande").value;
+    maxCount = document.getElementById("rangeMaxCategoriesGrande").value;
     rangeFilerCategories()
 });
 
-filtroCChico.addEventListener("click", () => {
-    minCount = cantMinChica.value;
-    maxCount = cantMaxChica.value;
+document.getElementById("rangeFilterCategoriesChico").addEventListener("click", () => {
+    minCount = document.getElementById("rangeMinCategoriesChico").value;
+    maxCount = document.getElementById("rangeMaxCategoriesChico").value;
     rangeFilerCategories()
 });
 
-limpiarCGrande.addEventListener("click", () => {limpiar()});
+document.getElementById("clearRangeFilterCategoriesGrande").addEventListener("click", () => {limpiar()});
 
-limpiarCChico.addEventListener("click", () => {limpiar()});
+document.getElementById("clearRangeFilterCategoriesChico").addEventListener("click", () => {limpiar()});
 
 const rangeFilerCategories = () => {
 
@@ -157,10 +140,10 @@ const rangeFilerCategories = () => {
 };
 
 const limpiar = () => {
-    cantMinGrande.value = "";
-    cantMaxGrande.value = "";
-    cantMinChica.value = "";
-    cantMaxChica.value = "";
+    document.getElementById("rangeMinCategoriesGrande").value = "";
+    document.getElementById("rangeMaxCategoriesGrande").value = "";
+    document.getElementById("rangeMinCategoriesChico").value = "";
+    document.getElementById("rangeMaxCategoriesChico").value = "";
 
     minCount = undefined;
     maxCount = undefined;

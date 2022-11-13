@@ -1,9 +1,12 @@
-//Variables
-
-//Datos y url
 const urlCarrito = CART_INFO_URL + "25801" + EXT_TYPE;
+//Variables del carrito
+let productoPrefijado;
+let carrito;
 
-//Formulario
+//Variables del formulario
+let inputsSinEspacios = Array.from(document.querySelectorAll('.form-control'));
+let inputsConEspacios = Array.from(document.querySelectorAll('.conEspacios'));
+
 let credito = document.getElementById("credito");
 let nTarjeta = document.getElementById("nTarjeta");
 let cSeguridad = document.getElementById("cSeguridad");
@@ -14,12 +17,11 @@ let nCuenta = document.getElementById("nCuenta");
 
 let botonC = document.getElementById("botonCondiciones");
 
-//Carrito
-let carrito;
-
 //Funcion para conseguir los datos de un producto, mostrarlos y ejecutar funciones dependiendo de los datos
 document.addEventListener("DOMContentLoaded", async function (e) {
     verificarInicioDeSesion();
+
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
 
     if (!perfilIniciado) {
         document.getElementById("botonFinalizarCompra").setAttribute("disabled", true);
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function (e) {
         } else {
             document.getElementById("cambiarM").checked = false;
         }
-        let productoPrefijado = await getJSONData(urlCarrito);
+        productoPrefijado = await getJSONData(urlCarrito);
         productoPrefijado = productoPrefijado.data.articles[0];
 
         let indexProductoPrefijado = perfilIniciado.shop.cart.map(producto => producto.id).indexOf(productoPrefijado.id);
@@ -43,16 +45,14 @@ document.addEventListener("DOMContentLoaded", async function (e) {
         mostrarCarrito();
 
         if (perfilIniciado.shop.estado === true) {
-            
-            limpiarCarro();
-            perfilIniciado.shop.estado = false;
-            localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
-            actualizarRegistroPerfiles();
-
             document.getElementById("compraE").classList.add("show");
             setTimeout(function () {
                 document.getElementById("compraE").classList.remove("show");
-            }, 4000);
+            }, 3000);
+
+            perfilIniciado.shop.estado = false;
+            localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
+            actualizarRegistroPerfiles();
         }
     }
 });
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async function (e) {
 //Funcion para mostrar y/o convertir los datos en la pantalla
 function mostrarCarrito() {
     let listaComprar = "";
-
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     if (perfilIniciado) {
         conversionYCuentas(perfilIniciado.shop);
         carrito = (JSON.parse(localStorage.getItem("perfilIniciado"))).shop.cart;
@@ -108,7 +108,7 @@ const conversionYCuentas = (compraCarrito) => {
 
 //Funcion para actualizar la informacion del usuario actual en el local storage
 const actualizarProducto = (prod) => {
-
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     let indexPerfilModificar = perfilIniciado.shop.cart.map(producto => producto.id).indexOf(prod.id);
     perfilIniciado.shop.cart[indexPerfilModificar] = prod;
     localStorage.setItem("perfilIniciado", JSON.stringify(perfilIniciado));
@@ -117,7 +117,7 @@ const actualizarProducto = (prod) => {
 
 //Funcion para modificar el subtotal de un item con el input en tiempo real
 function modificarCarrito(idmodificar) {
-
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     let indexProductoModificar = perfilIniciado.shop.cart.map(prod => prod.id).indexOf(idmodificar);
 
     let productoModificar = perfilIniciado.shop.cart[indexProductoModificar];
@@ -137,7 +137,7 @@ function modificarCarrito(idmodificar) {
 
 //Funcion que calcula y muestra tanto el subtotal de toda la compra como su iva
 const totales = () => {
-
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     if (perfilIniciado) {
         let premium = document.getElementById("premium");
         let express = document.getElementById("express");
@@ -204,8 +204,10 @@ const Fpago = () => {
                 seAcepto();
 
             } else {
+                let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
                 perfilIniciado.shop.estado = true;
                 localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
+                limpiarCarro();
                 actualizarRegistroPerfiles();
             }
 
@@ -263,7 +265,7 @@ const mostrar = () => {
 //Funcion que elimina un item del carro
 const borrar = (idEliminar) => {
 
-
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
 
     if ((idEliminar === 50924) && (perfilIniciado.prefijadoBorrado === false)) {
         perfilIniciado.prefijadoBorrado = true;
@@ -282,7 +284,7 @@ const borrar = (idEliminar) => {
 
 //Funcion que intercambia el valor de moneda segun el switch
 function cambiarMoneda() {
-
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
 
     let switchMoneda = document.getElementById("cambiarM");
     monedaNueva = switchMoneda.checked
@@ -319,8 +321,6 @@ function ajustarCifras(valorString) {
 };
 
 const limpiarCarro = () => {
-    let actualCart = (JSON.parse(localStorage.getItem("perfilIniciado"))).shop.cart;
-    actualCart.forEach((mercancia) => {
-        borrar(mercancia.id)
-    });
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    perfilIniciado.shop.cart.forEach((producto) => { borrar(producto.id) });
 };

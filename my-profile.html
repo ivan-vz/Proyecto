@@ -56,51 +56,10 @@
             <div class="d-flex d-block d-lg-none">
               <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
-                <li class="botonPerfil"></li>
                 <li class="botonCarrito"></li>
                 <li class="botonCerrar"></li>
               </ul>
-            </div>
-            <!-- Modal Para iniciar sesión -->
-            <form action="" class="needs-validation validacionLogin" novalidate>
-              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
-                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="input-group my-4">
-                        <span class="input-group-text">@</span>
-                        <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" required>
-                        <div class="invalid-feedback">
-                          Posibles errores: Email equivocado o con formato erróneo.
-                        </div>
-                      </div>
-                
-                      <div class="input-group my-4">
-                        <span class="input-group-text">&</span>
-                        <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" required>
-                        <div class="invalid-feedback">
-                          Posibles errores: Contraseña equivocada o que no cumple con el largo de 6 caracteres.
-                        </div>
-                      </div>
-                
-                      <div class="input-group my-4">
-                          <div class="input-group-text">
-                            <input type="checkbox" id="recordarme">
-                          </div>
-                          <span class="input-group-text">Recordarme</span>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="cuentaCorrectaOLibre()">Iniciar</button>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </form>          
+            </div>          
           </li>
         </ul>
       </div>
@@ -111,7 +70,7 @@
     <div class="container w-50">
       <div class="row row-cols-lg-2 row-cols-md-1 row-cols-1 my-3">
 
-        <div class="col text-center  text-lg-start">
+        <div class="col text-center">
           <h1>Perfil</h1>
         </div>
 
@@ -180,6 +139,7 @@
               id="inputFoto"
               name="image_uploads"
               accept=".jpg, .jpeg, .png" class="form-control" aria-label="file example">
+              <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
           </div>
 

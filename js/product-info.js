@@ -1,36 +1,34 @@
-//Variables
-
-//Datos y url
 let productId = localStorage.getItem("PID");
 const urlProductsInfo = PRODUCT_INFO_URL + productId + EXT_TYPE;
 const opiniones = PRODUCT_INFO_COMMENTS_URL + productId + EXT_TYPE;
-
-//Arrays 
+let lista = document.getElementById("contenedor");
 let producto = [];
 let comment = [];
+let estrellas;
 
 //Funcion para conseguir los datos de un producto, inicializar y/o mostrar los comentarios, anular o no un boton
-document.addEventListener("DOMContentLoaded", async function (e) {
+document.addEventListener("DOMContentLoaded",async function(e){
     verificarInicioDeSesion();
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
 
-
-    producto = await getJSONData(urlProductsInfo);
+    producto =  await getJSONData(urlProductsInfo);
     showProductInfo(producto.data);
-    comment = await getJSONData(opiniones);
+    comment =  await getJSONData(opiniones);
 
-    if (perfilIniciado) {
+    if(perfilIniciado) {
 
         let registroComentarios = {
             id: productId,
             comentarios: comment.data
         }
 
-        if (comentariosPuestos) {
+        if(comentariosPuestos){
             let existenComentarios = comentariosPuestos.find((producto) => {
                 return (producto.id === productId);
             });
-
-            if (!existenComentarios) {
+            
+            if(!existenComentarios){
                 comentariosPuestos.push(registroComentarios);
                 localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
             }
@@ -45,14 +43,14 @@ document.addEventListener("DOMContentLoaded", async function (e) {
 });
 
 //Funcion para subir un comentario
-comentar.addEventListener("click", () => {
-    let puntuacion = document.getElementById("tuPuntuacion");
-    let opinion = document.getElementById("tuOpinion");
+comentar.addEventListener("click",() => {
     let date = new Date();
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
     let nuevoCom = {
         "product": productId,
-        "score": parseInt(puntuacion.value),
-        "description": opinion.value,
+        "score": parseInt(document.getElementById("tuPuntuacion").value),
+        "description": document.getElementById("tuOpinion").value,
         "user": perfilIniciado.name,
         "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
     }
@@ -61,26 +59,27 @@ comentar.addEventListener("click", () => {
     comentariosPuestos[indexAComentar].comentarios.unshift(nuevoCom);
     localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
     showComments();
-    puntuacion.value = 1;
-    opinion.value = "";
+    document.getElementById("tuPuntuacion").value = 1;
+    document.getElementById("tuOpinion").value = "";
 })
 
 //Funcion para mostrar los comentarios
-function showComments() {
+function showComments(){
     let comentariosAMostrar = [];
-    let estrellas;
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
 
     let indexAComentar = comentariosPuestos.map(object => object.id).indexOf(productId);
     comentariosAMostrar = comentariosPuestos[indexAComentar].comentarios;
-
-    document.getElementById("Comentarios").innerHTML = "";
-
+    
+    document.getElementById("Comentarios").innerHTML = ""; 
+    
     comentariosAMostrar.forEach(msj => {
         let k = 1;
         estrellas = "";
         let Us_Da = `<li class="list-group-item"><strong>${msj.user}</strong> - ${msj.dateTime} `;
         while (k < 6) {
-            if (k <= parseInt(msj.score)) {
+            if(k <= parseInt(msj.score)){
                 estrellas += `<span class="fa fa-star checked"></span>`;
             } else {
                 estrellas += `<span class="fa fa-star"></span>`;
@@ -88,14 +87,14 @@ function showComments() {
             k++;
         }
         let Des = `<br>${msj.description}</li>`;
-        document.getElementById("Comentarios").innerHTML += Us_Da + estrellas + Des;
+        document.getElementById("Comentarios").innerHTML += Us_Da + estrellas + Des; 
     });
 }
 
 
 //Funcion para mostrar la informacion del producto
-function showProductInfo(product) {
-
+function showProductInfo(product){
+    
     let imagenes = "";
     let objR = "";
     let pos = 0;
@@ -111,17 +110,17 @@ function showProductInfo(product) {
     document.getElementById("categoryPChico").innerHTML = product.category;
     document.getElementById("soldCountPChico").innerHTML = product.soldCount;
 
-    for (imag of product.images) {
-        if (pos == 0) {
-            imagenes +=
-                `       
+     for(imag of product.images){
+        if(pos == 0){
+            imagenes +=  
+        `       
             <div class="carousel-item active">
                 <img src="${imag}" alt="imgCarousel" class="d-block w-100 img-thumbnail">
             </div>
         `;
         } else {
-            imagenes +=
-                `       
+            imagenes +=  
+            `       
                 <div class="carousel-item">
                     <img src="${imag}" alt="imgCarousel" class="d-block w-100 img-thumbnail">
                 </div>
@@ -133,9 +132,9 @@ function showProductInfo(product) {
         document.getElementById("galeriaCarouselChica").innerHTML = imagenes;
     }
 
-    for (prod of product.relatedProducts) {
-        objR +=
-            `
+    for(prod of product.relatedProducts){
+        objR += 
+        `
         <div class="text-center">
             <img class="img-thumbnail" src="${prod.image}" alt="imgProd" onclick="setProductID(${prod.id})" style="width: 50%; cursor: pointer">
             <h6><small class="text-muted">${prod.name}</small></h6>
@@ -147,12 +146,13 @@ function showProductInfo(product) {
 }
 
 //Funcion para agregar al carrito
-function crearNuevoProducto() {
+function crearNuevoProducto(){
 
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     prod = producto.data;
     let pedidos = document.getElementById("cantComprar");
 
-    if (pedidos.value != "" && pedidos.value > 0) {
+    if (pedidos.value != "" && pedidos.value > 0){
         let registro = {
             id: prod.id,
             name: prod.name,
@@ -164,18 +164,18 @@ function crearNuevoProducto() {
         perfilIniciado.shop.cart.push(registro);
         localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
         actualizarRegistroPerfiles();
-
+      
         pedidos.value = "";
         document.getElementById("comprarProducto").setAttribute("disabled", "");
         document.getElementById("cantComprar").setAttribute("disabled", "");
 
         document.getElementById("alert-success").classList.add("show");
-        setTimeout(function () {
-            document.getElementById("alert-success").classList.remove("show");
-        }, 3000);
+            setTimeout(function () {
+                document.getElementById("alert-success").classList.remove("show");
+            }, 3000);
     } else {
         document.getElementById("alert-warning").classList.add("show");
-        setTimeout(function () {
+        setTimeout(function() {
             document.getElementById("alert-warning").classList.remove("show");
         }, 3000);
     }
@@ -183,10 +183,10 @@ function crearNuevoProducto() {
 
 //Funcion qe controla el estado del boton y el input para "agregar productos"
 let chequearCarro = () => {
-
-    if (perfilIniciado) {
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    if(perfilIniciado){
         let indexAComprar = perfilIniciado.shop.cart.map(producto => producto.id).indexOf(parseInt(productId));
-        if (indexAComprar === -1) {
+        if(indexAComprar === -1){
             document.getElementById("comprarProducto").removeAttribute("disabled");
             document.getElementById("cantComprar").removeAttribute("disabled");
         } else {
@@ -201,9 +201,9 @@ let chequearCarro = () => {
 
 //Funcion que controla el boton de comentar segun el estado del usuario
 let chequearComentario = () => {
-
     let comentar = document.getElementById("comentar");
-    if (!perfilIniciado) {
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    if(!perfilIniciado){
         comentar.setAttribute("disabled", true);
     } else {
         comentar.removeAttribute("disabled");

@@ -63,25 +63,20 @@
                     <div class="modal-body">
                       <div class="input-group my-4">
                         <span class="input-group-text">@</span>
-                        <input type="email" class="form-control sinEspacios" placeholder="Ingrese su email" id="email" required>
-                        <div class="invalid-feedback">
-                          Posibles errores: Email equivocado o con formato erróneo.
-                        </div>
+                        <input type="email" class="form-control" placeholder="Ingrese su email" id="email" required>
                       </div>
                 
                       <div class="input-group my-4">
                         <span class="input-group-text">&</span>
-                        <input type="password" class="form-control sinEspacios" placeholder="Contraseña" id="password" minlength="6" required>
+                        <input type="password" class="form-control" placeholder="Contraseña" id="password" required>
                         <div class="invalid-feedback">
-                          Posibles errores: Contraseña equivocada o que no cumple con el largo de 6 caracteres.
+                          <strong>Posibles Errores:</strong>
+                          <ul>
+                            <li>Email o contraseña equivocado/a</li>
+                            <li>Email con formato erróneo o contraseña muy corta</li>
+                            <li>Campos vacios</li>
+                          </ul>
                         </div>
-                      </div>
-                
-                      <div class="input-group my-4">
-                          <div class="input-group-text">
-                            <input type="checkbox" id="recordarme">
-                          </div>
-                          <span class="input-group-text">Recordarme</span>
                       </div>
                   </div>
                   <div class="modal-footer">
