@@ -40,57 +40,9 @@ document.addEventListener("DOMContentLoaded",async function(e){
     }
 
     showComments();
+    chequearCarro();
+    chequearComentario();
 });
-
-//Funcion para subir un comentario
-comentar.addEventListener("click",() => {
-    let date = new Date();
-    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
-    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
-    let nuevoCom = {
-        "product": productId,
-        "score": parseInt(document.getElementById("tuPuntuacion").value),
-        "description": document.getElementById("tuOpinion").value,
-        "user": perfilIniciado.name,
-        "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
-    }
-
-    let indexAComentar = comentariosPuestos.map(object => object.id).indexOf(productId);
-    comentariosPuestos[indexAComentar].comentarios.unshift(nuevoCom);
-    localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
-    showComments();
-    document.getElementById("tuPuntuacion").value = 1;
-    document.getElementById("tuOpinion").value = "";
-})
-
-//Funcion para mostrar los comentarios
-function showComments(){
-    let comentariosAMostrar = [];
-    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
-    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
-
-    let indexAComentar = comentariosPuestos.map(object => object.id).indexOf(productId);
-    comentariosAMostrar = comentariosPuestos[indexAComentar].comentarios;
-    
-    document.getElementById("Comentarios").innerHTML = ""; 
-    
-    comentariosAMostrar.forEach(msj => {
-        let k = 1;
-        estrellas = "";
-        let Us_Da = `<li class="list-group-item"><strong>${msj.user}</strong> - ${msj.dateTime} `;
-        while (k < 6) {
-            if(k <= parseInt(msj.score)){
-                estrellas += `<span class="fa fa-star checked"></span>`;
-            } else {
-                estrellas += `<span class="fa fa-star"></span>`;
-            }
-            k++;
-        }
-        let Des = `<br>${msj.description}</li>`;
-        document.getElementById("Comentarios").innerHTML += Us_Da + estrellas + Des; 
-    });
-}
-
 
 //Funcion para mostrar la informacion del producto
 function showProductInfo(product){
@@ -144,6 +96,64 @@ function showProductInfo(product){
 
     document.getElementById("ORelacionados").innerHTML = objR;
 }
+
+//Funcion para mostrar los comentarios
+function showComments(){
+    let comentariosAMostrar = [];
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+    let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
+
+    let indexAComentar = comentariosPuestos.map(object => object.id).indexOf(productId);
+    comentariosAMostrar = comentariosPuestos[indexAComentar].comentarios;
+    
+    document.getElementById("Comentarios").innerHTML = ""; 
+    
+    comentariosAMostrar.forEach(msj => {
+        let k = 1;
+        estrellas = "";
+        let Us_Da = `<li class="list-group-item"><strong>${msj.user}</strong> - ${msj.dateTime} `;
+        while (k < 6) {
+            if(k <= parseInt(msj.score)){
+                estrellas += `<span class="fa fa-star checked"></span>`;
+            } else {
+                estrellas += `<span class="fa fa-star"></span>`;
+            }
+            k++;
+        }
+        let Des = `<br>${msj.description}</li>`;
+        document.getElementById("Comentarios").innerHTML += Us_Da + estrellas + Des; 
+    });
+}
+
+//Funcion para subir un comentario
+comentar.addEventListener("click",() => {
+    let date = new Date();
+    let tuOpinion = document.getElementById("tuOpinion");
+    
+    if(tuOpinion.value.trim() != ""){
+        let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+        let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
+        let nuevoCom = {
+            "product": productId,
+            "score": parseInt(document.getElementById("tuPuntuacion").value),
+            "description": tuOpinion.value,
+            "user": perfilIniciado.name,
+            "dateTime": date.toISOString().split('T')[0] + " " + date.toLocaleTimeString()
+        }
+    
+        let indexAComentar = comentariosPuestos.map(object => object.id).indexOf(productId);
+        comentariosPuestos[indexAComentar].comentarios.unshift(nuevoCom);
+        localStorage.setItem('comentariosPuestos', JSON.stringify(comentariosPuestos));
+        showComments();
+        document.getElementById("tuPuntuacion").value = 1;
+        tuOpinion.value = "";
+    } else{
+        document.getElementById("comentarioVacio").classList.add("show");
+            setTimeout(function () {
+                document.getElementById("comentarioVacio").classList.remove("show");
+            }, 3000);
+    }
+})
 
 //Funcion para agregar al carrito
 function crearNuevoProducto(){

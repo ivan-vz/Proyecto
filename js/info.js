@@ -1,4 +1,6 @@
-//Fncion que controla el modal del inicio de sesion
+//Funciones globales 
+
+//Funcion que controla el modal del inicio de sesion
 (() => {
     const forms = Array.from(document.querySelectorAll('.validacionLogin'));
 
@@ -19,9 +21,8 @@
     })
 })()
 
-let inputNoVacio = Array.from(document.querySelectorAll('.sinEspacios'));
-
 //Funciones de condicion para el modal de Inicio
+//Valida si el email y la contraseña estan libres, ya existen y coinciden con un usuario, ademas de no ser vacios y tener el formato correcto
 let cuentaCorrectaOLibre = () => {
     let emailIngresado = document.getElementById("email");
     let passwordIngresada = document.getElementById("password");
@@ -71,23 +72,15 @@ let cuentaCorrectaOLibre = () => {
     }
 };
 
+//Email y contraseña no vacios, email con "@" y contraseña con minimo 6 caracteres
 const formatoEPCorrecto = (email, passw) => {
     return ((email.trim() !== "") && (passw.trim().length > 5) && (email.includes("@")));
 }
 
-const sinEspacios = () => {
-    inputNoVacio.forEach((input) => {
-        if (input.value.includes(" ")) {
-            input.setCustomValidity("Caracteres invalidos");
-        } else {
-            input.setCustomValidity("");
-        }
-    });
-};
-
-let noVaciosConEspacios = Array.from(document.querySelectorAll('.conEspacios'));
-// Funcion que controla que calle y esquina no sean vacias, pero tambien permite espacios ==> "   " esta mal pero "  pedro  pedro" esta bien
+//Condiciones para el modal de compra y el de perfil
+//Funcion que no permite campos totalmente nulos
 const conEspacios = () => {
+    let noVaciosConEspacios = Array.from(document.querySelectorAll('.conEspacios'));
     noVaciosConEspacios.forEach((input) => {
         if (Array.from(input.value).some((caracter) => caracter != " ")) {
             input.setCustomValidity("");
@@ -97,20 +90,7 @@ const conEspacios = () => {
     });
 }
 
-//Funcion que controla que cada input numerico tenga su largo correcto ==> que no se ingresen numerso de mas o de menos
-const nCorrecto = (id, minL, maxL) => {
-    let num = document.getElementById(id);
-    if (num.value.length === minL || num.value.length === maxL) {
-        num.setCustomValidity("");
-    } else {
-        num.setCustomValidity("Formato incorrecto");
-    }
-};
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
+//Funcion que crea y sube al registro un nuevo usuario
 function crearUsuario() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
@@ -134,13 +114,11 @@ function crearUsuario() {
     }
 
     let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
-    if (registroUsuarios) {
-        registroUsuarios.push(datosUsuario);
-    } else {
+    if (!registroUsuarios) {
         registroUsuarios = [];
-        registroUsuarios.push(datosUsuario);
     }
-
+    registroUsuarios.push(datosUsuario);
+    
     let perfilIniciado = datosUsuario;
     localStorage.setItem("registroUsuarios", JSON.stringify(registroUsuarios));
     localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
@@ -157,6 +135,11 @@ function crearUsuario() {
 
 }
 
+//Funcion que retorna un valor random
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
 //Funcion que controla si el usuario esta o no ingresado para mostrar los elementos indicados
 const verificarInicioDeSesion = () => {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
@@ -168,7 +151,7 @@ const verificarInicioDeSesion = () => {
         document.getElementById("emailLoginG").innerHTML = "Invitado";
         document.getElementById("emailLoginC").innerHTML = "Invitado";
 
-        if (window.location.pathname != "/my-profile.html" || window.location.pathname != "/cart.html") {
+        if (!window.location.pathname.includes("/my-profile.html") ||!window.location.pathname.includes("/cart.html")) {
             let liPerfil = Array.from(document.getElementsByClassName("botonPerfil"));
             liPerfil.forEach((liP) => {
                 liP.innerHTML = `
@@ -193,7 +176,7 @@ const verificarInicioDeSesion = () => {
         document.getElementById("emailLoginG").innerHTML = perfilIniciado.name;
         document.getElementById("emailLoginC").innerHTML = perfilIniciado.name;
 
-        if (window.location.pathname != "/my-profile.html") {
+        if (!window.location.pathname.includes("/my-profile.html")) {
             let liPerfil = Array.from(document.getElementsByClassName("botonPerfil"));
             liPerfil.forEach((liP) => {
                 liP.innerHTML = `
@@ -213,33 +196,13 @@ const verificarInicioDeSesion = () => {
         });
     }
 
-    if (window.location.pathname === "/product-info.html") {
+    if (window.location.pathname.includes("/product-info.html")) {
         chequearCarro();
         chequearComentario();
     }
 };
 
-//Funcion para cerrar sesion
-function cerrarS() {
-    localStorage.removeItem("perfilIniciado");
-    if (window.location.pathname === "/my-profile.html" || window.location.pathname === "/cart.html") {
-        window.location = "index.html";
-    }
-    verificarInicioDeSesion();
-}
-
-function setProductID(id) {
-    localStorage.setItem("PID", id);
-    window.location = "product-info.html"
-}
-
-if (window.location.pathname != "/my-profile.html") {
-    document.getElementById("volverArriba").addEventListener("click", () => {
-        window.location = "#";
-    });
-}
-
-//Funcion lara actualizar el registro de perfiles
+//Funcion para actualizar el registro de perfiles
 const actualizarRegistroPerfiles = () => {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
@@ -254,13 +217,31 @@ const actualizarRegistroPerfiles = () => {
 //Funcion para actualizar la informacion de un comentario al editar el perfil
 const modificarDatosComentarios = (usuarioActual, nuevoUsuario) => {
     let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
-    comentariosPuestos.forEach((producto) => {
-        let listaComentarios = producto.comentarios.map(comentario => comentario.user);
-        let listaComentariosFiltrados = listaComentarios.filter((usuario) => usuario === usuarioActual);
-        listaComentariosFiltrados.forEach((comment) => {
-            let indexComentarioAModificar = producto.comentarios.map(comm => comm.user).indexOf(comment);
-            producto.comentarios[indexComentarioAModificar].user = nuevoUsuario;
-            localStorage.setItem("comentariosPuestos", JSON.stringify(comentariosPuestos));
+    if(comentariosPuestos){
+        comentariosPuestos.forEach((producto) => {
+            let listaComentarios = producto.comentarios.map(comentario => comentario.user);
+            if(listaComentarios){
+                let listaComentariosFiltrados = listaComentarios.filter((usuario) => usuario === usuarioActual);
+                listaComentariosFiltrados.forEach((comment) => {
+                    let indexComentarioAModificar = producto.comentarios.map(comm => comm.user).indexOf(comment);
+                    producto.comentarios[indexComentarioAModificar].user = nuevoUsuario;
+                    localStorage.setItem("comentariosPuestos", JSON.stringify(comentariosPuestos));
+                });
+            }
         });
-    });
+    }
 };
+
+//Funcion para cerrar sesion
+function cerrarS() {
+    localStorage.removeItem("perfilIniciado");
+    if (window.location.pathname.includes("/my-profile.html") || window.location.pathname.includes("/cart.html")){
+        window.location = "index.html";
+    }
+    verificarInicioDeSesion();
+}
+
+function setProductID(id) {
+    localStorage.setItem("PID", id);
+    window.location = "product-info.html"
+}

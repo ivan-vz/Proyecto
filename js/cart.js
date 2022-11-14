@@ -1,4 +1,5 @@
 const urlCarrito = CART_INFO_URL + "25801" + EXT_TYPE;
+
 //Variables del carrito
 let productoPrefijado;
 let carrito;
@@ -20,7 +21,6 @@ let botonC = document.getElementById("botonCondiciones");
 //Funcion para conseguir los datos de un producto, mostrarlos y ejecutar funciones dependiendo de los datos
 document.addEventListener("DOMContentLoaded", async function (e) {
     verificarInicioDeSesion();
-
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
 
     if (!perfilIniciado) {
@@ -57,6 +57,21 @@ document.addEventListener("DOMContentLoaded", async function (e) {
     }
 });
 
+//Funcion que intercambia el valor de moneda segun el switch
+function cambiarMoneda() {
+    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
+
+    let switchMoneda = document.getElementById("cambiarM");
+    monedaNueva = switchMoneda.checked
+        ? "USD"
+        : "UYU";
+
+    perfilIniciado.shop.moneda = monedaNueva;
+    localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
+    actualizarRegistroPerfiles();
+    mostrarCarrito();
+};
+
 //Funcion para mostrar y/o convertir los datos en la pantalla
 function mostrarCarrito() {
     let listaComprar = "";
@@ -86,35 +101,6 @@ function mostrarCarrito() {
     totales();
 }
 
-//Funcion para pasar de dolares-pesos y viceversa
-const conversionYCuentas = (compraCarrito) => {
-    compraCarrito.cart.forEach((compra) => {
-        let conversionProducto = {
-            count: compra.count,
-            currency: compraCarrito.moneda,
-            id: compra.id,
-            image: compra.image,
-            name: compra.name,
-            unitCost: ((compraCarrito.moneda === "USD" && compra.currency === "UYU")
-                ? compra.unitCost /= 40
-                : (compraCarrito.moneda === "UYU" && compra.currency === "USD")
-                    ? compra.unitCost * 40
-                    : compra.unitCost),
-        };
-
-        actualizarProducto(conversionProducto);
-    });
-};
-
-//Funcion para actualizar la informacion del usuario actual en el local storage
-const actualizarProducto = (prod) => {
-    let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
-    let indexPerfilModificar = perfilIniciado.shop.cart.map(producto => producto.id).indexOf(prod.id);
-    perfilIniciado.shop.cart[indexPerfilModificar] = prod;
-    localStorage.setItem("perfilIniciado", JSON.stringify(perfilIniciado));
-    actualizarRegistroPerfiles();
-};
-
 //Funcion para modificar el subtotal de un item con el input en tiempo real
 function modificarCarrito(idmodificar) {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
@@ -134,6 +120,26 @@ function modificarCarrito(idmodificar) {
         totales();
     }
 }
+
+//Funcion para pasar de dolares-pesos y viceversa
+const conversionYCuentas = (compraCarrito) => {
+    compraCarrito.cart.forEach((compra) => {
+        let conversionProducto = {
+            count: compra.count,
+            currency: compraCarrito.moneda,
+            id: compra.id,
+            image: compra.image,
+            name: compra.name,
+            unitCost: ((compraCarrito.moneda === "USD" && compra.currency === "UYU")
+                ? compra.unitCost /= 40
+                : (compraCarrito.moneda === "UYU" && compra.currency === "USD")
+                    ? compra.unitCost * 40
+                    : compra.unitCost),
+        };
+
+        actualizarProducto(conversionProducto);
+    });
+};
 
 //Funcion que calcula y muestra tanto el subtotal de toda la compra como su iva
 const totales = () => {
@@ -167,21 +173,27 @@ const totales = () => {
     }
 };
 
-//Funcion que chequea Si fue seleccionada una forma de pago para habilitar sus opciones, bloquear las de la otra ademas de reiniciar sus valores
-const Fpago = () => {
-    credito.checked
-        ? (nCuenta.value = "",
-            nTarjeta.removeAttribute("disabled"),
-            cSeguridad.removeAttribute("disabled"),
-            fecha.removeAttribute("disabled"),
-            nCuenta.setAttribute("disabled", true))
-        : (nTarjeta.value = "",
-            cSeguridad.value = "",
-            fecha.value = "",
-            nCuenta.removeAttribute("disabled"),
-            nTarjeta.setAttribute("disabled", true),
-            cSeguridad.setAttribute("disabled", true),
-            fecha.setAttribute("disabled", true));
+//Funcion que modifica las cifras de los sbtotales, IVAS y totales con puntos, comas y dos cifras despues de la coma (si tiene)
+function ajustarCifras(valorString) {
+    let partesValor = valorString.split(",");
+    let valorTot = [];
+    let nuevoVal = [];
+
+    valorTot.push(partesValor[0]);
+
+    if (partesValor[1] != undefined) {
+        let despuesComa = Array.from(partesValor[1]);
+        nuevoVal.push(despuesComa[0]);
+        if (despuesComa[1] != undefined) {
+            nuevoVal.push(despuesComa[1]);
+            nuevoVal = nuevoVal.join('');
+        }
+
+        valorTot.push(nuevoVal);
+        valorTot = valorTot.join(",");
+    }
+
+    return valorTot;
 };
 
 //Funcion Bootstrap que cancela el subit en caso de no cumplir las condiciones
@@ -244,6 +256,33 @@ const seAcepto = () => {
     }
 };
 
+//Funcion que controla que cada input numerico tenga su largo correcto
+const nCorrecto = (id, minL, maxL) => {
+    let num = document.getElementById(id);
+    if (num.value.length === minL || num.value.length === maxL) {
+        num.setCustomValidity("");
+    } else {
+        num.setCustomValidity("Formato incorrecto");
+    }
+};
+
+//Funcion que chequea Si fue seleccionada una forma de pago para habilitar sus opciones, bloquear las de la otra ademas de reiniciar sus valores
+const Fpago = () => {
+    credito.checked
+        ? (nCuenta.value = "",
+            nTarjeta.removeAttribute("disabled"),
+            cSeguridad.removeAttribute("disabled"),
+            fecha.removeAttribute("disabled"),
+            nCuenta.setAttribute("disabled", true))
+        : (nTarjeta.value = "",
+            cSeguridad.value = "",
+            fecha.value = "",
+            nCuenta.removeAttribute("disabled"),
+            nTarjeta.setAttribute("disabled", true),
+            cSeguridad.setAttribute("disabled", true),
+            fecha.setAttribute("disabled", true));
+};
+
 //Funcion que se ejecuta cuando el apartado del tipo de pago esta validado
 const esconder = () => {
     botonC.style.color = '#0d6efd';
@@ -282,44 +321,16 @@ const borrar = (idEliminar) => {
     totales();
 };
 
-//Funcion que intercambia el valor de moneda segun el switch
-function cambiarMoneda() {
+//Funcion para actualizar la informacion del usuario actual en el local storage
+const actualizarProducto = (prod) => {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
-
-    let switchMoneda = document.getElementById("cambiarM");
-    monedaNueva = switchMoneda.checked
-        ? "USD"
-        : "UYU";
-
-    perfilIniciado.shop.moneda = monedaNueva;
-    localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
+    let indexPerfilModificar = perfilIniciado.shop.cart.map(producto => producto.id).indexOf(prod.id);
+    perfilIniciado.shop.cart[indexPerfilModificar] = prod;
+    localStorage.setItem("perfilIniciado", JSON.stringify(perfilIniciado));
     actualizarRegistroPerfiles();
-    mostrarCarrito();
 };
 
-//Funcion que modifica las cifras de los sbtotales, IVAS y totales con puntos, comas y dos cifras despues de la coma (si tiene)
-function ajustarCifras(valorString) {
-    let partesValor = valorString.split(",");
-    let valorTot = [];
-    let nuevoVal = [];
-
-    valorTot.push(partesValor[0]);
-
-    if (partesValor[1] != undefined) {
-        let despuesComa = Array.from(partesValor[1]);
-        nuevoVal.push(despuesComa[0]);
-        if (despuesComa[1] != undefined) {
-            nuevoVal.push(despuesComa[1]);
-            nuevoVal = nuevoVal.join('');
-        }
-
-        valorTot.push(nuevoVal);
-        valorTot = valorTot.join(",");
-    }
-
-    return valorTot;
-};
-
+//Funcion que borra todos los productos comprados al terminar la compra
 const limpiarCarro = () => {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     perfilIniciado.shop.cart.forEach((producto) => { borrar(producto.id) });

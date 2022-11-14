@@ -124,9 +124,14 @@
 
             <div class="col my-2">
               <label for="emailPerfil" class="form-label">E-mail</label>
-              <input type="email" class="form-control border border-dark sinEspacios" id="emailPerfil" required oninput="sinEspacios()">
+              <input type="email" class="form-control border border-dark" id="emailPerfil" required oninput="emailLibre()">
               <div class="invalid-feedback">
-                Ingrese su email.
+                <strong>Posibles Errores:</strong>
+                <ul>
+                  <li>Email ya en uso</li>
+                  <li>Email con formato erróneo</li>
+                  <li>Campo vacio</li>
+                </ul>
               </div>
             </div>
 
@@ -139,7 +144,6 @@
               id="inputFoto"
               name="image_uploads"
               accept=".jpg, .jpeg, .png" class="form-control" aria-label="file example">
-              <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
           </div>
 
@@ -150,7 +154,7 @@
         </form>
 
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
-          <div id="toastGurdar" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div id="toastGuardar" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header" style="background-color: lightgreen; color: black;">
               <strong>¡Hey!</strong>
             </div>
