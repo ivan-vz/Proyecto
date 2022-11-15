@@ -38,23 +38,23 @@ let cuentaCorrectaOLibre = () => {
             return (usuario.password === passwordIngresada.value);
         });
 
-        if ((existeEmail != undefined && existePassW != undefined) &&(existeEmail.password === existePassW.password && existeEmail.email === existePassW.email)) {
-                emailIngresado.setCustomValidity("");
-                passwordIngresada.setCustomValidity("");
-                let perfilIniciado = existeEmail;
-                localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
-                verificarInicioDeSesion();
-                const toastInicioExitoso = document.getElementById('inicioExitoso');
-                const toastIE = new bootstrap.Toast(toastInicioExitoso)
+        if ((existeEmail != undefined && existePassW != undefined) && (existeEmail.password === existePassW.password && existeEmail.email === existePassW.email)) {
+            emailIngresado.setCustomValidity("");
+            passwordIngresada.setCustomValidity("");
+            let perfilIniciado = existeEmail;
+            localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
+            verificarInicioDeSesion();
+            const toastInicioExitoso = document.getElementById('inicioExitoso');
+            const toastIE = new bootstrap.Toast(toastInicioExitoso)
 
-                toastIE.show()
-                setTimeout(function () {
-                    toastIE.hide();
-                }, 3000);
+            toastIE.show()
+            setTimeout(function () {
+                toastIE.hide();
+            }, 3000);
         } else if ((existeEmail === undefined && existePassW === undefined) && (formatoEPCorrecto(emailIngresado.value, passwordIngresada.value))) {
-                emailIngresado.setCustomValidity("");
-                passwordIngresada.setCustomValidity("");
-                crearUsuario();
+            emailIngresado.setCustomValidity("");
+            passwordIngresada.setCustomValidity("");
+            crearUsuario();
         } else {
             emailIngresado.setCustomValidity("Incorrecto");
             passwordIngresada.setCustomValidity("Incorrecto");
@@ -118,7 +118,7 @@ function crearUsuario() {
         registroUsuarios = [];
     }
     registroUsuarios.push(datosUsuario);
-    
+
     let perfilIniciado = datosUsuario;
     localStorage.setItem("registroUsuarios", JSON.stringify(registroUsuarios));
     localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
@@ -151,7 +151,7 @@ const verificarInicioDeSesion = () => {
         document.getElementById("emailLoginG").innerHTML = "Invitado";
         document.getElementById("emailLoginC").innerHTML = "Invitado";
 
-        if (!window.location.pathname.includes("/my-profile.html") ||!window.location.pathname.includes("/cart.html")) {
+        if (!window.location.pathname.includes("/my-profile.html") || !window.location.pathname.includes("/cart.html")) {
             let liPerfil = Array.from(document.getElementsByClassName("botonPerfil"));
             liPerfil.forEach((liP) => {
                 liP.innerHTML = `
@@ -217,10 +217,10 @@ const actualizarRegistroPerfiles = () => {
 //Funcion para actualizar la informacion de un comentario al editar el perfil
 const modificarDatosComentarios = (usuarioActual, nuevoUsuario) => {
     let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
-    if(comentariosPuestos){
+    if (comentariosPuestos) {
         comentariosPuestos.forEach((producto) => {
             let listaComentarios = producto.comentarios.map(comentario => comentario.user);
-            if(listaComentarios){
+            if (listaComentarios) {
                 let listaComentariosFiltrados = listaComentarios.filter((usuario) => usuario === usuarioActual);
                 listaComentariosFiltrados.forEach((comment) => {
                     let indexComentarioAModificar = producto.comentarios.map(comm => comm.user).indexOf(comment);
@@ -235,7 +235,7 @@ const modificarDatosComentarios = (usuarioActual, nuevoUsuario) => {
 //Funcion para cerrar sesion
 function cerrarS() {
     localStorage.removeItem("perfilIniciado");
-    if (window.location.pathname.includes("/my-profile.html") || window.location.pathname.includes("/cart.html")){
+    if (window.location.pathname.includes("/my-profile.html") || window.location.pathname.includes("/cart.html")) {
         window.location = "index.html";
     }
     verificarInicioDeSesion();
@@ -245,3 +245,59 @@ function setProductID(id) {
     localStorage.setItem("PID", id);
     window.location = "product-info.html"
 }
+
+//Inicio de sesion con google
+const iniciarGoogle = () => {
+    let googleButton = document.getElementById('google-button');
+    let container = document.getElementsByClassName('contGoogle')[0];
+    let img = document.getElementsByClassName('imgGoogle')[0];
+    let getName = document.getElementsByClassName('nameGoogle')[0];
+    let id = document.getElementsByClassName('idGoogle')[0];
+    let email = document.getElementsByClassName('emailGoogle')[0];
+
+
+    // function to get response
+    function handleCredentialResponse(response) {
+        const responsePayload = decodeJwtResponse(response.credential);
+        document.getElementById("infoGoogle").classList.remove("d-none");
+        img.src = responsePayload.picture;
+        getName.innerHTML = responsePayload.name;
+        id.innerHTML = responsePayload.sub;
+        email.innerHTML = responsePayload.email;
+        container.style.display = 'inline-block';
+        googleButton.style.display = 'none'
+    }
+
+    window.onload = function () {
+        google.accounts.id.initialize({
+            // replace your client id below
+            client_id: "809127837215-6m5sscat51irktibf6mkd57gnv8s7r9v.apps.googleusercontent.com",
+            callback: handleCredentialResponse,
+            auto_select: true,
+            auto: true
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("google-button"),
+            { theme: "filled_blue", size: "medium", width: '200' }  // customization attributes
+        );
+        // also display the One Tap dialog on right side
+        // important for auto login
+        google.accounts.id.prompt();
+    }
+
+    // function to decode the response.credential
+    function decodeJwtResponse(token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    }
+
+    function signOut() {
+        google.accounts.id.disableAutoSelect();
+        // do anything on logout
+        location.reload();
+    }
+};

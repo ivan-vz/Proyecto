@@ -29,9 +29,10 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">     
+          <li class="nav-item">
             <div class="dropdown d-flex d-none d-lg-block">
-              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginG" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
                 <li class="botonCarrito"></li>
@@ -39,7 +40,8 @@
               </ul>
             </div>
             <div class="d-flex d-block d-lg-none">
-              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+              <button id="emailLoginC" button class="btn btn-dark dropdown-toggle nav-link" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
               <ul class="dropdown-menu position-absolute w-100 menuC">
                 <li class="botonPerfil"></li>
                 <li class="botonCarrito"></li>
@@ -47,40 +49,58 @@
               </ul>
             </div>
             <!-- Modal Para iniciar sesión -->
-            <form action="" class="needs-validation validacionLogin" novalidate>
-              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
-                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group my-4">
-                          <span class="input-group-text">@</span>
-                          <input type="email" class="form-control" placeholder="Ingrese su email" id="email" required>
+            <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
+                    <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="" class="needs-validation validacionLogin" novalidate>
+                      <div class="input-group my-4">
+                        <span class="input-group-text">@</span>
+                        <input type="email" class="form-control" placeholder="Ingrese su email" id="email" required>
+                      </div>
+
+                      <div class="input-group my-4">
+                        <span class="input-group-text">&</span>
+                        <input type="password" class="form-control" placeholder="Contraseña" id="password" required>
+                        <div class="invalid-feedback">
+                          <strong>Posibles Errores:</strong>
+                          <ul>
+                            <li>Email o contraseña equivocado/a</li>
+                            <li>Email con formato erróneo o contraseña muy corta</li>
+                            <li>Campos vacios</li>
+                          </ul>
                         </div>
-                  
-                        <div class="input-group my-4">
-                          <span class="input-group-text">&</span>
-                          <input type="password" class="form-control" placeholder="Contraseña" id="password" required>
-                          <div class="invalid-feedback">
-                            <strong>Posibles Errores:</strong>
-                            <ul>
-                              <li>Email o contraseña equivocado/a</li>
-                              <li>Email con formato erróneo o contraseña muy corta</li>
-                              <li>Campos vacios</li>
-                            </ul>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
+                      </div>
                       <button type="submit" class="btn btn-primary" onclick="cuentaCorrectaOLibre()">Iniciar</button>
+                    </form>
+
+                    <hr>
+
+                    <div id="google-button"></div>
+                    <div class="container contGoogle">
+                      <div id="infoGoogle" class="d-none">
+                        <img src="" alt="profile" class="imgGoogle">
+                        <div class="nameGoogle"></div>
+                        <br>
+                        <lable>ID: </lable>
+                        <div class="idGoogle"></div>
+                        <br>
+                        <lable>Email: </lable>
+                        <div class="emailGoogle"></div>
+                      </div>
+                      <br>
+                      <button id="btnGoogle" class="btn btn-primary" onClick="iniciarGoogle()">Iniciar Sesión con
+                        Google</button>
                     </div>
                   </div>
                 </div>
               </div>
-            </form>  
+            </div>
           </li>
         </ul>
       </div>
@@ -95,8 +115,7 @@
           <div class="col-md-4">
             <div class="card mb-4 shadow-sm custom-card cursor-active" id="autos">
               <img class="bd-placeholder-img card-img-top" src="img/cars_index
-.jpg"
-                alt="Imgagen representativa de la categoría 'Autos'">
+.jpg" alt="Imgagen representativa de la categoría 'Autos'">
               <h3 class="m-3">Autos</h3>
               <div class="card-body">
                 <p class="card-text">Los mejores precios en autos 0 kilómetro, de alta y media gama.</p>
@@ -106,8 +125,7 @@
           <div class="col-md-4">
             <div class="card mb-4 shadow-sm custom-card cursor-active" id="juguetes">
               <img class="bd-placeholder-img card-img-top" src="img/toys_index
-.jpg"
-                alt="Imgagen representativa de la categoría 'Juguetes'">
+.jpg" alt="Imgagen representativa de la categoría 'Juguetes'">
               <h3 class="m-3">Juguetes</h3>
               <div class="card-body">
                 <p class="card-text">Encuentra aquí los mejores precios para niños/as de cualquier edad.</p>
@@ -117,8 +135,7 @@
           <div class="col-md-4">
             <div class="card mb-4 shadow-sm custom-card cursor-active" id="muebles">
               <img class="bd-placeholder-img card-img-top" src="img/furniture_index
-.jpg"
-                alt="Imgagen representativa de la categoría 'Muebles'">
+.jpg" alt="Imgagen representativa de la categoría 'Muebles'">
               <h3 class="m-3">Muebles</h3>
               <div class="card-body">
                 <p class="card-text">Muebles antiguos, nuevos y para ser armados por uno mismo.</p>
@@ -153,10 +170,12 @@
   </main>
   <footer class="text-muted">
     <div class="container">
-      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button" class="btn btn-primary w-25">Volver arriba</button> </div>
+      <div class="row justify-content-end m-0 my-2"> <button id="volverArriba" type="button"
+          class="btn btn-primary w-25">Volver arriba</button> </div>
 
       <div class="row">
-        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
+        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+          -
           2022</p>
         <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
       </div>
@@ -166,7 +185,7 @@
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
   <script src="js/info.js"></script>
-
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </body>
 
 </html>
