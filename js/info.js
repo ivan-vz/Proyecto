@@ -248,6 +248,7 @@ function setProductID(id) {
 
 //Inicio de sesion con google
 const iniciarGoogle = () => {
+    console.log("Entre1");
     let googleButton = document.getElementById('google-button');
     let container = document.getElementsByClassName('contGoogle')[0];
     let img = document.getElementsByClassName('imgGoogle')[0];
@@ -258,6 +259,7 @@ const iniciarGoogle = () => {
 
     // function to get response
     function handleCredentialResponse(response) {
+        console.log("Entre2");
         const responsePayload = decodeJwtResponse(response.credential);
         document.getElementById("infoGoogle").classList.remove("d-none");
         img.src = responsePayload.picture;
@@ -269,6 +271,7 @@ const iniciarGoogle = () => {
     }
 
     window.onload = function () {
+        console.log("Entre3");
         google.accounts.id.initialize({
             // replace your client id below
             client_id: "809127837215-6m5sscat51irktibf6mkd57gnv8s7r9v.apps.googleusercontent.com",
@@ -287,9 +290,10 @@ const iniciarGoogle = () => {
 
     // function to decode the response.credential
     function decodeJwtResponse(token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        console.log("Entre4");
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
         return JSON.parse(jsonPayload);
