@@ -38,6 +38,7 @@ function handleCredentialResponse(response) {
         crearUsuario(responsePayload.email, null, responsePayload.name, responsePayload.picture);
     }
 
+    verificarInicioDeSesion();
     googleButton.style.display = 'none';
     btnsalir.style.display = 'block';
 }
