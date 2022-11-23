@@ -2,16 +2,6 @@
 
 //Inicio con google
 
-const iniciarGoogle = () => {
-    google.accounts.id.initialize({
-        // replace your client id below
-        client_id: "809127837215-6m5sscat51irktibf6mkd57gnv8s7r9v.apps.googleusercontent.com",
-        callback: handleCredentialResponse,
-        auto_select: true,
-        auto: true
-    });
-}
-
 function handleCredentialResponse(response) {
     let googleButton = document.getElementById('google-button');
     const responsePayload = decodeJwtResponse(response.credential);
