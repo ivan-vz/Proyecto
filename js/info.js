@@ -10,7 +10,7 @@ function handleCredentialResponse(response) {
     if (registroUsuarios) {
         let indexPerfilYaExistente = registroUsuarios.map(perfil => perfil.email).indexOf(responsePayload.email);
         console.log(indexPerfilYaExistente);
-        if(indexPerfilYaExistente){
+        if(indexPerfilYaExistente !== -1){
             let perfilIniciado = registroUsuarios[indexPerfilYaExistente];
             localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
             verificarInicioDeSesion();
