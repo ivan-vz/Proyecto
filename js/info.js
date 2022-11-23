@@ -3,13 +3,13 @@
 //Inicio con google
 
 function handleCredentialResponse(response) {
-    let googleButton = document.getElementById('google-button');
     const responsePayload = decodeJwtResponse(response.credential);
 
     let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
 
     if (registroUsuarios) {
         let indexPerfilYaExistente = registroUsuarios.map(perfil => perfil.email).indexOf(responsePayload.email);
+        console.log(indexPerfilYaExistente);
         if(indexPerfilYaExistente){
             let perfilIniciado = registroUsuarios[indexPerfilYaExistente];
             localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
@@ -29,6 +29,7 @@ function handleCredentialResponse(response) {
     }
 
     verificarInicioDeSesion();
+    document.getElementById("closeB").click();
 }
 
 
