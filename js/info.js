@@ -2,14 +2,13 @@
 
 //Inicio con google
 
-function handleCredentialResponse(response) {
-    const responsePayload = decodeJwtResponse(response.credential);
+function verificacionDeGoogleRespuesta(response) {
+    const responsePayload = decodificarGoogleResponse(response.credential);
 
     let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
 
     if (registroUsuarios) {
         let indexPerfilYaExistente = registroUsuarios.map(perfil => perfil.email).indexOf(responsePayload.email);
-        console.log(indexPerfilYaExistente);
         if(indexPerfilYaExistente !== -1){
             let perfilIniciado = registroUsuarios[indexPerfilYaExistente];
             localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
@@ -34,7 +33,7 @@ function handleCredentialResponse(response) {
 
 
 // function to decode the response.credential
-function decodeJwtResponse(token) {
+function decodificarGoogleResponse(token) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
