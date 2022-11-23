@@ -29,8 +29,6 @@ function handleCredentialResponse(response) {
     }
 
     verificarInicioDeSesion();
-    googleButton.style.display = 'none';
-    btnsalir.style.display = 'block';
 }
 
 
