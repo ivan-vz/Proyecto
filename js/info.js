@@ -5,7 +5,7 @@
 const iniciarGoogle = () => {
     google.accounts.id.initialize({
         client_id: "809127837215-6m5sscat51irktibf6mkd57gnv8s7r9v.apps.googleusercontent.com",
-        callback: handleCredentialResponse(),
+        callback: handleCredentialResponse,
         auto_select: false,
         auto: true
     });
