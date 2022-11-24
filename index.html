@@ -49,16 +49,17 @@
               </ul>
             </div>
             <!-- Modal Para iniciar sesión -->
-            <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
-                    <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal"
-                      aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form action="" class="needs-validation validacionLogin" novalidate>
+            <form action="" class="needs-validation validacionLogin" novalidate>
+              <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="modalLoginLabel">Iniciar Sesión</h1>
+                      <button id="closeB" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                       <div class="input-group my-4">
                         <span class="input-group-text">@</span>
                         <input type="email" class="form-control" placeholder="Ingrese su email" id="email" required>
@@ -77,16 +78,15 @@
                           </ul>
                         </div>
                       </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" onclick="cuentaCorrectaOLibre()">Iniciar</button>
-                        <div id="google-button"></div>
-                      </div>
-
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" onclick="cuentaCorrectaOLibre()">Iniciar</button>
+                      <div id="google-button"></div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
       </div>
       </li>
       </ul>
