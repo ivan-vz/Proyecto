@@ -1,14 +1,13 @@
 //Funciones globales 
 
 //Inicio con google
-
-function verificacionDeGoogleRespuesta(response) {
-    const responsePayload = decodificarGoogleResponse(response.credential);
+function verificacionDeGoogleResponse(response) {
+    const responseGoogle = decodificarGoogleResponse(response.credential);
 
     let registroUsuarios = JSON.parse(localStorage.getItem("registroUsuarios"));
 
     if (registroUsuarios) {
-        let indexPerfilYaExistente = registroUsuarios.map(perfil => perfil.email).indexOf(responsePayload.email);
+        let indexPerfilYaExistente = registroUsuarios.map(perfil => perfil.email).indexOf(responseGoogle.email);
         if(indexPerfilYaExistente !== -1){
             let perfilIniciado = registroUsuarios[indexPerfilYaExistente];
             localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
@@ -21,18 +20,16 @@ function verificacionDeGoogleRespuesta(response) {
                 toastIE.hide();
             }, 3000);
         } else {
-            crearUsuario(responsePayload.email, null, responsePayload.name, responsePayload.picture);
+            crearUsuario(responseGoogle.email, null, responseGoogle.name, responseGoogle.picture);
         }
     } else {
-        crearUsuario(responsePayload.email, null, responsePayload.name, responsePayload.picture);
+        crearUsuario(responseGoogle.email, null, responseGoogle.name, responseGoogle.picture);
     }
 
     verificarInicioDeSesion();
     document.getElementById("closeB").click();
 }
 
-
-// function to decode the response.credential
 function decodificarGoogleResponse(token) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

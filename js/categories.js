@@ -8,6 +8,18 @@ let maxCount = undefined;
 
 document.addEventListener("DOMContentLoaded", function(e){
     verificarInicioDeSesion();
+    
+    google.accounts.id.initialize({
+        client_id: "809127837215-6m5sscat51irktibf6mkd57gnv8s7r9v.apps.googleusercontent.com",
+        callback: verificacionDeGoogleResponse,
+        auto_select: true,
+        auto: true
+    });
+    google.accounts.id.renderButton(
+        document.getElementById("google-button"),
+        { theme: "filled_blue", size: "medium", width: '200' }
+    );
+
     getJSONData(CATEGORIES_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
             currentCategoriesArray = resultObj.data
@@ -116,9 +128,9 @@ document.getElementById("rangeFilterCategoriesChico").addEventListener("click", 
     rangeFilerCategories()
 });
 
-document.getElementById("clearRangeFilterCategoriesGrande").addEventListener("click", () => {limpiar()});
+document.getElementById("clearRangeFilterCategoriesGrande").addEventListener("click", () => {limpiarInput()});
 
-document.getElementById("clearRangeFilterCategoriesChico").addEventListener("click", () => {limpiar()});
+document.getElementById("clearRangeFilterCategoriesChico").addEventListener("click", () => {limpiarInput()});
 
 const rangeFilerCategories = () => {
 
@@ -139,7 +151,7 @@ const rangeFilerCategories = () => {
     showCategoriesList();
 };
 
-const limpiar = () => {
+const limpiarInput = () => {
     document.getElementById("rangeMinCategoriesGrande").value = "";
     document.getElementById("rangeMaxCategoriesGrande").value = "";
     document.getElementById("rangeMinCategoriesChico").value = "";

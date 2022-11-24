@@ -90,7 +90,7 @@ function mostrarCarrito() {
                 <td>${ajustarCifras(compra.unitCost.toLocaleString())}</td>
                 <td><input type="number" class="form-control border border-dark m-0" style="width: 4em;" id="subtotal${compra.id}" min="1" placeholder="${compra.count}" oninput="modificarCarrito(${compra.id})"></td>
                 <td id="subtotalRelativo${compra.id}">${ajustarCifras(subtotal.toLocaleString())}</td>
-                <td><img src="img/x-octagon.svg" style="width: 2em; cursor: pointer;" onclick="borrar(${compra.id})"></td>
+                <td><img src="img/x-octagon.svg" style="width: 2em; cursor: pointer;" onclick="borrarProducto(${compra.id})"></td>
             </tr>
             `;
         });
@@ -98,7 +98,7 @@ function mostrarCarrito() {
 
     document.getElementById("carritoProd").innerHTML = listaComprar;
 
-    totales();
+    totalesAPagar();
 }
 
 //Funcion para modificar el subtotal de un item con el input en tiempo real
@@ -117,7 +117,7 @@ function modificarCarrito(idmodificar) {
         let subtotal = productoModificar.count * productoModificar.unitCost;
         document.getElementById(`subtotalRelativo${productoModificar.id}`).innerHTML = ajustarCifras((subtotal).toLocaleString());
         actualizarProducto(productoModificar);
-        totales();
+        totalesAPagar();
     }
 }
 
@@ -142,7 +142,7 @@ const conversionYCuentas = (compraCarrito) => {
 };
 
 //Funcion que calcula y muestra tanto el subtotal de toda la compra como su iva
-const totales = () => {
+const totalesAPagar = () => {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     if (perfilIniciado) {
         let premium = document.getElementById("premium");
@@ -207,13 +207,13 @@ function ajustarCifras(valorString) {
                 event.preventDefault();
                 event.stopPropagation();
 
-                nTarjeta.setAttribute("oninput", "seAcepto()");
-                cSeguridad.setAttribute("oninput", "seAcepto()");
-                fecha.setAttribute("oninput", "seAcepto()");
-                nCuenta.setAttribute("oninput", "seAcepto()");
-                bancaria.setAttribute("onclick", "Fpago(); mostrar();");
-                credito.setAttribute("onclick", "Fpago(); mostrar();");
-                seAcepto();
+                nTarjeta.setAttribute("oninput", "verificacionDelModalDePago()");
+                cSeguridad.setAttribute("oninput", "verificacionDelModalDePago()");
+                fecha.setAttribute("oninput", "verificacionDelModalDePago()");
+                nCuenta.setAttribute("oninput", "verificacionDelModalDePago()");
+                bancaria.setAttribute("onclick", "modalFormatoDePago(); mostrarErrorFormatoDePago();");
+                credito.setAttribute("onclick", "modalFormatoDePago(); mostrarErrorFormatoDePago();");
+                verificacionDelModalDePago();
 
             } else {
                 let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
@@ -230,34 +230,34 @@ function ajustarCifras(valorString) {
 })()
 
 //Funcion que controla el estado del apartado del tipo de pago
-const seAcepto = () => {
+const verificacionDelModalDePago = () => {
 
     if (!credito.checked && !bancaria.checked || !(nCuenta.checkValidity() || (cSeguridad.checkValidity() && fecha.checkValidity() && nTarjeta.checkValidity()))) {
-        mostrar();
+        mostrarErrorFormatoDePago();
 
     } else {
         if (bancaria.checked) {
-            mostrar();
-            nCorrecto('nCuenta', 10, 10);
+            mostrarErrorFormatoDePago();
+            numeroCorrecto('nCuenta', 10, 10);
 
             if (nCuenta.checkValidity()) {
-                esconder();
+                esconderErrorFormatoDePago();
             }
 
         } else if (credito.checked) {
-            mostrar();
-            nCorrecto('cSeguridad', 3, 4);
-            nCorrecto('nTarjeta', 16, 16);
+            mostrarErrorFormatoDePago();
+            numeroCorrecto('cSeguridad', 3, 4);
+            numeroCorrecto('nTarjeta', 16, 16);
 
             if (cSeguridad.checkValidity() && fecha.checkValidity() && nTarjeta.checkValidity()) {
-                esconder();
+                esconderErrorFormatoDePago();
             }
         }
     }
 };
 
 //Funcion que controla que cada input numerico tenga su largo correcto
-const nCorrecto = (id, minL, maxL) => {
+const numeroCorrecto = (id, minL, maxL) => {
     let num = document.getElementById(id);
     if (num.value.length === minL || num.value.length === maxL) {
         num.setCustomValidity("");
@@ -267,7 +267,7 @@ const nCorrecto = (id, minL, maxL) => {
 };
 
 //Funcion que chequea Si fue seleccionada una forma de pago para habilitar sus opciones, bloquear las de la otra ademas de reiniciar sus valores
-const Fpago = () => {
+const modalFormatoDePago = () => {
     credito.checked
         ? (nCuenta.value = "",
             nTarjeta.removeAttribute("disabled"),
@@ -284,7 +284,7 @@ const Fpago = () => {
 };
 
 //Funcion que se ejecuta cuando el apartado del tipo de pago esta validado
-const esconder = () => {
+const esconderErrorFormatoDePago = () => {
     botonC.style.color = '#0d6efd';
     credito.setCustomValidity("");
     bancaria.setCustomValidity("");
@@ -293,7 +293,7 @@ const esconder = () => {
 };
 
 //Funcion que se ejecuta cuando el apartado del tipo de pago no esta validado
-const mostrar = () => {
+const mostrarErrorFormatoDePago = () => {
     botonC.style.color = '#dc3545';
     credito.setCustomValidity("Complete el form de pago");
     bancaria.setCustomValidity("Complete el form de pago");
@@ -302,7 +302,7 @@ const mostrar = () => {
 };
 
 //Funcion que elimina un item del carro
-const borrar = (idEliminar) => {
+const borrarProducto = (idEliminar) => {
 
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
 
@@ -318,7 +318,7 @@ const borrar = (idEliminar) => {
     localStorage.setItem('perfilIniciado', JSON.stringify(perfilIniciado));
     actualizarRegistroPerfiles();
     mostrarCarrito();
-    totales();
+    totalesAPagar();
 };
 
 //Funcion para actualizar la informacion del usuario actual en el local storage
@@ -333,5 +333,5 @@ const actualizarProducto = (prod) => {
 //Funcion que borra todos los productos comprados al terminar la compra
 const limpiarCarro = () => {
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
-    perfilIniciado.shop.cart.forEach((producto) => { borrar(producto.id) });
+    perfilIniciado.shop.cart.forEach((producto) => { borrarProducto(producto.id) });
 };

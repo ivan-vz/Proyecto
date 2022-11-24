@@ -9,6 +9,18 @@ let estrellas;
 //Funcion para conseguir los datos de un producto, inicializar y/o mostrar los comentarios, anular o no un boton
 document.addEventListener("DOMContentLoaded",async function(e){
     verificarInicioDeSesion();
+
+    google.accounts.id.initialize({
+        client_id: "809127837215-6m5sscat51irktibf6mkd57gnv8s7r9v.apps.googleusercontent.com",
+        callback: verificacionDeGoogleResponse,
+        auto_select: true,
+        auto: true
+    });
+    google.accounts.id.renderButton(
+        document.getElementById("google-button"),
+        { theme: "filled_blue", size: "medium", width: '200' }
+    );
+    
     let perfilIniciado = JSON.parse(localStorage.getItem("perfilIniciado"));
     let comentariosPuestos = JSON.parse(localStorage.getItem("comentariosPuestos"));
 

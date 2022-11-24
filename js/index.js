@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function(){
     verificarInicioDeSesion();
 
     google.accounts.id.initialize({
-        // replace your client id below
+
         client_id: "809127837215-6m5sscat51irktibf6mkd57gnv8s7r9v.apps.googleusercontent.com",
-        callback: verificacionDeGoogleRespuesta,
+        callback: verificacionDeGoogleResponse,
         auto_select: true,
         auto: true
     });
